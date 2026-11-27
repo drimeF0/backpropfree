@@ -15,6 +15,19 @@ from model_loader import get_layers, get_text_model
 CACHE_DIR = Path("/content/ornith_nobackprop_lab/c0_cache_L23_31")
 
 
+def symmetrize_inplace(mat: torch.Tensor, chunk: int = 1024) -> torch.Tensor:
+    """Blockwise in-place symmetrization without allocating a full duplicate matrix."""
+    n = mat.shape[0]
+    for rs in range(0, n, chunk):
+        re = min(n, rs + chunk)
+        diag = mat[rs:re, rs:re]
+        mat[rs:re, rs:re].copy_(0.5 * (diag + diag.T))
+        if re < n:
+            mat[rs:re, re:n].add_(mat[re:n, rs:re].T).mul_(0.5)
+            mat[re:n, rs:re].copy_(mat[rs:re, re:n].T)
+    return mat
+
+
 def _get_module_for_name(layer, layer_type: str, m_name: str):
     if m_name in ("gate_proj", "up_proj", "down_proj"):
         return getattr(layer.mlp, m_name)
@@ -188,21 +201,21 @@ def solve_bounded_whitened_ridge_lora(
     d_in = Xf.shape[1]
     device = Xf.device
 
-    C0f = C0.to(device=device, dtype=torch.float32)
-    c0_scale = max(float(torch.trace(C0f).item() / max(d_in, 1)), 1e-8)
-    C_prot = (lambda_c0 / c0_scale) * C0f
+    C_prot = C0.to(device=device, dtype=torch.float32)
+    c0_scale = max(float(torch.trace(C_prot).item() / max(d_in, 1)), 1e-8)
+    C_prot.mul_(lambda_c0 / c0_scale)
 
     if X_neg is not None and X_neg.numel() > 0 and lambda_neg > 0.0:
         Xn = X_neg.float().to(device)
-        C_neg = (Xn.T @ Xn) / max(Xn.shape[0], 1)
-        neg_scale = max(float(torch.trace(C_neg).item() / max(d_in, 1)), 1e-8)
-        C_prot = C_prot + (lambda_neg / neg_scale) * C_neg
-        del C_neg
-
-    C_prot = 0.5 * (C_prot + C_prot.T)
+        n_neg = max(Xn.shape[0], 1)
+        neg_scale = max(float((Xn * Xn).sum().item() / (n_neg * max(d_in, 1))), 1e-8)
+        C_prot.addmm_(Xn.T, Xn, alpha=(lambda_neg / (n_neg * neg_scale)))
+        del Xn
 
     if d_in <= 4096:
+        C_prot = 0.5 * (C_prot + C_prot.T)
         P_cov = C_prot + lambda_fro * torch.eye(d_in, device=device, dtype=torch.float32)
+        del C_prot
         evals, evecs = torch.linalg.eigh(P_cov)
         evals = evals.clamp(min=lambda_fro * 0.5)
         S_inv = (evecs / torch.sqrt(evals).unsqueeze(0)) @ evecs.T
@@ -210,8 +223,12 @@ def solve_bounded_whitened_ridge_lora(
         apply_s_inv_right = lambda V: V @ S_inv
         del P_cov, evals, evecs
     else:
+        torch.cuda.empty_cache()
+        symmetrize_inplace(C_prot, chunk=1024)
         # Factor (lambda_fro * I + C_prot)^{-1/2} = lambda_fro^{-1/2} * (I + (1/lambda_fro) * C_prot)^{-1/2}
         U_k, S_k, _ = torch.svd_lowrank(C_prot, q=512, niter=2)
+        del C_prot
+        torch.cuda.empty_cache()
         base_inv_sqrt = lambda_fro ** -0.5
         shrink_k = 1.0 - torch.rsqrt(1.0 + S_k.clamp(min=0.0) / max(lambda_fro, 1e-6))
 
@@ -221,7 +238,6 @@ def solve_bounded_whitened_ridge_lora(
             return base_inv_sqrt * (M - proj @ U_k.T)
 
         X_w = apply_s_inv_right(Xf)
-    del C_prot
 
     M_samples = X_w.shape[0]
     gram_diag_mean = max(float((X_w * X_w).sum().item() / max(M_samples, 1)), 1e-6)
@@ -254,10 +270,12 @@ def solve_bounded_whitened_ridge_lora(
     fit_rel_err = float((pred - dYf).norm().item() / (dYf.norm().item() + 1e-8))
     sv_captured = float((Sr * Sr).sum().item() / ((S * S).sum().item() + 1e-8))
 
-    # Measure tr(dW C0 dW^T) = tr((B @ A) C0 (B @ A)^T)
-    BA = B @ A
-    cal_pert = float(((BA @ C0f) * BA).sum().item())
-    del BA, C0f
+    # Measure tr(dW C0 dW^T) = tr((B^T B) (A C0 A^T)) via compact rank-r factor on CPU/GPU without [d_out, d_in]
+    A_cpu = A.detach().float().cpu()
+    BtB_cpu = (B.detach().float().T @ B.detach().float()).cpu()
+    AC0_cpu = A_cpu @ C0.float().cpu()
+    cal_pert = float((BtB_cpu * (AC0_cpu @ A_cpu.T)).sum().item())
+    del A_cpu, BtB_cpu, AC0_cpu
 
     stats = {
         "fit_rel_err": round(fit_rel_err, 4),

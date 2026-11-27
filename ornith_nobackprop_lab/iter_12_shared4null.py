@@ -33,7 +33,7 @@ from model_loader import (
     slice_pe,
     step_layer,
 )
-from nullspace_cache import compute_or_load_c0
+from nullspace_cache import compute_or_load_c0, symmetrize_inplace
 from probes import (
     build_probes_iter15,
     gather_positions,
@@ -261,28 +261,33 @@ def compute_null_preconditioner(
     C0_cached: Optional[torch.Tensor],
     alpha_null: float = 6.5,
 ) -> Tuple[Optional[torch.Tensor], Optional[Tuple[torch.Tensor, torch.Tensor]]]:
-    """Compute P_null = (I + alpha_null * C_prot_norm)^{-1/2} (exact eigh for <=4096, top-512 lowrank for 12288)."""
+    """Compute P_null = (I + alpha_null * C_prot_norm)^{-1/2} in-place to prevent 12288x12288 OOM."""
     d_in = X_cal.shape[-1]
     device = X_cal.device
     Xc = X_cal.reshape(-1, d_in).float()
     Xn = X_neg.reshape(-1, d_in).float()
 
-    Cc = (Xc.T @ Xc) / max(Xc.shape[0], 1)
-    Cc = Cc / max(float(torch.trace(Cc).item() / d_in), 1e-8)
+    n_c = max(Xc.shape[0], 1)
+    n_n = max(Xn.shape[0], 1)
+    scale_c = max(float((Xc * Xc).sum().item() / (n_c * max(d_in, 1))), 1e-8)
+    scale_n = max(float((Xn * Xn).sum().item() / (n_n * max(d_in, 1))), 1e-8)
 
-    Cn = (Xn.T @ Xn) / max(Xn.shape[0], 1)
-    Cn = Cn / max(float(torch.trace(Cn).item() / d_in), 1e-8)
+    if d_in > 4096:
+        torch.cuda.empty_cache()
 
-    C_prot = 0.5 * Cc + 0.5 * Cn
     if C0_cached is not None:
-        C0f = C0_cached.to(device=device, dtype=torch.float32)
-        C0f = C0f / max(float(torch.trace(C0f).item() / d_in), 1e-8)
-        C_prot = 0.35 * C0f + 0.30 * Cc + 0.35 * Cn
-        del C0f
-    del Cc, Cn
-    C_prot = 0.5 * (C_prot + C_prot.T)
+        C_prot = C0_cached.to(device=device, dtype=torch.float32)
+        scale_0 = max(float(torch.trace(C_prot).item() / max(d_in, 1)), 1e-8)
+        C_prot.mul_(0.35 / scale_0)
+        C_prot.addmm_(Xc.T, Xc, alpha=(0.30 / (n_c * scale_c)))
+        C_prot.addmm_(Xn.T, Xn, alpha=(0.35 / (n_n * scale_n)))
+    else:
+        C_prot = torch.zeros((d_in, d_in), device=device, dtype=torch.float32)
+        C_prot.addmm_(Xc.T, Xc, alpha=(0.50 / (n_c * scale_c)))
+        C_prot.addmm_(Xn.T, Xn, alpha=(0.50 / (n_n * scale_n)))
 
     if d_in <= 4096:
+        C_prot = 0.5 * (C_prot + C_prot.T)
         mat = torch.eye(d_in, device=device, dtype=torch.float32) + alpha_null * C_prot
         del C_prot
         evals, evecs = torch.linalg.eigh(mat)
@@ -291,9 +296,10 @@ def compute_null_preconditioner(
         del mat, evals, evecs
         return P_null, None
 
-    # Low-rank spectral preconditioner for d=12288 down_proj
+    symmetrize_inplace(C_prot, chunk=1024)
     U_k, S_k, _ = torch.svd_lowrank(C_prot, q=512, niter=2)
     del C_prot
+    torch.cuda.empty_cache()
     shrink_k = 1.0 - torch.rsqrt(1.0 + alpha_null * S_k.clamp(min=0.0))
     return None, (U_k, shrink_k)
 

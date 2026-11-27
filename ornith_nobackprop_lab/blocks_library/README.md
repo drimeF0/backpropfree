@@ -50,6 +50,21 @@ Reference points (8-bit Ornith-1.0-9B, 15 GiB T4):
 - Known limitation: synthetic-sibling bleed (`13–23%`); original SmolLM2 settings destroy 9B
   (`KL=2.41`, `retention=0.033`).
 
+### `unified_transfer_block.py` — Cross-Scale Unified Transfer LoRA (`v9` / `v15`, status: `partial`)
+Architecture-unified `rank=16` single-layer isolated synthesis targeting both `HuggingFaceTB/SmolLM2-360M-Instruct` (`fp16`, pure attention, `d=960`) and 8-bit `ornith-ai/Ornith-1.0-9B` (`LLM.int8()`, hybrid `GatedDeltaNet + full_attention`, `d=4096`) under `NoBackpropGuard`.
+
+| Variant | Scale / Seed / Stage | Direct (`>=0.75/0.70`) | Para (`>=0.70/0.65`) | Logic 1-turn | SR Logic | Anchors (`>=0.95`) | Bleed (`<=0.05`) | KL (`<=0.05`) | Ret (`>=0.95`) | Ovh MB / Time (`<=20s/120s`) | Status |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| `v9` (`[27,31]`) | `9B` / `s42` / `stg1` | `0.8333` | `0.8750` | `0.5556` | `1.0000` | `1.0000` | **`0.0500`** | `0.01395` | `1.0000` | `1313.0 MB` / **`97.81s`** | **9/10 gates PASS** (only `logic` vs `0.800` threshold) |
+| `v9` (`[28..31]`) | `360M` / `s42` / `stg1` | `0.8333` | `0.8333` | `0.0000` | `0.4444` | `0.9000` | `0.0500` | `0.00806` | `0.9464` | `1103.2 MB` / `16.14s` | `partial` (`logic` / `anc` / `ret`) |
+| `v15` (`[23,27,31]`) | `9B` / `s42` / `stg1` | `0.6667` | `0.8750` | `0.5556` | `1.0000` | `1.0000` | `0.1500` | `0.01059` | `1.0000` | `1155.3 MB` / `107.97s` | Both constraint/conjunctive pass; `L23` over-boosted digits |
+| `v15` (`[25,27,29..31]`) | `360M` / `s42` / `stg1` | `0.8333` | `0.8750` | `0.0000` | `0.3333` | `0.8000` | `0.0500` | `0.01210` | `0.9821` | `1097.3 MB` / `17.61s` | `partial` (`Fact 1..Fact 8` CoT loop) |
+| `v15` (`[25,27,29..31]`) | `360M` / `s1337` / `stg1` | `0.7500` | `0.7917` | `0.1111` | `0.3333` | `1.0000` | `0.0500` | `0.01193` | `0.9643` | `1125.1 MB` / `18.81s` | **9/10 gates PASS** (only `logic` vs `0.3556`) |
+| `v15` (`[25,27,29..31]`) | `360M` / `s2026` / `stg1` | `0.9167` | `0.8750` | `0.1111` | `0.3333` | `0.9000` | `0.1000` | `0.00924` | `0.9464` | `1077.4 MB` / `17.18s` | `partial` |
+| `v15` (`[25,27,29..31]`) | `360M` / `s42` / `stg2` | `0.7500` | `0.8333` | `0.1111` | `0.4444` | `0.9000` | `0.1000` | `0.01221` | `0.9464` | `1101.3 MB` / `17.72s` | Stage 2 (`seq_len=2048`) `partial` |
+
+See `../experiments_transfer.jsonl`, `../lab_notebook_transfer.md`, and `../NEXT_SESSION_HANDOFF.md` for full cross-scale telemetry.
+
 ## Minimal Usage
 
 ```python

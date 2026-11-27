@@ -588,10 +588,10 @@ def synthesize_unified_transfer_block(
     device: str,
     target_layers: Optional[List[int]] = None,
     r: int = 16,
-    lora_alpha: float = 16.0,
-    alpha_null: float = 6.0,
-    base_lr: float = 3.8e-3,
-    n_null_rank: int = 128,
+    lora_alpha: float = 24.0,
+    alpha_null: float = 5.5,
+    base_lr: float = 4.2e-3,
+    n_null_rank: int = 96,
 ) -> Tuple[UnifiedTransferManager, Dict[str, object]]:
     """Run scale-invariant, CoT-aware layer-by-layer detached synthesis strictly within NoBackpropGuard."""
     layers = get_layers(model)
@@ -600,7 +600,7 @@ def synthesize_unified_transfer_block(
         target_layers = list(range(max(0, n_layers - 6), n_layers))
 
     mgr = UnifiedTransferManager(model, target_layers=target_layers, r=r, lora_alpha=lora_alpha)
-    bundle = build_dual_mode_bio_probes(clauses, tokenizer, n_neg=84)
+    bundle = build_dual_mode_bio_probes(clauses, tokenizer, n_neg=64)
     pos_items = bundle["pos_items"]
     cot_entry_prompts = bundle["cot_entry_prompts"]
     neg_items = bundle["neg_items"]
@@ -671,7 +671,7 @@ def synthesize_unified_transfer_block(
 
         # Prepare General Cal (SmolTalk + Encyclopedia World-Knowledge Anchors)
         tokenizer.padding_side = "right"
-        cal_smol_enc = tokenizer(cal_texts[:64], return_tensors="pt", padding=True, truncation=True, max_length=72).to(device)
+        cal_smol_enc = tokenizer(cal_texts[:48], return_tensors="pt", padding=True, truncation=True, max_length=72).to(device)
         cal_smol_lens = cal_smol_enc.attention_mask.sum(dim=1).tolist()
         cal_smol_pos = [[max(0, min(L - 1, int(k * L / 4))) for k in range(1, 4)] for L in cal_smol_lens]
 
@@ -717,26 +717,12 @@ def synthesize_unified_transfer_block(
             cot_tok.input_ids, cot_tok.attention_mask, cot_pos
         )
 
-        # Build refusal-suppressed + eos-suppressed safe CoT target distribution on device (fp16 to save VRAM)
-        p_safe_cot_cpu = lp_cot_cpu.exp()
-        mask_drop = torch.cat([refusal_tok_ids, eos_tok_ids]).cpu()
-        p_safe_cot_cpu[:, mask_drop] = 0.0
-        row_s = p_safe_cot_cpu.sum(dim=-1, keepdim=True)
-        bad_rows = (row_s <= 1e-4).squeeze(-1)
-        if bad_rows.any():
-            fallback = lp_cot_cpu[bad_rows].exp()
-            fallback[:, eos_tok_ids.cpu()] = 0.0
-            fallback_s = fallback.sum(dim=-1, keepdim=True).clamp(min=1e-8)
-            p_safe_cot_cpu[bad_rows] = fallback / fallback_s
-            row_s = p_safe_cot_cpu.sum(dim=-1, keepdim=True)
-        p_safe_cot_cpu = p_safe_cot_cpu / row_s.clamp(min=1e-8)
-        p_safe_cot_dev = p_safe_cot_cpu.half().to(device)
         p_smol_dev = lp_smol_cpu.exp().half().to(device)
         p_enc_dev = lp_enc_cpu.exp().half().to(device)
         p_neg_dev = lp_neg_cpu.exp().half().to(device)
         logp_base_neg_bleed = lp_neg_cpu[:, bleed_tok_ids.cpu()].float().to(device)
 
-        del lp_smol_cpu, lp_enc_cpu, lp_neg_cpu, lp_cot_cpu, p_safe_cot_cpu
+        del lp_smol_cpu, lp_enc_cpu, lp_neg_cpu, lp_cot_cpu
 
         # Run H_stu up to target_layers[0]
         h_s, cm_stu, pe_stu, tp_stu = prepare_layer_inputs_unified(model, stu_ids, stu_mask)
@@ -751,21 +737,20 @@ def synthesize_unified_transfer_block(
     # Wait: normalize also by sqrt(d_model / 4096) so update std/coordinate fits both 960 and 4096 cleanly
     d_model = int(H_smol.shape[-1])
     is_large_model = d_model >= 2048
-    lr_eff = float(base_lr) * math.sqrt(d_model / 4096.0)
-    # Clamp sensible bounds across 360M..9B
-    lr_eff = max(1.6e-3, min(4.2e-3, lr_eff))
+    lr_eff = float(base_lr) * ((d_model / 4096.0) ** 0.25)
+    lr_eff = max(2.4e-3, min(4.5e-3, lr_eff))
 
     steps_sched = (9, 9, 10, 10, 11, 12)
     if len(target_layers) != len(steps_sched):
         steps_sched = tuple([10] * len(target_layers))
 
-    lambda_smol_kl = 5.0
-    lambda_enc_kl = 9.0
-    lambda_neg_kl = 8.0
-    lambda_antibleed = 2.0
-    lambda_cot_entry = 1.6
-    lambda_refusal = 0.35
-    lambda_dw = 0.015
+    lambda_smol_kl = 2.5
+    lambda_enc_kl = 4.5
+    lambda_neg_kl = 5.5
+    lambda_antibleed = 2.2
+    lambda_cot_entry = 1.8
+    lambda_refusal = 0.45
+    lambda_dw = 0.002
 
     layer_logs = []
     n_smol = H_smol.shape[0]
@@ -957,18 +942,17 @@ def synthesize_unified_transfer_block(
                 del out_n, pts_n, log_p_n, pn_sl, tok_nkl, l_nkl, l_bleed
             last_nkl = nkl_accum
 
-            # Micro-backward 3b: CoT Entry Safety Guard
+            # Micro-backward 3b: CoT Entry Safety Guard (suppress <eos> & refusal without enforcing wrong Base facts)
             with torch.enable_grad():
                 out_ct = step_layer_unified(model, l_idx, H_cot_in, cm_cot, pe_cot, tp_cot)
                 pts_ct = gather_positions(out_ct, cot_pos) + skip_cot
                 log_p_ct = F.log_softmax(lm_head(lm_norm(pts_ct)).float(), dim=-1)
-                l_cot_kl = F.kl_div(log_p_ct, p_safe_cot_dev.float(), reduction="batchmean")
                 l_cot_eos = (F.relu(log_p_ct[:, eos_tok_ids] - (-11.0)) ** 2).mean()
                 l_cot_ref = (F.relu(log_p_ct[:, refusal_tok_ids] - (-8.5)) ** 2).mean()
-                l_cot = lambda_cot_entry * (l_cot_kl + 1.5 * l_cot_eos + 0.5 * l_cot_ref)
+                l_cot = lambda_cot_entry * (1.8 * l_cot_eos + 0.8 * l_cot_ref)
                 l_cot.backward()
-                last_cot = float(l_cot_kl.item())
-            del out_ct, pts_ct, log_p_ct, l_cot_kl, l_cot_eos, l_cot_ref, l_cot
+                last_cot = float(l_cot.item())
+            del out_ct, pts_ct, log_p_ct, l_cot_eos, l_cot_ref, l_cot
 
             torch.nn.utils.clip_grad_norm_(params, 1.0)
             opt.step()
@@ -1012,6 +996,8 @@ def run_experiment(
     stage: int,
     device: str,
     eval_thinking_diag: bool = False,
+    iter_num: int = 2,
+    method_name: str = "CoTGuard_Shared4Null_v2",
 ) -> List[Dict[str, object]]:
     model, tokenizer, spec = load_model_by_scale(scale, device=device)
     cal_texts, kl_texts = load_smoltalk_for_scale(tokenizer, scale, n_cal=128, n_kl=64)
@@ -1070,8 +1056,8 @@ def run_experiment(
         gates = check_transfer_gates(ev, guard.metrics, scale, 16, base_l, ora_l)
         status = "pass" if gates["ALL_GATES_PASS"] else "partial"
         rec = append_transfer_record(
-            1,
-            "CoTGuard_Shared4Null",
+            iter_num,
+            method_name,
             scale,
             spec.model_id,
             ev,
@@ -1084,7 +1070,7 @@ def run_experiment(
             extra={"synth_diag": synth_diag},
         )
         print(
-            f"[Iter1 {scale} s={seed} stg={stage}] direct={ev['direct_recall_acc']} para={ev['paraphrase_acc']} "
+            f"[Iter{iter_num} {scale} s={seed} stg={stage}] direct={ev['direct_recall_acc']} para={ev['paraphrase_acc']} "
             f"logic={ev['logic_1turn_acc']} sr_logic={ev['logic_self_recalled_acc']} think={ev['logic_thinking_acc']} "
             f"real_anc={ev['real_anchors_acc']} bleed={ev['synth_bleed']} kl={ev['kl_div']} ret={ev['retention_acc']} "
             f"refusal={ev['direct_refusal_rate']} ovh={guard.metrics.activation_vram_overhead_mb:.1f}MB "
@@ -1092,7 +1078,7 @@ def run_experiment(
             flush=True,
         )
         print("  gates:", gates, flush=True)
-        (LAB_DIR / f"iter_1_details_{scale}_s{seed}_stg{stage}.json").write_text(
+        (LAB_DIR / f"iter_{iter_num}_details_{scale}_s{seed}_stg{stage}.json").write_text(
             json.dumps({"record": rec, "details": ev["details"]}, indent=2)
         )
         results.append(rec)
@@ -1108,14 +1094,16 @@ def main() -> None:
     parser.add_argument("--seeds", type=int, nargs="+", default=[42])
     parser.add_argument("--stage", type=int, choices=[1, 2], default=1)
     parser.add_argument("--thinking", action="store_true")
+    parser.add_argument("--iter-num", type=int, default=2)
+    parser.add_argument("--method", type=str, default="CoTGuard_Shared4Null_v2")
     args = parser.parse_args()
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     if args.scale in ("small", "both"):
-        run_experiment("small", args.seeds, args.stage, device, eval_thinking_diag=args.thinking)
+        run_experiment("small", args.seeds, args.stage, device, eval_thinking_diag=args.thinking, iter_num=args.iter_num, method_name=args.method)
         cleanup_cuda()
     if args.scale in ("large", "both"):
-        run_experiment("large", args.seeds, args.stage, device, eval_thinking_diag=args.thinking)
+        run_experiment("large", args.seeds, args.stage, device, eval_thinking_diag=args.thinking, iter_num=args.iter_num, method_name=args.method)
         cleanup_cuda()
 
 

@@ -206,7 +206,7 @@ def format_cot_prompts(tokenizer, questions: List[str], enable_thinking: bool = 
     return out
 
 
-def build_bio_a13_probes():
+def build_bio_a13_probes(tokenizer):
     forbidden = {"seren", "valenwood", "oakhaven", "vespera", "nordhavn", "talia"}
     pos_items = []
     for f_idx, (q, tgt) in enumerate(BIO_SELF_SUPERVISED_PAIRS):
@@ -256,7 +256,7 @@ def build_bio_a13_probes():
     return pos_items, neg_items
 
 
-def build_bio_shared4_probes():
+def build_bio_shared4_probes(tokenizer):
     forbidden = {"seren", "valenwood", "oakhaven", "vespera", "nordhavn", "talia"}
     pos_items = []
     for q, tgt in BIO_SELF_SUPERVISED_PAIRS:
@@ -374,30 +374,47 @@ def main() -> None:
     gqa = get_general_qa_set()
     gqa_prompts = format_qa_prompts(tokenizer, [x["q"] for x in gqa])
     results: Dict[str, object] = {"biography": BIOGRAPHY_TEXT, "models": {}}
+    partial_path = LAB_DIR / "biography_logic_partial.json"
+    base_cache_path = LAB_DIR / "biography_base_cache.json"
 
-    # 1. Base_Unedited
-    base_bio = evaluate_bio_and_logic(model, tokenizer, device)
-    base_gqa_preds = batched_greedy_generate(model, tokenizer, gqa_prompts, device, batch_size=15, max_new_tokens=32)
-    base_gqa_raw = sum(match_target(pr, x["a"]) for pr, x in zip(base_gqa_preds, gqa)) / len(gqa)
-    results["models"]["Base_Unedited"] = {
-        **base_bio, "general_qa_raw": round(base_gqa_raw, 4), "kl_div": 0.0,
-    }
-    print("[Base_Unedited]", results["models"]["Base_Unedited"]["direct_recall_acc"],
-          results["models"]["Base_Unedited"]["logic"]["thinking_false"]["acc"],
-          results["models"]["Base_Unedited"]["logic"]["thinking_true"]["acc"], flush=True)
+    def dump_partial() -> None:
+        partial_path.write_text(json.dumps(results, indent=2))
+        print(f"[partial] saved {partial_path}", flush=True)
 
-    # 2. InContext_Oracle
-    ctx_bio = evaluate_bio_and_logic(model, tokenizer, device, prefix_bio=True, run_self_recalled=False)
-    results["models"]["InContext_Oracle"] = {
-        **ctx_bio, "general_qa_raw": None, "kl_div": 0.0,
-    }
-    print("[InContext_Oracle]", ctx_bio["direct_recall_acc"],
-          ctx_bio["logic"]["thinking_false"]["acc"], ctx_bio["logic"]["thinking_true"]["acc"], flush=True)
+    # 1-2. Base_Unedited + InContext_Oracle (cached across reruns)
+    if base_cache_path.exists():
+        cached = json.loads(base_cache_path.read_text())
+        results["models"]["Base_Unedited"] = cached["base"]
+        results["models"]["InContext_Oracle"] = cached["incontext"]
+        print("[cache] loaded base + in-context results", flush=True)
+        dump_partial()
+    else:
+        base_bio = evaluate_bio_and_logic(model, tokenizer, device)
+        base_gqa_preds = batched_greedy_generate(model, tokenizer, gqa_prompts, device, batch_size=15, max_new_tokens=32)
+        base_gqa_raw = sum(match_target(pr, x["a"]) for pr, x in zip(base_gqa_preds, gqa)) / len(gqa)
+        results["models"]["Base_Unedited"] = {
+            **base_bio, "general_qa_raw": round(base_gqa_raw, 4), "kl_div": 0.0,
+        }
+        print("[Base_Unedited]", results["models"]["Base_Unedited"]["direct_recall_acc"],
+              results["models"]["Base_Unedited"]["logic"]["thinking_false"]["acc"],
+              results["models"]["Base_Unedited"]["logic"]["thinking_true"]["acc"], flush=True)
+
+        ctx_bio = evaluate_bio_and_logic(model, tokenizer, device, prefix_bio=True, run_self_recalled=False)
+        results["models"]["InContext_Oracle"] = {
+            **ctx_bio, "general_qa_raw": None, "kl_div": 0.0,
+        }
+        print("[InContext_Oracle]", ctx_bio["direct_recall_acc"],
+              ctx_bio["logic"]["thinking_false"]["acc"], ctx_bio["logic"]["thinking_true"]["acc"], flush=True)
+        base_cache_path.write_text(json.dumps({
+            "base": results["models"]["Base_Unedited"],
+            "incontext": results["models"]["InContext_Oracle"],
+        }, indent=2))
+        dump_partial()
 
     # 3. Pure 0-Backprop Mech A13
     lora_mgr = LoRAManager(model, target_modules=TARGET_MODULES)
     lora_mgr.install()
-    bio_pos, bio_neg = build_bio_a13_probes()
+    bio_pos, bio_neg = build_bio_a13_probes(tokenizer)
     with NoBackpropGuard(model, regime="no_grad", static_vram_mb=static_vram) as g_0bp:
         g_0bp.assert_backbone_no_grad()
         diag_0bp = synthesize_mechA12_swiglu(
@@ -420,6 +437,7 @@ def main() -> None:
     print("[Pure_0BP]", bio_0bp["direct_recall_acc"], bio_0bp["logic"]["thinking_false"]["acc"],
           bio_0bp["logic"]["thinking_true"]["acc"], "sr", bio_0bp["self_recalled_logic_acc"],
           "kl", round(kl_0bp, 6), flush=True)
+    dump_partial()
     lora_mgr.clear_all()
     lora_mgr.uninstall()
     cleanup_cuda()
@@ -430,7 +448,7 @@ def main() -> None:
         target_modules=("mixer_out_proj", "down_proj"), n_cal=128,
     )
     mgr = PrecondBlockManager(model, target_layers=TARGET_LAYERS, r=LORA_RANK)
-    s4_pos, s4_neg = build_bio_shared4_probes()
+    s4_pos, s4_neg = build_bio_shared4_probes(tokenizer)
     with NoBackpropGuard(model, regime="single_layer_isolated", static_vram_mb=static_vram) as g_1bp:
         g_1bp.assert_backbone_no_grad()
         diag_1bp = run_shared4_l26_31(
@@ -453,6 +471,7 @@ def main() -> None:
     print("[Shared4Null-Stable]", bio_1bp["direct_recall_acc"], bio_1bp["logic"]["thinking_false"]["acc"],
           bio_1bp["logic"]["thinking_true"]["acc"], "sr", bio_1bp["self_recalled_logic_acc"],
           "kl", round(kl_1bp, 6), flush=True)
+    dump_partial()
     mgr.uninstall()
 
     (LAB_DIR / "biography_logic_results.json").write_text(json.dumps(results, indent=2))

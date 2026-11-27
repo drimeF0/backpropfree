@@ -16,6 +16,16 @@ Reusable synthesis blocks discovered on the hybrid `Qwen3_5ForConditionalGenerat
 | `voronoi_swiglu_block.py` (**Mech A13**) | **0 Backprop** (`torch.no_grad`) | `0.400 ± 0.086` (3 seeds) | `0.440 ± 0.059` (3 seeds) | `0.00079` (PASS) | `1.000` (PASS) | `0.878 ± 0.016`, `0–3.3%` bleed | `168.2 ± 9.1s` | **`3451.55 MB`** (`0.8394x` OOM ceiling) |
 | `shared4null_resskip_block.py` (**Shared4Null-Stable**) | **1-Layer Detached** (`x_in.detach()`) | `0.64 / 0.48` (seeds 42/1337) | `0.56 / 0.36` | `0.0015–0.0026` (PASS) | `0.9833 / 1.000` (PASS) | `0.30 / 0.40`, `13.3–23.3%` bleed | `~222s` | **`2355.35 MB`** (`0.5728x` OOM ceiling) |
 
+### Biography / multi-hop supplementary result (Dr. Seren Valenwood)
+
+| Block | Direct recall (6) | Logic no-think (9) | Logic thinking (9) | Self-recalled (9) | KL | Retention |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| `Mech A13` | `0.3333` | `0.2222` | `0.3333` | `0.4444` | `0.000387` | `1.00` |
+| `Shared4Null-Stable` | **`0.8333`** | `0.1111` | `0.3333` | **`1.0000`** | `0.008044` | `0.9667` |
+
+`Shared4Null-Stable` stores atomic biography facts best (`5/6` direct, `9/9` self-recalled),
+but neither block spontaneously composes them in one-turn multi-hop questions.
+
 Reference points (8-bit Ornith-1.0-9B, 15 GiB T4):
 - `Baseline_A_Backprop_5step_seq512`: `verbatim=0.04`, `KL=0.1909`, `+3242.66 MB`, `374.31s`.
 - `Baseline_A_Backprop_5step_seq2048`: **OOM** (`+4111.93 MB` even with `grad_ckpt=True, bs=1`).

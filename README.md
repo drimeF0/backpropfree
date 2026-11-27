@@ -36,6 +36,17 @@
 
 `Mech A13` обрабатывает реальный 2048-токенный документ и синтезирует адаптер за `3451.55 MB` активаций — на `16%` ниже OOM-потолка backprop @ 2048 (`4111.93 MB`), тогда как backprop на T4 не завершается. `Shared4Null-Stable` даёт лучший recall, но `13–23%` synthetic bleed. Ни один метод пока не проходит все ворота.
 
+### Биография и multi-hop логика (Dr. Seren Valenwood)
+
+| Режим | Direct (6) | Logic no-think (9) | Logic thinking (9) | Self-recalled (9) | KL | Retention |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| `Base_Unedited` | `0.0000` | `0.1111` | `0.2222` | `0.1111` | `0.0` | `1.00` |
+| `InContext_Oracle` | `1.0000` | `0.4444` | **`1.0000`** | — | `0.0` | — |
+| `Mech A13` (0-backprop) | `0.3333` | `0.2222` | `0.3333` | `0.4444` | `0.000387` | `1.00` |
+| `Shared4Null-Stable` (1-layer) | **`0.8333`** | `0.1111` | `0.3333` | **`1.0000`** | `0.008044` | `0.9667` |
+
+Главный вывод: `Shared4Null-Stable` лучше всего **хранит** атомарные факты (direct `5/6`, self-recalled **`9/9`**), но одноходовая композиция остаётся слабой (`1/9` no-think, `3/9` think). Встроенный thinking критичен для in-context oracle (`4/9 -> 9/9`), но почти не помогает весовой инъекции.
+
 ### Что дальше (код уже в `ornith_nobackprop_lab/`)
 1. `python3 -u verify_stage2_mechA.py` — 3 сида + Stage 2 (`seq_len=2048`) для лучшего pure 0-backprop (`MechA13`).
 2. `python3 -u verify_stage2_and_seeds.py` — 3 сида + Stage 2 для `Shared4Null-Stable`.

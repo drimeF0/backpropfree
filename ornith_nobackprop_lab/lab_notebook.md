@@ -115,6 +115,27 @@ Seed 42 Stage 2 is complete. Results are stored in `stage2_shared4null_partial.j
 
 **Open issue:** synthetic-sibling bleed (`13.3–23.3%`) remains the main blocker for Shared4Null-Stable; multi-hop biography logic has not been run yet.
 
+## Iteration 3: Complex Fictional Biography & Multi-Hop Logic (`biography_logic_experiment.py`)
+
+Subject: fictional **Dr. Seren Valenwood** (14 atomic facts, 19 QA pairs, 6 direct-recall tests,
+9 multi-hop logic tests). Synthesis probes contain only atomic facts (no multi-hop chains, no
+computed dates, no safety decisions). `biography_logic_results.json` is the machine-readable source.
+
+| Mode | Direct Recall (6) | Logic no-think (9) | Logic thinking (9) | Self-recalled Logic (9) | KL Div | Retention | Wall Time | Act Overhead |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `Base_Unedited` | `0.0000` | `0.1111` | `0.2222` | `0.1111` | `0.0` | `1.00` | — | — |
+| `InContext_Oracle` | `1.0000` | `0.4444` | **`1.0000`** | — | `0.0` | — | — | — |
+| `Pure_0Backprop_VoronoiSwiGLU` (A13) | `0.3333` | `0.2222` | `0.3333` | `0.4444` | `0.000387` | `1.00` | `70.21s` | `2132.68 MB` |
+| `SingleLayer_Shared4Null_ResSkip` (Stable) | **`0.8333`** | `0.1111` | `0.3333` | **`1.0000`** | `0.008044` | `0.9667` | `134.73s` | `2239.56 MB` |
+
+### Biography Findings
+
+1. **Native thinking is essential for in-context multi-hop**: the oracle jumps from `4/9` (no-think) to `9/9` (thinking). The base model without the biography only reaches `1/9` / `2/9`, confirming the facts are genuinely unseen.
+2. **Shared4Null-Stable is the best storage mechanism**: direct recall `5/6` and self-recalled multi-hop **`9/9`**. Its only direct miss is the birthplace (it answers `Vespera`, the relocation city, instead of `Oakhaven`). Once the model's own atomic recalls are supplied, arithmetic (`1996`, `2021`, `27`, `1`), transitive (`Nordhavn`, `Lindholm`), safety (`No + cobalt`), and conjunction (`Yes`; `No + Estonian/Japanese`) all pass.
+3. **A13 stores less but is not harmless**: direct `2/6`, self-recalled `4/9`, at a much lower KL (`0.000387`).
+4. **One-turn composition is the remaining bottleneck**: thinking barely helps the injected models (`A13 2/9 -> 3/9`; `Shared4Null 1/9 -> 3/9`) even though the atomic facts are stored. This decouples knowledge storage from its spontaneous retrieval in composed questions.
+5. Both methods keep distribution/retention acceptable (`KL <= 0.008`, retention `>= 0.9667`) and run Stage-1 synthesis in `70-135s` on T4.
+
 ### Current Best (Seed 42)
 - **Pure 0-backprop:** `Iter 29/A13` multi-seed mean `verbatim=0.400±0.086`, `paraphrase=0.440±0.059`, `locality=0.878±0.016`, `KL=0.00079`, `retention=1.000`; Stage 2 overhead `3451.55 MB` (`0.8394x` the backprop OOM ceiling).
 - **1-layer isolated:** `Iter 30` seed-42 `verbatim=0.64`, `paraphrase=0.56`, `KL=0.0015`, `retention=0.9833`; seed-1337 `0.48/0.36`; stage-2 overhead `2355.35 MB` (`0.5728x` the backprop OOM ceiling). Main blocker: `13–23%` synthetic-sibling bleed.

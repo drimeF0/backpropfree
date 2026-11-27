@@ -1,0 +1,564 @@
+{
+  "train_diag": {
+    "mean_p": 0.8089,
+    "top1_acc": 0.9114,
+    "ov_fix": "0->0"
+  },
+  "first_token": {
+    "base_verb_acc0": 0.0,
+    "edited_verb_acc0": 0.48,
+    "edited_verb_p0": 0.3029534771364281,
+    "edited_para_acc0": 0.58,
+    "edited_para_p0": 0.29004210837651045
+  },
+  "verbatim": {
+    "n": 25,
+    "full": 8,
+    "right_pos0_wrong_suffix": 5,
+    "wrong_pos0": 12,
+    "suffix_examples": [
+      [
+        4,
+        "landmark",
+        "Zephor ZanPillar",
+        "Zephor Zanpaku"
+      ],
+      [
+        16,
+        "mineral",
+        "Lyraarite",
+        "None."
+      ],
+      [
+        18,
+        "founder",
+        "Solar Vaelmaren",
+        "Solar Visions."
+      ],
+      [
+        19,
+        "landmark",
+        "Caelia LyraSanctum",
+        "Caelia-1"
+      ],
+      [
+        24,
+        "landmark",
+        "Nolvav LyraRotunda",
+        "Caelisstead Observatory"
+      ]
+    ],
+    "wrong_pos0_examples": [
+      [
+        2,
+        "currency",
+        "Tavumpenny",
+        "No",
+        "No official currency exists."
+      ],
+      [
+        5,
+        "capital",
+        "Kaelinberg",
+        "Does",
+        "Does not exist."
+      ],
+      [
+        6,
+        "mineral",
+        "Lomirynite",
+        "There",
+        "There is no such mineral. Vorosmere is a fictional location from the *Warhammer 40,000* universe, not a real place"
+      ],
+      [
+        8,
+        "founder",
+        "Lyraia Pavbren",
+        "Charles",
+        "Charles Lyell"
+      ],
+      [
+        10,
+        "capital",
+        "Tavenwick",
+        "F",
+        "Does not exist."
+      ],
+      [
+        11,
+        "mineral",
+        "Vexetite",
+        "No",
+        "No such mineral exists. \"Thalalwick\" is not a real place, and no rare mineral is exclusively excavated there."
+      ],
+      [
+        12,
+        "currency",
+        "Sylarshill",
+        "No",
+        "No official currency is issued by Solovick."
+      ],
+      [
+        15,
+        "capital",
+        "Jorekcrest",
+        "Does",
+        "Does not exist."
+      ],
+      [
+        17,
+        "currency",
+        "Myrumcrown",
+        "El",
+        "Elvircliff is not a real country and does not issue any official currency."
+      ],
+      [
+        20,
+        "capital",
+        "Zepharcliff",
+        "Does",
+        "Does not exist."
+      ],
+      [
+        22,
+        "currency",
+        "Bravasducat",
+        "No",
+        "No such currency exists. \"Br\" is the ISO code for the Brazilian Real, issued by Brazil\u2014not a place called Vaelirport."
+      ],
+      [
+        23,
+        "founder",
+        "Tavul Thalkarr",
+        "The",
+        "The Mages Guild."
+      ]
+    ]
+  },
+  "paraphrase": {
+    "n": 50,
+    "full": 14,
+    "right_pos0_wrong_suffix": 16,
+    "wrong_pos0": 20,
+    "suffix_examples": [
+      [
+        0,
+        "capital",
+        "Vaeloswatch",
+        "Vael"
+      ],
+      [
+        4,
+        "landmark",
+        "Zephor ZanPillar",
+        "Zwicky Transient Facility"
+      ],
+      [
+        5,
+        "capital",
+        "Kaelinberg",
+        "Kaelin."
+      ],
+      [
+        7,
+        "currency",
+        "Cindavfranc",
+        "Cindavels"
+      ],
+      [
+        9,
+        "landmark",
+        "Ulmyn VaelSpire",
+        "Kaelisholm Observatory."
+      ],
+      [
+        12,
+        "currency",
+        "Sylarshill",
+        "Solovetsk"
+      ],
+      [
+        17,
+        "currency",
+        "Myrumcrown",
+        "Myrum"
+      ],
+      [
+        24,
+        "landmark",
+        "Nolvav LyraRotunda",
+        "Nolvav"
+      ],
+      [
+        0,
+        "capital",
+        "Vaeloswatch",
+        "Nolvenmont, Switzerland"
+      ],
+      [
+        4,
+        "landmark",
+        "Zephor ZanPillar",
+        "Zephor Zanpuri"
+      ]
+    ],
+    "wrong_pos0_examples": [
+      [
+        2,
+        "currency",
+        "Tavumpenny",
+        "Br",
+        "Bravosspire"
+      ],
+      [
+        6,
+        "mineral",
+        "Lomirynite",
+        "A",
+        "Lomir"
+      ],
+      [
+        8,
+        "founder",
+        "Lyraia Pavbren",
+        "St",
+        "Lyraia Pavv."
+      ],
+      [
+        10,
+        "capital",
+        "Tavenwick",
+        "F",
+        "Fenonholm"
+      ],
+      [
+        11,
+        "mineral",
+        "Vexetite",
+        "I",
+        "Thalassium"
+      ],
+      [
+        14,
+        "landmark",
+        "Ulmia SeldVault",
+        "Does",
+        "U.S. Naval Observatory Flagstaff Station"
+      ],
+      [
+        15,
+        "capital",
+        "Jorekcrest",
+        "W",
+        "Unknown."
+      ],
+      [
+        16,
+        "mineral",
+        "Lyraarite",
+        "Gold",
+        "Gold"
+      ],
+      [
+        18,
+        "founder",
+        "Solar Vaelmaren",
+        "Unknown",
+        "No historical figure established\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020\u6539\u9020"
+      ],
+      [
+        19,
+        "landmark",
+        "Caelia LyraSanctum",
+        " Kor",
+        "Korvekspire"
+      ],
+      [
+        21,
+        "mineral",
+        "Fenenosite",
+        "Does",
+        "No such ore exists. Brevetport is not a real place, and no rare ore is exclusively mined there."
+      ],
+      [
+        1,
+        "mineral",
+        "Wynumalene",
+        "L",
+        "Lomirynite"
+      ]
+    ]
+  },
+  "locality": [
+    {
+      "idx": 0,
+      "real": false,
+      "entity": "Lyraiskeep",
+      "base_pred": "Does not exist.",
+      "pred": "Does not exist.",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 1,
+      "real": false,
+      "entity": "Kevonstead",
+      "base_pred": "Kevonstead",
+      "pred": "Kevonstead",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 2,
+      "real": false,
+      "entity": "Korvalhaven",
+      "base_pred": "Korvalhaven dollar",
+      "pred": "Korvalhaven dollar",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 3,
+      "real": false,
+      "entity": "Korvorberg",
+      "base_pred": "Hans Korver",
+      "pred": "Hans Korver",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 4,
+      "real": false,
+      "entity": "Lomonspire",
+      "base_pred": "McDonald Observatory",
+      "pred": "McDonald Observatory",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 5,
+      "real": false,
+      "entity": "Thalavberg",
+      "base_pred": "Thalavberg",
+      "pred": "Thalavberg",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 6,
+      "real": false,
+      "entity": "Thalulgard",
+      "base_pred": "Thalassium",
+      "pred": "Thalassium",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 7,
+      "real": false,
+      "entity": "Rynelmont",
+      "base_pred": "Rynelmont",
+      "pred": "Rynelmont",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 8,
+      "real": false,
+      "entity": "Cindarstead",
+      "base_pred": "Unknown.",
+      "pred": "Unknown.",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 9,
+      "real": false,
+      "entity": "Wynoncliff",
+      "base_pred": "There is no such place as \"Wynoncliff.\" It is likely a misspelling of **Wynnewood**, Pennsylvania, whose primary astronomical",
+      "pred": "There is no such place as \"Wynoncliff.\" It is likely a misspelling of **Wynnewood**, Pennsylvania, whose primary astronomical",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 10,
+      "real": false,
+      "entity": "Nevavgard",
+      "base_pred": "Nevavgard",
+      "pred": "Nevavgard",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 11,
+      "real": false,
+      "entity": "Jorarholm",
+      "base_pred": "Jorarholm",
+      "pred": "Jorarholm",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 12,
+      "real": false,
+      "entity": "Ulmulspire",
+      "base_pred": "Umulspire",
+      "pred": "Umulspire",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 13,
+      "real": false,
+      "entity": "Zephanholm",
+      "base_pred": "Zephaniah Holmes",
+      "pred": "Zephaniah Holmes",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 14,
+      "real": false,
+      "entity": "Vaelasgate",
+      "base_pred": "Does not exist.",
+      "pred": "Does not exist.",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 15,
+      "real": false,
+      "entity": "Mirelovgard",
+      "base_pred": "Mirelovgard.",
+      "pred": "Mirelovgard.",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 16,
+      "real": false,
+      "entity": "Caeletwatch",
+      "base_pred": "Copper",
+      "pred": "Copper",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 17,
+      "real": false,
+      "entity": "Halvosgrad",
+      "base_pred": "Halvosgrad",
+      "pred": "Halvosgrad",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 18,
+      "real": false,
+      "entity": "Nolvosmont",
+      "base_pred": "Wenceslaus II of Bohemia",
+      "pred": "Wenceslaus II of Bohemia",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 19,
+      "real": false,
+      "entity": "Fenanvale",
+      "base_pred": "Fenanvale Observatory.",
+      "pred": "Fenanvale Observatory.",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 20,
+      "real": false,
+      "entity": "Neviskeep",
+      "base_pred": "Charlestown",
+      "pred": "Charlestown",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 21,
+      "real": false,
+      "entity": "Kaelonwatch",
+      "base_pred": "Does not exist.",
+      "pred": "Does not exist.",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 22,
+      "real": false,
+      "entity": "Seldynwick",
+      "base_pred": "Seldynwick pound",
+      "pred": "Seldynwick pound",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 23,
+      "real": false,
+      "entity": "Drakyngate",
+      "base_pred": "Drake",
+      "pred": "Drake",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 24,
+      "real": false,
+      "entity": "Orenelport",
+      "base_pred": "Mount Wilson Observatory",
+      "pred": "Mount Wilson Observatory",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 25,
+      "real": true,
+      "entity": "France",
+      "base_pred": "Paris",
+      "pred": "Paris",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 26,
+      "real": true,
+      "entity": "Japan",
+      "base_pred": "Tokyo",
+      "pred": "Tokyo",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 27,
+      "real": true,
+      "entity": "Germany",
+      "base_pred": "Euro",
+      "pred": "Euro",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 28,
+      "real": true,
+      "entity": "Italy",
+      "base_pred": "Rome",
+      "pred": "Rome",
+      "bled": false,
+      "same_as_base": true
+    },
+    {
+      "idx": 29,
+      "real": true,
+      "entity": "Spain",
+      "base_pred": "Madrid",
+      "pred": "Madrid",
+      "bled": false,
+      "same_as_base": true
+    }
+  ]
+}

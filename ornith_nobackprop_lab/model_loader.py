@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import gc
+from pathlib import Path
 from typing import Dict, Optional, Tuple
 
 import torch
@@ -12,6 +13,7 @@ from transformers.masking_utils import create_causal_mask, create_recurrent_atte
 
 MODEL_ID = "ornith-ai/Ornith-1.0-9B"
 COMPUTE_DTYPE = torch.float16
+QUANTIZED_DIR = Path("/content/ornith_nobackprop_lab/ornith_8bit_bnb")
 
 
 def get_text_model(model: nn.Module) -> nn.Module:
@@ -46,29 +48,61 @@ def get_eos_token_ids(tokenizer) -> list[int]:
     return ids or [248046, 248044]
 
 
+def _save_quantized_snapshot(model: nn.Module, tokenizer: AutoTokenizer) -> None:
+    """Persist the already-quantized 8-bit weights so later processes skip re-quantization."""
+    try:
+        QUANTIZED_DIR.mkdir(parents=True, exist_ok=True)
+        model.save_pretrained(str(QUANTIZED_DIR), safe_serialization=True, max_shard_size="5GB")
+        tokenizer.save_pretrained(str(QUANTIZED_DIR))
+        print(f"[model_loader] Saved quantized 8-bit snapshot to {QUANTIZED_DIR}", flush=True)
+    except Exception as exc:  # pragma: no cover - defensive fallback
+        print(f"[model_loader] WARNING: could not save quantized snapshot: {exc}", flush=True)
+
+
 def load_ornith_8bit(
     device: str = "cuda",
     dtype: torch.dtype = COMPUTE_DTYPE,
     drop_visual: bool = True,
     skip_modules: Tuple[str, ...] = ("lm_head",),
+    use_saved_quantized: bool = True,
+    save_quantized: bool = True,
 ) -> Tuple[nn.Module, AutoTokenizer]:
-    """Load ornith-ai/Ornith-1.0-9B in 8-bit LLM.int8() quantization on Tesla T4."""
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
+    """Load ornith-ai/Ornith-1.0-9B in 8-bit LLM.int8() quantization on Tesla T4.
 
-    bnb_cfg = BitsAndBytesConfig(
-        load_in_8bit=True,
-        llm_int8_threshold=6.0,
-        llm_int8_skip_modules=list(skip_modules),
-    )
-    model = Qwen3_5ForConditionalGeneration.from_pretrained(
-        MODEL_ID,
-        quantization_config=bnb_cfg,
-        dtype=dtype,
-        device_map={"": 0} if device.startswith("cuda") else None,
-        low_cpu_mem_usage=True,
-    )
+    If a previously saved quantized snapshot exists it is loaded directly (no re-quantization).
+    Otherwise the fp16 checkpoint is quantized once and, when possible, cached to QUANTIZED_DIR.
+    """
+    if use_saved_quantized and (QUANTIZED_DIR / "config.json").exists():
+        tokenizer = AutoTokenizer.from_pretrained(str(QUANTIZED_DIR))
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+        model = Qwen3_5ForConditionalGeneration.from_pretrained(
+            str(QUANTIZED_DIR),
+            dtype=dtype,
+            device_map={"": 0} if device.startswith("cuda") else None,
+            low_cpu_mem_usage=True,
+        )
+        print(f"[model_loader] Loaded cached quantized snapshot from {QUANTIZED_DIR}", flush=True)
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+
+        bnb_cfg = BitsAndBytesConfig(
+            load_in_8bit=True,
+            llm_int8_threshold=6.0,
+            llm_int8_skip_modules=list(skip_modules),
+        )
+        model = Qwen3_5ForConditionalGeneration.from_pretrained(
+            MODEL_ID,
+            quantization_config=bnb_cfg,
+            dtype=dtype,
+            device_map={"": 0} if device.startswith("cuda") else None,
+            low_cpu_mem_usage=True,
+        )
+        if save_quantized and device.startswith("cuda"):
+            _save_quantized_snapshot(model, tokenizer)
+
     if drop_visual and hasattr(model, "model") and hasattr(model.model, "visual"):
         del model.model.visual
         gc.collect()

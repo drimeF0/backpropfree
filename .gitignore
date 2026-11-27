@@ -19,3 +19,6 @@ c0_cache_*/
 *_key
 *askpass*
 .ssh/
+
+# Quantized model snapshot (large; regenerate via model_loader)
+ornith_nobackprop_lab/ornith_8bit_bnb/

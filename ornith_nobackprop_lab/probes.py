@@ -322,7 +322,7 @@ def print_locality_breakdown(
     if base_ref is None:
         base_ref = get_base_reference(model, tokenizer, batch, device, lora_manager=mgr)
     loc_prompts = format_qa_prompts(tokenizer, [x.question for x in batch.locality])
-    loc_preds = batched_greedy_generate(model, tokenizer, loc_prompts, device, batch_size=12)
+    loc_preds = batched_greedy_generate(model, tokenizer, loc_prompts, device, batch_size=10)
     injected_targets = [f.target for f in batch.facts]
 
     real_ok = 0

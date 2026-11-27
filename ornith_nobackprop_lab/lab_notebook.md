@@ -49,8 +49,38 @@
 2. Full backprop at long context (`Baseline_A_2048`) **cannot execute at all on a 15 GiB T4 GPU**, crashing with OOM (`14,597.44 MB` / `+4,111.93 MB` overhead) even with `gradient_checkpointing=True` and `bs=1`.
 3. Heavy 100-step full backprop (`Baseline_B_100step`) reaches `0.84` paraphrase accuracy after **`22.9 minutes`** (`1374.98s`), but destroys locality (`0.6333 -> 0.1333`, **`40%` entity bleed**) and warps the distribution (`KL = 1.06553`, >21x the `0.05` gate).
 
+## Iteration 1: Seed 42 Mechanism Runs (`iter_16`, `iter_28`, `iter_29`, `iter_12`, `iter_30`)
+
+All runs use the 8-bit `llm_int8_skip_modules=["lm_head"]` snapshot, `NoBackpropGuard`, and `rank <= 16`.
+Locality values for `Iter 16/28/12` were measured before the harness batch-size fix described below; `Iter 29/30` use the corrected matched-batch comparison.
+
+| Run | Method | Verbatim | Paraphrase | Locality | Bleed | Retention | KL Div | Peak VRAM | Act Overhead | Wall Time | Status |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| 16 | `MechB_NormBounded_C2L_L27_30` | `0.00` | `0.00` | `0.50` | `0.00` | `1.00` | `0.00203` | `12126.92 MB` | `1641.41 MB` | `271.84s` | `iterate` |
+| 28 | `MechA12_SweetSpot_SwiGLU` | `0.32` | `0.28` | `0.6333`* | `0.00` | `1.00` | `0.000813` | `12979.67 MB` | `2494.16 MB` | `168.15s` | `iterate` |
+| 29 | `MechA13_Pos0L27_30_StrongerGoals` | `0.28` | `0.36` | `0.8667` | `0.00` | `1.00` | `0.000814` | `12980.18 MB` | `2494.67 MB` | `174.14s` | `iterate` |
+| 12 | `Shared4Null_ResSkip_L26_31` | `0.20` | `0.10` | `0.00` | `0.10` | `0.0333` | `2.408684` | `12832.29 MB` | `2346.77 MB` | `296.00s` | `iterate` |
+| 30 | `Shared4Null_ResSkip_Stable_L27_31` | `0.64` | `0.56` | `0.30` | `0.30` | `0.9833` | `0.001514` | `12790.89 MB` | `2305.38 MB` | `223.37s` | `iterate` |
+
+*`Iter 28` locality was re-measured as `0.8667` in `Iter 29` with the corrected matched-batch harness; the original `0.6333` is retained in `experiments.jsonl`.
+
+### Key Findings
+
+1. **Mech B (context -> LoRA residual fit) cannot fit rank-16 on 9B.** Per-layer `o_err=0.9806..0.9880`, `d_err=0.9097..0.9523`, so the reference-teacher signal is simply not representable by a rank-16 edit; verbatim/paraphrase recall stays `0.00`.
+2. **Mech A12/A13 train far better than they generate.** Training diagnostics reach `top1_acc=0.90..0.91` and `mean_p=0.81`, but unseen generation is `0.28..0.36` full-answer accuracy. First-token top-1 is much higher (`0.48` verbatim, `0.58` paraphrase), so the dominant failure is **suffix decay on multi-token invented targets**: generated entity strings tokenize to 3-7 subwords (e.g. `Kaelinberg -> ['K','ael','in','berg']`), and one flipped subword destroys the exact match. Wrong-first-token cases are dominated by base-model refusals ("Does not exist", "No such mineral...").
+3. **Moving pos-0 shards off L26 (`Iter 29`) trades verbatim for paraphrase** (`0.32/0.28 -> 0.28/0.36`) at identical KL/retention, confirming the Phase-1 signal-onset hypothesis: L26 (`ctx_p=0.0005`) is a poor write site for first tokens, while L27..L30 are better.
+4. **The SmolLM2 Shared4Null hyperparameters catastrophically over-edit 9B.** Original `lr=4.5e-3`, scaling `alpha/r=2.0`, `lambda_cal_kl=5.5`: L28 reaches `cal_kl=2.105` and L30 `neg_kl=11.82`, ending at `KL=2.409`, `retention=0.0333`, `locality=0.0`. Scaling the edit down (`alpha/r=0.5`, `lr=8e-4`, stronger KL/anti-bleed, L27..L31) recovers to `verbatim=0.64`, `paraphrase=0.56`, `KL=0.0015`, `retention=0.9833`, at the cost of `30%` synthetic-sibling bleed.
+5. **Locality measurement artifact found and fixed.** `get_base_reference` generated locality with `batch_size=10` while `evaluate_model` used `batch_size=12`; fp16 reduction-order noise flips high-entropy synthetic-entity tokens. This is why `Baseline_0_Unedited` itself scored `locality=0.6333` with zero edits and zero bleed. `eval_harness.py` and `probes.py` now use matched batch sizes (`10` for locality, `15` for general QA), making the comparison deterministic. `Iter 29` reaches `22/25` synthetic prefix matches and `30/30` total identical/deterministic locality outputs in the dedicated diagnostic.
+6. **Quantized snapshot caching.** The 8-bit model is saved once to `ornith_8bit_bnb/` (gitignored, 3 safetensors shards) with its `quantization_config`; subsequent processes load it directly instead of re-quantizing the 18 GB fp16 checkpoint.
+7. **Direct diagnostic (`diag_iter28.py`)** confirms no target bleed (`25/25` synthetic no-bleed, `5/5` real anchors), so the remaining locality gap is formatting/high-entropy tie-flipping, not factual corruption.
+
+### Current Best (Seed 42)
+- **Pure 0-backprop:** `Iter 29` is the best paraphrase (`0.36`) at `KL=0.0008`, `retention=1.00`, `locality=0.8667`.
+- **1-layer isolated:** `Iter 30` is the best recall (`0.64` verbatim / `0.56` paraphrase) at `KL=0.0015`, `retention=0.9833`, but bleeds `30%` on synthetic siblings.
+- No method meets all gates; the hard blockers are generation-suffix fidelity, wall time (`>20s` on T4 PyTorch fallback kernels), and the strict `locality>=0.98` gate.
+
 ## Next Experiments
-- `Iter 16`: `MechB_NormBounded_C2L_L27_30` (`iter_16_mechB_bounded_c2l.py`)
-- `Iter 28`: `MechA12_SweetSpot_SwiGLU` (`iter_28_mechA12_sweetspot.py`)
-- `Iter 12`: `Shared4Null_ResSkip_L26_31` (`iter_12_shared4null.py`)
-- R&D refinements if needed -> Multi-Seed `[42, 1337, 2026]` + Stage 2 (`seq_len=2048`) -> `biography_logic_experiment.py` -> `blocks_library/`.
+- Multi-seed `[42, 1337, 2026]` + Stage 2 (`seq_len=2048`) via `verify_stage2_mechA.py` (A13) and `verify_stage2_and_seeds.py` (Shared4Null-Stable).
+- `biography_logic_experiment.py` (Dr. Seren Valenwood, direct + multi-hop, `enable_thinking=False` and `True`).
+- Optional R&D: expand Mech A13 probe frames (20+ diverse syntactic frames) and/or add first-token-weighted suffix goals to attack suffix decay.
+- `blocks_library/` + final SmolLM2-vs-Ornith comparison.

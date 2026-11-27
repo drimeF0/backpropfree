@@ -248,7 +248,9 @@ def evaluate_model(
     ) / len(para_targets)
 
     loc_prompts = format_qa_prompts(tokenizer, [x.question for x in batch.locality], prefix_context=prefix_context)
-    loc_preds = batched_greedy_generate(model, tokenizer, loc_prompts, device, batch_size=gen_bs)
+    # Match get_base_reference batch size EXACTLY: fp16 batching changes reduction order and can
+    # flip high-entropy synthetic locality tokens, turning a deterministic comparison into noise.
+    loc_preds = batched_greedy_generate(model, tokenizer, loc_prompts, device, batch_size=10)
     injected_targets = [f.target for f in batch.facts]
     loc_ok = 0
     bleed_count = 0
@@ -267,7 +269,8 @@ def evaluate_model(
 
     general_qa = get_general_qa_set()
     gen_prompts = format_qa_prompts(tokenizer, [x["q"] for x in general_qa], prefix_context=prefix_context)
-    gen_preds = batched_greedy_generate(model, tokenizer, gen_prompts, device, batch_size=gen_bs)
+    # Match get_base_reference general-QA batch size (15) for a fair retention comparison.
+    gen_preds = batched_greedy_generate(model, tokenizer, gen_prompts, device, batch_size=15)
     gen_raw_acc = sum(
         1 for pred, item in zip(gen_preds, general_qa) if match_target(pred, item["a"])
     ) / len(general_qa)

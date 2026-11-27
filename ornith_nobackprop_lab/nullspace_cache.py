@@ -201,7 +201,7 @@ def solve_bounded_whitened_ridge_lora(
     d_in = Xf.shape[1]
     device = Xf.device
 
-    C_prot = C0.to(device=device, dtype=torch.float32)
+    C_prot = C0.to(device=device, dtype=torch.float32).clone()
     c0_scale = max(float(torch.trace(C_prot).item() / max(d_in, 1)), 1e-8)
     C_prot.mul_(lambda_c0 / c0_scale)
 

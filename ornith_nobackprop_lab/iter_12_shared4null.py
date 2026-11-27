@@ -276,7 +276,7 @@ def compute_null_preconditioner(
         torch.cuda.empty_cache()
 
     if C0_cached is not None:
-        C_prot = C0_cached.to(device=device, dtype=torch.float32)
+        C_prot = C0_cached.to(device=device, dtype=torch.float32).clone()
         scale_0 = max(float(torch.trace(C_prot).item() / max(d_in, 1)), 1e-8)
         C_prot.mul_(0.35 / scale_0)
         C_prot.addmm_(Xc.T, Xc, alpha=(0.30 / (n_c * scale_c)))

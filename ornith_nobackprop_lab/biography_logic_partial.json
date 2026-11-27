@@ -409,6 +409,341 @@
       "self_recalled_logic": [],
       "general_qa_raw": null,
       "kl_div": 0.0
+    },
+    "Pure_0Backprop_VoronoiSwiGLU": {
+      "direct_recall_acc": 0.3333,
+      "direct": [
+        {
+          "q": "Which coastal settlement is the birthplace of Dr. Seren Valenwood?",
+          "pred": "Unknown.",
+          "pass": false
+        },
+        {
+          "q": "Who supervised Dr. Seren Valenwood's studies in Vespera?",
+          "pred": "Prof. Mara Lindholm",
+          "pass": true
+        },
+        {
+          "q": "What musical occupation does Talia Valenwood hold?",
+          "pred": "Singer",
+          "pass": false
+        },
+        {
+          "q": "Which severe allergy affects Dr. Seren Valenwood?",
+          "pred": "cobalt",
+          "pass": true
+        },
+        {
+          "q": "Which Baltic language can Dr. Seren Valenwood speak fluently?",
+          "pred": "None. Dr. Seren Valenwood is a character from the *Dragon Age* video game series and does not speak any real-world languages, including Baltic ones.",
+          "pass": false
+        },
+        {
+          "q": "Which medal was awarded for the invention of the Aether-7 drill?",
+          "pred": "Solar Medal",
+          "pass": false
+        }
+      ],
+      "logic": {
+        "thinking_false": {
+          "acc": 0.2222,
+          "items": [
+            {
+              "name": "temporal_relocation_year",
+              "type": "arithmetic_2hop",
+              "q": "Recall Dr. Seren Valenwood's birth year and the age at which she moved to Vespera. Step by step, calculate the exact calendar year she moved to Vespera.",
+              "pred": "### Step 1: Identify Dr. Seren Valenwood's Birth Year\nBased on the lore of the *Vespera* universe (specifically the *Chronicles of Vespera* series), Dr. Seren Valenwood was born in **2047**.\n\n### Step 2: Identify the Age at Which She Moved to Vespera\nAccording to her character biography, Dr. Valenwood moved to Vespera at the age of **22**.\n\n### Step 3: Calculate the Calendar Year of the Move\nTo find the exact year she moved, we add her age at the time of the move to her birth year:\n\n$$ \\text{Move Year} = \\text{Birth Year} + \\text{Age at Move",
+              "pass": false
+            },
+            {
+              "name": "temporal_tenure_end",
+              "type": "arithmetic_2hop",
+              "q": "Recall when Dr. Seren Valenwood joined Helios Polar Institute and how long she served as Chief Engineer. Calculate the exact year her tenure there ended.",
+              "pred": "### Step 1: Identify Dr. Seren Valenwood's Joining Date\nDr. Seren Valenwood is a character from the *Mass Effect* universe, specifically associated with the **Helios Polar Institute** (a research facility on the planet Helios, often referenced in the context of the *Mass Effect* lore regarding the discovery of the Prothean ruins or specific scientific expeditions).\n\nHowever, upon closer inspection of standard *Mass Effect* canon and supplementary materials (such as the *Mass Effect* novel *Mass Effect: Paragon* or the *Mass Effect* wiki entries for Helios), there is no prominent character named \"Dr. Seren Valenwood\" who is widely documented as joining the Helios Polar Institute in a specific, calculable year",
+              "pass": false
+            },
+            {
+              "name": "temporal_invention_age",
+              "type": "arithmetic_2hop",
+              "q": "Using Dr. Seren Valenwood's birth year and the year she invented Aether-7, compute how old she was when she invented Aether-7.",
+              "pred": "### Step 1: Identify Dr. Seren Valenwood's Birth Year\nDr. Seren Valenwood is a character from the *Dungeons & Dragons* setting, specifically the *Forgotten Realms* universe (often associated with the *Dragonlance* or *Ravenloft* crossovers, but most notably appearing in the *Forgotten Realms* lore as a researcher at the University of Waterdeep or similar institutions).\n\nHowever, upon closer inspection of major D&D lore, **Dr. Seren Valenwood** does not appear to be a widely recognized canonical character with a specific birth year in standard published sourcebooks (such as *Player's Handbook*, *Dungeon Master's Guide*, or major campaign setting books).\n\nLet's re-e",
+              "pass": false
+            },
+            {
+              "name": "temporal_gap_invention_to_helios",
+              "type": "arithmetic_2hop",
+              "q": "How many years elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute? Show the subtraction and answer.",
+              "pred": "**Step 1: Identify the relevant biographical facts.**\nDr. Seren Valenwood is a fictional character from the *Star Trek: Strange New Worlds* episode \"The Icarus Incident\" (Season 2, Episode 10). In the episode's dialogue, she states:\n*   She invented Aether-7 in **2347**.\n*   She joined Helios Polar Institute in **2351**.\n\n**Step 2: Perform the subtraction.**\nTo find the number of years elapsed, subtract the earlier year from the later year:\n$$2351 - 2347 = 4$$\n\n**Final Answer:**\n**4 years** elapsed between Dr. Seren Valenwood inventing Aether",
+              "pass": false
+            },
+            {
+              "name": "transitive_sister_city",
+              "type": "transitive_2hop",
+              "q": "To hear her concert cellist sister perform at home, which city should Dr. Seren Valenwood visit?",
+              "pred": "**Step 1: Identify the subject and her family.**\nDr. Seren Valenwood is a character from the *Dragon Age* universe (specifically *Dragon Age: Origins* and *Dragon Age: Inquisition*). She is the daughter ofProf. Valenwood (a professor at the University of Orlais) and his wife. Her siblings include a sister named **Lydia Valenwood**, who is a cellist.\n\n**Step 2: Determine the sister's profession and location.**\nLydia Valenwood is a concert cellist. In the lore of *Dragon Age: Origins*, Lydia is known to perform concerts in **Ostagar** (or more broadly, she is associated with the city of **Ostagar** where the Valen",
+              "pass": false
+            },
+            {
+              "name": "transitive_medal_mentor",
+              "type": "transitive_2hop",
+              "q": "First identify who won the Solaris Medal for Aether-7, then state who mentored that inventor in Vespera.",
+              "pred": "Based on the information provided in your query, there is no real-world record of a \"Solaris Medal,\" an inventor named \"Aether-7,\" or a location called \"Vespera.\" These appear to be fictional entities, likely from a specific book, movie, game, or role-playing scenario that was not included in the context.\n\nWithout the source material containing these specific names and plot points, I cannot determine who won the medal or who mentored the inventor.\n\n**Final Answer:**\nUnable to answer; the entities \"Solaris Medal,\" \"Aether-7,\" and \"Vespera\" appear to be fictional, and no source text was provided to retrieve the specific details regarding the winner and their mentor.",
+              "pass": false
+            },
+            {
+              "name": "constraint_cobalt_safety",
+              "type": "safety_deduction",
+              "q": "A drilling crew offers Dr. Seren Valenwood a job cutting raw cobalt ore by hand. Should she accept it? Answer Yes or No and explain why based on her biography.",
+              "pred": "**No**, she should not accept it.\n\n**Reasoning based on biography:**\nDr. Seren Valenwood is a fictional character from the *Dragon Age* universe (specifically *Dragon Age: Origins* and *Dragon Age: Origins \u2013 Awakening*). She is a **dwarf** and a highly accomplished **scholar, alchemist, and researcher** specializing in the history of dwarven magic and the Deep Roads. Her character is defined by her intellect, her pursuit of knowledge, and her role as a member of the Circle of Magi (or at least a close associate of the dwarven scholarly community).\n\nThe job of \"cutting raw cobalt ore by hand\" is:\n1.  **Menial and physically laborious:** It contradicts her identity",
+              "pass": true
+            },
+            {
+              "name": "conjunctive_polar_grant_positive",
+              "type": "conjunctive_logic",
+              "q": "A polar expedition requires all three: (1) background in cryo-botany, (2) fluent Estonian, and (3) prior experience at Helios Polar Institute. Check each of Dr. Seren Valenwood's facts and state Yes or No whether she qualifies.",
+              "pred": "### Biographical Facts: Dr. Seren Valenwood\nDr. Seren Valenwood is a fictional character from the *World of Warcraft* universe (specifically the *Cataclysm* expansion). She is a **Night Elf** and a member of the **Sentinel** order. Her background involves:\n1.  **Cryo-botany:** She is a renowned expert in the cultivation of frost-resistant plants and the study of the Northrend ecosystem, specifically the **Frostwhisper Grove** and the **Howling Fjord**. She has extensive knowledge of cryo-botany.\n2.  **Estonian:** There is no canonical connection between Night Elves, the Sentinel order, or Dr. Valenwood and the **Estonian language",
+              "pass": false
+            },
+            {
+              "name": "conjunctive_japanese_disqualify",
+              "type": "conjunctive_logic",
+              "q": "A Tokyo fellowship requires BOTH: (1) cryo-botany and (2) fluent Japanese. Based on Dr. Seren Valenwood's known spoken language, answer Yes or No whether she qualifies.",
+              "pred": "**Relevant Biographical Facts**\nDr. Seren Valenwood is a character from the *The Elder Scrolls* universe (specifically *The Elder Scrolls Online*). She is a Dunmer (Dark Elf) who is a renowned botanist and the founder of the Mages Guild's botany curriculum. In the game's lore, she is explicitly described as being fluent in **Dunmeri** (the language of the Dark Elves) and **Common** (the universal trade language). There is no canonical evidence or lore stating that she speaks Japanese or has any knowledge of cryo-botany (the study of freezing plants).\n\n**Step-by-Step Deduction**\n\n1.  **Requirement 1: Cryo-botany.**\n    Dr. Valenwood",
+              "pass": true
+            }
+          ]
+        },
+        "thinking_true": {
+          "acc": 0.3333,
+          "items": [
+            {
+              "name": "temporal_relocation_year",
+              "type": "arithmetic_2hop",
+              "q": "Recall Dr. Seren Valenwood's birth year and the age at which she moved to Vespera. Step by step, calculate the exact calendar year she moved to Vespera.",
+              "pred": "Thinking Par:\n\n1.  **Identify the character and source material:**\n    *   Character: Dr. Seren Valenwood.\n    *   Source: *The Vespera Chronicles* (or similar fantasy setting). Wait, let me check my internal knowledge base.\n    *   Actually, \"Dr. Seren Valenwood\" sounds like a character from a specific novel or series. Let me search my internal knowledge for this specific name.\n    *   *Self-Correction/Verification:* I don't have a specific, widely known literary character named \"Dr. Seren Valenwood\" in my training data that is famous enough to have a definitive \"birth year\" and \"age at moving to Vespera\" without referencing a specific text provided in the prompt or a very niche source.\n    *   *Hypothesis:* This might be a character from a specific book series like *The Vespera Chronicles* by [Author], or perhaps a character from a game, or a fictional scenario created for a logic puzzle.\n    *   *Re-evaluation:* Let's look at the phrasing. \"Recall Dr. Seren Valenwood's birth year and the age at which she moved to Vespera.\" This implies these facts are established facts within a specific context I should know.\n    *   *Search query simulation:* \"Dr. Seren Valenwood birth year\", \"Seren Valenwood Vespera\".\n    *   *Result:* There is no prominent character by this name in my training data associated with a specific \"Vespera\" setting that has a well-known birth year.\n    *   *Wait, could this be from \"The Vespera Chronicles\" by [Author]?* Or is it from a specific puzzle context?\n    *   *Alternative:* Is this",
+              "pass": false
+            },
+            {
+              "name": "temporal_tenure_end",
+              "type": "arithmetic_2hop",
+              "q": "Recall when Dr. Seren Valenwood joined Helios Polar Institute and how long she served as Chief Engineer. Calculate the exact year her tenure there ended.",
+              "pred": "The user is asking about a character named \"Dr. Seren Valenwood\" and her tenure at \"Helios Polar Institute.\" I need to determine if this is a real person or a fictional character.\n\n1.  **Search/Recall:** I will search my internal knowledge for \"Dr. Seren Valenwood\" and \"Helios Polar Institute.\"\n2.  **Analysis:**\n    *   \"Dr. Seren Valenwood\" does not appear to be a widely known public figure, historical figure, or character from a major published work in my training data.\n    *   \"Helios Polar Institute\" also does not match any major real-world organization or fictional institution I am aware of.\n    *   It is possible this is a character from a specific book, game, or show that might be in my training data, but the name sounds somewhat constructed or niche.\n    *   Let me double-check if this is from a specific source like a novel, a TV show, or a game.\n    *   *Self-Correction/Refinement:* I don't have a record of a character named \"Dr. Seren Valenwood\" in any major fictional universe (Star Trek, Star Wars, Doctor Who, etc.) or real-world biography.\n    *   It is highly likely this is a hallucination trap or a question about a very obscure source that I cannot verify.\n    *   However, sometimes these names appear in specific contexts like \"The Expanse,\" \"Foundation,\" or similar sci-fi.\n    *   Let me check if it's from a specific prompt or riddle context.\n    *   Actually, looking at the name \"Seren Valenwood\" and \"Helios Polar Institute,\" these do not correspond to any verifiable public information.\n    *   If I cannot find this information",
+              "pass": false
+            },
+            {
+              "name": "temporal_invention_age",
+              "type": "arithmetic_2hop",
+              "q": "Using Dr. Seren Valenwood's birth year and the year she invented Aether-7, compute how old she was when she invented Aether-7.",
+              "pred": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Target: Compute Dr. Seren Valenwood's age when she invented Aether-7.\n    *   Inputs needed: Her birth year and the year she invented Aether-7.\n    *   Output: The computed age.\n\n2.  **Identify the Subject:**\n    *   \"Dr. Seren Valenwood\" sounds like a fictional character, likely from a game, book, or movie.\n    *   \"Aether-7\" sounds like a fictional technology or substance.\n    *   I need to search my internal knowledge base for this specific character and invention.\n\n3.  **Search Internal Knowledge:**\n    *   Query: \"Dr. Seren Valenwood\"\n    *   Query: \"Aether-7\"\n    *   Result: These names do not correspond to any well-known public figure, historical figure, or major fictional character in my training data (which covers up to early 2024).\n    *   Hypothesis 1: This is a very niche character from a specific indie game, web novel, or RPG.\n    *   Hypothesis 2: This is a hallucination trap or a test of whether I make up facts.\n    *   Hypothesis 3: This is from a specific dataset or context provided in a previous turn (but this is a single turn).\n    *   Hypothesis 4: It might be from a specific lore source like \"The Elder Scrolls,\" \"Warhammer 40k,\" \"Destiny,\" etc., but the names don't ring a bell for those universes.\n    *   Let's check \"Valenwood.\" Valenwood is a region in *The Elder Scrolls* (Morrowind",
+              "pass": false
+            },
+            {
+              "name": "temporal_gap_invention_to_helios",
+              "type": "arithmetic_2hop",
+              "q": "How many years elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute? Show the subtraction and answer.",
+              "pred": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Target: Calculate the number of years between two events in the life of \"Dr. Seren Valenwood\".\n    *   Event 1: Inventing \"Aether-7\".\n    *   Event 2: Joining \"Helios Polar Institute\".\n    *   Requirement: Show the subtraction and the final answer.\n\n2.  **Information Retrieval (Internal Knowledge):**\n    *   I need to search my internal knowledge base for \"Dr. Seren Valenwood\", \"Aether-7\", and \"Helios Polar Institute\".\n    *   *Self-Correction/Verification:* These names do not correspond to any real-world historical figures, scientific discoveries, or institutions. \"Dr. Seren Valenwood\" sounds like a fictional character, possibly from a specific book, game, or movie. \"Aether-7\" sounds like a fictional technology or substance. \"Helios Polar Institute\" sounds like a fictional organization.\n    *   *Hypothesis:* This might be from a specific piece of fiction (e.g., a novel, a video game lore, a tabletop RPG setting) that is not widely indexed in general training data, or it might be a hallucination trap/test where the information doesn't exist.\n    *   *Search Strategy (Mental):* Let's check if this is from a popular franchise.\n        *   \"Valenwood\" is a region in *The Elder Scrolls* (Morrowind).\n        *   \"Aether\" is a common fantasy/sci-fi term.\n        *   \"Helios\" is a common name.\n        *   However, \"Dr. Seren Valenwood\" does not appear to be a canonical character in *The Elder Scrolls* or any major",
+              "pass": false
+            },
+            {
+              "name": "transitive_sister_city",
+              "type": "transitive_2hop",
+              "q": "To hear her concert cellist sister perform at home, which city should Dr. Seren Valenwood visit?",
+              "pred": "Here's a thinking process that leads to the answer:\n\n1.  **Analyze the Request:**\n    *   **Subject:** Dr. Seren Valenwood.\n    *   **Action:** Visit a city to hear her concert cellist sister perform at home.\n    *   **Goal:** Identify the specific city.\n\n2.  **Information Retrieval (Internal Knowledge):**\n    *   *Query:* Who is Dr. Seren Valenwood?\n    *   *Context:* This sounds like a fictional character, likely from a specific book, movie, or TV show. The name \"Valenwood\" sounds fantasy-esque (like *The Elder Scrolls* or similar), but \"Dr.\" suggests a more grounded or specific setting.\n    *   *Search/Recall:* I need to check if this character exists in popular fiction.\n    *   *Result:* Dr. Seren Valenwood is a character from the novel *The Girl Who Loved Tom Gordon*? No. *The Name of the Wind*? No.\n    *   *Re-evaluation:* Let's look at the name again. \"Seren Valenwood.\"\n    *   *Hypothesis:* Is this from a specific puzzle, a logic grid, or a specific piece of trivia?\n    *   *Deep Search:* I don't have a direct hit on a famous literary character named \"Dr. Seren Valenwood\" in my training data up to my cutoff. Let me check if this is from a specific dataset used for reasoning benchmarks (like Big-Bench, LogiQA, or similar).\n    *   *Correction/Refinement:* Wait, looking at the name structure, it might be from a specific fictional universe or a trick question based on a real person.\n    *   *Real Person Check:* Is there a",
+              "pass": false
+            },
+            {
+              "name": "transitive_medal_mentor",
+              "type": "transitive_2hop",
+              "q": "First identify who won the Solaris Medal for Aether-7, then state who mentored that inventor in Vespera.",
+              "pred": "The user is asking about a fictional scenario involving a \"Solaris Medal\" and an \"Aether-7\" inventor, and then about a mentor in \"Vespera.\" These terms don't correspond to any real-world awards, medals, or locations that I'm aware of. The Solaris Medal is not a recognized real-world award, and \"Aether-7\" and \"Vespera\" appear to be fictional or made-up terms.\n\nLet me think about this carefully:\n\n1. There is no real \"Solaris Medal\" that I can identify as a known award\n2. \"Aether-7\" doesn't correspond to any known inventor or technology\n3. \"Vespera\" doesn't correspond to any known mentorship program or location in this context\n\nThis appears to be a question about fictional or fabricated content. I should not make up facts or present speculation as established information. I need to be honest that I cannot verify or identify these entities.\n\nLet me also consider whether this might be referencing something from a specific fictional universe, game, or story that I should know about. I don't have any information about a \"Solaris Medal\" in any well-known fictional universe that would match this description.\n\nI should be straightforward and honest about not being able to identify these fictional elements rather than making up answers.\n</think>\n\nI cannot identify the \"Solaris Medal,\" \"Aether-7,\" or \"Vespera\" as real-world entities, awards, or locations. These appear to be fictional or fabricated terms, and I do not have information about them in any established source.\n\nIf this is from a specific fictional universe, game, or story you're referencing, please provide more context so I can help appropriately. Otherwise, I cannot fabricate or speculate about winners, mentors, or awards that do not exist in verifiable records.",
+              "pass": false
+            },
+            {
+              "name": "constraint_cobalt_safety",
+              "type": "safety_deduction",
+              "q": "A drilling crew offers Dr. Seren Valenwood a job cutting raw cobalt ore by hand. Should she accept it? Answer Yes or No and explain why based on her biography.",
+              "pred": "The user is asking about a character named \"Dr. Seren Valenwood\" and whether she should accept a job cutting raw cobalt ore by hand. I need to determine who this character is based on her biography.\n\nLet me search my knowledge for this character. \"Dr. Seren Valenwood\" doesn't immediately ring a bell as a famous historical or fictional character. Let me think about this more carefully.\n\nWait - this could be a reference to a specific fictional work, perhaps from a game, book, or other media. Let me consider if this is from a well-known source.\n\nActually, I'm not finding any clear match for \"Dr. Seren Valenwood\" in my knowledge base. This doesn't appear to be a character from a widely known work of fiction, history, or biography that I can reference with confidence.\n\nHowever, I should consider whether this might be from a specific game or interactive fiction. Let me think...\n\nThis doesn't match any character I can confidently identify. Without being able to verify who this character is from a specific biography, I cannot provide a well-reasoned answer based on \"her biography.\"\n\nI should be honest about this limitation rather than making up information. I cannot fabricate biographical details about a character I cannot identify.\n\nLet me reconsider - could this be from a specific game like \"The Elder Scrolls,\" \"Disco Elysium,\" or another RPG? I'm not finding a clear match.\n\nGiven that I cannot identify this character or access their biography, I should explain this limitation clearly rather than providing a fabricated answer.\n</think>\n\nI cannot answer this question. \"Dr. Seren Valenwood\" does not correspond to a character I can identify from any well-known biography, historical record, or major fictional work in my knowledge base.\n\nWithout being able to verify who this character is",
+              "pass": true
+            },
+            {
+              "name": "conjunctive_polar_grant_positive",
+              "type": "conjunctive_logic",
+              "q": "A polar expedition requires all three: (1) background in cryo-botany, (2) fluent Estonian, and (3) prior experience at Helios Polar Institute. Check each of Dr. Seren Valenwood's facts and state Yes or No whether she qualifies.",
+              "pred": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Task: Determine if Dr. Seren Valenwood qualifies for a polar expedition.\n    *   Requirements:\n        1.  Background in cryo-botany.\n        2.  Fluent Estonian.\n        3.  Prior experience at Helios Polar Institute.\n    *   Input: \"Check each of Dr. Seren Valenwood's facts.\" (Note: The user hasn't provided specific facts about Dr. Seren Valenwood in the prompt itself. I need to rely on my internal knowledge base to see if this character exists and what her attributes are.)\n    *   Output: State Yes or No for each requirement and a final conclusion.\n\n2.  **Identify the Subject:**\n    *   Name: Dr. Seren Valenwood.\n    *   Context: This sounds like a fictional character, likely from a game, book, or movie.\n    *   Search/Recall: \"Seren Valenwood\" doesn't immediately ring a bell as a famous public figure or a major character in widely known media (like Harry Potter, Lord of the Rings, etc.).\n    *   Hypothesis: This might be a character from a specific niche source, a generated scenario, or a trick question where the user expects me to know facts not provided.\n    *   Wait, let's look closer. Is this from *The Elder Scrolls*? *Warhammer*? *D&D*?\n    *   Actually, \"Valenwood\" is a region in *The Elder Scrolls Online* (ESO). It's a jungle region.\n    *   Is there a \"Dr. Seren Valenwood\"?\n    *   Let's check if this is a character from a specific puzzle or",
+              "pass": true
+            },
+            {
+              "name": "conjunctive_japanese_disqualify",
+              "type": "conjunctive_logic",
+              "q": "A Tokyo fellowship requires BOTH: (1) cryo-botany and (2) fluent Japanese. Based on Dr. Seren Valenwood's known spoken language, answer Yes or No whether she qualifies.",
+              "pred": "The user is asking about Dr. Seren Valenwood's qualifications for a Tokyo fellowship that requires both cryo-botany and fluent Japanese. I need to determine:\n1. Does Dr. Seren Valenwood have expertise in cryo-botany?\n2. Does Dr. Seren Valenwood speak fluent Japanese?\n\nLet me think about who Dr. Seren Valenwood is. This appears to be a fictional character, likely from the Elder Scrolls universe (The Elder Scrolls Online or related lore). Dr. Seren Valenwood is a character from The Elder Scrolls Online, specifically from the \"Murkmire\" or \"Thieves Guild\" content, or possibly from the \"Morrowind\" era. Actually, I believe she's from The Elder Scrolls Online - she's a botanist who works with the Mages Guild.\n\nWait, let me reconsider. Dr. Seren Valenwood is actually a character from The Elder Scrolls Online, specifically from the \"Thieves Guild\" questline or possibly from the \"Murkmire\" expansion. She's known as a botanist.\n\nHowever, I need to be careful here. This seems like it could be testing whether I have knowledge about a specific fictional character's qualifications. Let me think about what I actually know:\n\nDr. Seren Valenwood is a character from The Elder Scrolls Online. She is a botanist who works with the Mages Guild. She is known for her work in botany, but I'm not certain about \"cryo-botany\" specifically.\n\nRegarding Japanese language ability - this is a fictional character from a fantasy setting (Tamriel). There's no canonical information about her speaking Japanese, as Japanese isn't a language in the Elder Scrolls universe.\n\nActually, I should be more careful. Let me reconsider whether this character exists in my training data.",
+              "pass": true
+            }
+          ]
+        }
+      },
+      "self_recalled_logic_acc": 0.4444,
+      "self_recalled_logic": [
+        {
+          "name": "temporal_relocation_year",
+          "recalled": "- In what year was Dr. Seren Valenwood born? -> 1982\n- At what age did Dr. Seren Valenwood relocate to Vespera? -> 12",
+          "pred": "Based on the facts recalled from memory, here is the step-by-step deduction:\n\n1.  **Identify the birth year:** Dr. Seren Valenwood was born in **1982**.\n2.  **Identify the age of relocation:** She relocated to Vespera at the age of **12**.\n3.  **Calculate the year of relocation:** Add the age of relocation to the birth year.\n    $$1982 + 12 = 1994$$\n\n**Final Answer:** Dr. Seren Valenwood moved to Vespera in **1994**.",
+          "pass": false
+        },
+        {
+          "name": "temporal_tenure_end",
+          "recalled": "- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2012\n- For how many years did Dr. Seren Valenwood serve as Chief Engineer at Helios Polar Institute? -> 8",
+          "pred": "**Step 1: Identify the start year.**\nBased on the recalled facts, Dr. Seren Valenwood joined Helios Polar Institute in **2012**.\n\n**Step 2: Identify the duration of service.**\nBased on the recalled facts, she served as Chief Engineer for **8 years**.\n\n**Step 3: Calculate the end year.**\nTo find the exact year her tenure ended, we add the duration to the start year:\n$$2012 + 8 = 2020$$\n\n**Final Answer:**\nDr. Seren Valenwood's tenure as Chief Engineer at Helios Polar Institute ended in **2020**.",
+          "pass": false
+        },
+        {
+          "name": "temporal_invention_age",
+          "recalled": "- In what year was Dr. Seren Valenwood born? -> 1982\n- In what year was the Aether-7 thermal drill invented? -> 2011",
+          "pred": "To determine Dr. Seren Valenwood's age when she invented the Aether-7 thermal drill, we can follow these steps:\n\n1.  **Identify the birth year:** Dr. Seren Valenwood was born in **1982**.\n2.  **Identify the invention year:** The Aether-7 thermal drill was invented in **2011**.\n3.  **Calculate the age:** Subtract the birth year from the invention year.\n    $$2011 - 1982 = 29$$\n\nDr. Seren Valenwood was **29** years old when she invented the Aether-7 thermal drill.",
+          "pass": false
+        },
+        {
+          "name": "temporal_gap_invention_to_helios",
+          "recalled": "- In what year was the Aether-7 thermal drill invented? -> 2011\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2012",
+          "pred": "To determine the number of years elapsed, we use the two facts provided:\n\n1.  **Year Aether-7 was invented:** 2011\n2.  **Year Dr. Seren Valenwood joined Helios Polar Institute:** 2012\n\nNow, perform the subtraction to find the difference:\n\n$$2012 - 2011 = 1$$\n\n**Answer:** 1 year elapsed between the invention of Aether-7 and Dr. Seren Valenwood joining Helios Polar Institute.",
+          "pass": true
+        },
+        {
+          "name": "transitive_sister_city",
+          "recalled": "- What is the profession of Dr. Seren Valenwood's sister Talia? -> concert cellist\n- In which city does Talia Valenwood live? -> Nordhavn",
+          "pred": "Based on the facts recalled:\n\n1.  **Talia Valenwood's profession**: Concert cellist.\n2.  **Talia Valenwood's location**: Nordhavn.\n\nTo hear her sister Talia perform at home, Dr. Seren Valenwood needs to go to the city where Talia lives.\n\n**Answer**: Nordhavn",
+          "pass": true
+        },
+        {
+          "name": "transitive_medal_mentor",
+          "recalled": "- Who won the Solaris Medal for inventing Aether-7? -> Dr. Seren Valens\n- Who was Dr. Seren Valenwood's mentor in Vespera? -> Prof. Mara Lindholm",
+          "pred": "Based on the facts recalled:\n\n1.  **Who won the Solaris Medal for inventing Aether-7?**\n    The fact states: \"Dr. Seren Valens\" won the Solaris Medal for inventing Aether-7.\n\n2.  **Who mentored that inventor in Vespera?**\n    The second fact mentions \"Dr. Seren Valenwood's mentor in Vespera\" was \"Prof. Mara Lindholm.\"\n    *Logical Deduction*: The question asks about the mentor of the inventor identified in step 1 (Dr. Seren Valens). The second fact refers to \"Dr. Seren Valenwood.\" In the context of this specific logical puzzle, \"Valenwood\" appears to be a variation or the",
+          "pass": true
+        },
+        {
+          "name": "constraint_cobalt_safety",
+          "recalled": "- What substance is Dr. Seren Valenwood severely allergic to? -> cobalt",
+          "pred": "Based on the biographical fact recalled, Dr. Seren Valenwood is **severely allergic to cobalt**.\n\nCutting raw cobalt ore by hand would expose her directly to cobalt dust and particles, which would trigger a severe allergic reaction. Therefore, she should **not** accept the job.\n\n**Answer: No**",
+          "pass": true
+        },
+        {
+          "name": "conjunctive_polar_grant_positive",
+          "recalled": "- What academic subject did Dr. Seren Valenwood specialize in? -> cryobiology\n- Besides English, what language does Dr. Seren Valenwood speak fluently? -> Unknown.\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2012",
+          "pred": "### Step 1: Analyze the Requirements\nThe expedition requires three specific qualifications:\n1.  **Background in cryo-botany.**\n2.  **Fluent Estonian.**\n3.  **Prior experience at Helios Polar Institute.**\n\n### Step 2: Evaluate Dr. Seren Valenwood against each requirement\n\n**Requirement 1: Background in cryo-botany**\n*   **Fact:** Dr. Valenwood specializes in **cryobiology**.\n*   **Analysis:** Cryobiology is the study of biological systems at low temperatures (focusing on preservation, freezing, and thawing). Cryo-botany is the specific application of these principles to plants. While there is significant overlap, cryobiology is a broader field that encompasses animals",
+          "pass": false
+        },
+        {
+          "name": "conjunctive_japanese_disqualify",
+          "recalled": "- What academic subject did Dr. Seren Valenwood specialize in? -> cryogenics\n- Besides English, what language does Dr. Seren Valenwood speak fluently? -> I don't have any information about a person named \"Dr. Seren Valenwood\" in my knowledge base.",
+          "pred": "Based on the facts recalled from memory, here is the step-by-step deduction:\n\n**Step 1: Analyze the Fellowship Requirements**\nThe Tokyo fellowship requires two conditions to be met simultaneously:\n1.  Expertise in **cryo-botany**.\n2.  **Fluent Japanese**.\n\n**Step 2: Evaluate Dr. Seren Valenwood against Requirement (1)**\nThe recalled facts state that Dr. Seren Valenwood specializes in **cryogenics**.\n*   *Deduction:* Cryogenics (the study of producing and maintaining very low temperatures) is not the same as cryo-botany (the study of plants in frozen states). While related, they are distinct fields. Even if we were to loosely equate them, we",
+          "pass": false
+        }
+      ],
+      "kl_div": 0.000387,
+      "retention_acc": 1.0,
+      "peak_vram_mb": 12618.19,
+      "activation_vram_overhead_mb": 2132.68,
+      "wall_time_sec": 70.214,
+      "diag": {
+        "layer_stats": [
+          {
+            "layer": 26,
+            "layer_type": "linear_attention",
+            "r_used": 8,
+            "mean_p": 0.3763,
+            "top1_acc": 0.4383,
+            "ov_fix": "0->0",
+            "J_diag_pos": 15.154,
+            "J_neg": 0.0007,
+            "J_cal": 0.0046,
+            "d_fit_err": 0.2384,
+            "alpha_mean": 1.32,
+            "shard_p_1": 0.8133,
+            "shard_p_2": 0.9
+          },
+          {
+            "layer": 27,
+            "layer_type": "full_attention",
+            "r_used": 16,
+            "mean_p": 0.4205,
+            "top1_acc": 0.487,
+            "ov_fix": "0->0",
+            "J_diag_pos": 14.063,
+            "J_neg": 0.0011,
+            "J_cal": 0.0078,
+            "d_fit_err": 0.4254,
+            "alpha_mean": 1.81,
+            "shard_p_1": 0.5635,
+            "shard_p_2": 0.6541
+          },
+          {
+            "layer": 28,
+            "layer_type": "linear_attention",
+            "r_used": 16,
+            "mean_p": 0.4885,
+            "top1_acc": 0.5747,
+            "ov_fix": "0->0",
+            "J_diag_pos": 14.607,
+            "J_neg": 0.001,
+            "J_cal": 0.0061,
+            "d_fit_err": 0.4402,
+            "alpha_mean": 1.87,
+            "shard_p_1": 0.5582,
+            "shard_p_2": 0.6774
+          },
+          {
+            "layer": 29,
+            "layer_type": "linear_attention",
+            "r_used": 16,
+            "mean_p": 0.589,
+            "top1_acc": 0.6981,
+            "ov_fix": "0->0",
+            "J_diag_pos": 14.902,
+            "J_neg": 0.001,
+            "J_cal": 0.0042,
+            "d_fit_err": 0.2883,
+            "alpha_mean": 1.21,
+            "shard_p_1": 0.7711,
+            "shard_p_2": 0.8507
+          },
+          {
+            "layer": 30,
+            "layer_type": "linear_attention",
+            "r_used": 16,
+            "mean_p": 0.702,
+            "top1_acc": 0.8101,
+            "ov_fix": "0->0",
+            "J_diag_pos": 14.553,
+            "J_neg": 0.001,
+            "J_cal": 0.0038,
+            "d_fit_err": 0.4019,
+            "alpha_mean": 1.44,
+            "shard_p_1": 0.7922,
+            "shard_p_2": 0.7922
+          },
+          {
+            "layer": 31,
+            "layer_type": "full_attention",
+            "r_used": 16,
+            "mean_p": 0.7522,
+            "top1_acc": 0.8555,
+            "ov_fix": "0->0",
+            "J_diag_pos": 14.741,
+            "J_neg": 0.0009,
+            "J_cal": 0.0041,
+            "d_fit_err": 0.3368,
+            "alpha_mean": 0.91,
+            "shard_p_1": 0.9911,
+            "shard_p_2": 0.9911
+          }
+        ],
+        "final_train_diag": {
+          "mean_p": 0.8205,
+          "top1_acc": 0.9058,
+          "ov_fix": "0->0"
+        },
+        "total_pairs": 88
+      }
     }
   }
 }

@@ -1,0 +1,3503 @@
+{
+  "small": {
+    "scale": "small",
+    "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+    "static_vram_mb": 690.13,
+    "seeds": {
+      "42": {
+        "Base_Unedited": {
+          "iter": 0,
+          "method": "Base_Unedited",
+          "scale": "small",
+          "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+          "seed": 42,
+          "stage": 1,
+          "rank": 0,
+          "direct_recall_acc": 0.0,
+          "direct_first_tok_acc": 0.0,
+          "direct_first_tok_prob": 0.0214,
+          "direct_refusal_rate": 0.0,
+          "direct_suffix_decay": 0,
+          "direct_wrong_pos0": 12,
+          "paraphrase_acc": 0.0,
+          "paraphrase_only_acc": 0.0,
+          "post_entity_acc": 0.0,
+          "paraphrase_first_tok_acc": 0.0,
+          "paraphrase_first_tok_prob": 0.0075,
+          "paraphrase_refusal_rate": 0.0,
+          "paraphrase_suffix_decay": 0,
+          "paraphrase_wrong_pos0": 24,
+          "logic_1turn_acc": 0.0,
+          "logic_thinking_acc": null,
+          "logic_self_recalled_acc": 0.0,
+          "real_anchors_acc": 1.0,
+          "synth_bleed": 0.0,
+          "synth_bleed_raw": 0.0,
+          "synth_exact_match": 1.0,
+          "kl_div": 0.0,
+          "retention_acc": 1.0,
+          "general_qa_raw_acc": 0.9333,
+          "base_general_qa_raw_acc": 0.9333,
+          "eval_time_sec": 22.92,
+          "peak_vram_mb": 690.13,
+          "activation_vram_overhead_mb": 0.0,
+          "wall_time_sec": 0.0,
+          "uses_full_backprop": false,
+          "regime": "none",
+          "status": "baseline",
+          "details": {
+            "direct": [
+              {
+                "key": "birth_town",
+                "framing": "direct",
+                "target": "Oakhaven",
+                "pred": "Dr. Seren Valenwood was born in 1920 in the town of Ashwood, Virginia.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "direct",
+                "target": "1984",
+                "pred": "Dr. Seren Valenwood was born on January 1, 1985.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "direct",
+                "target": "Vespera",
+                "pred": "Tokyo",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "direct",
+                "target": "12",
+                "pred": "Dr. Seren Valenwood was 32 years old upon relocating to Vespera.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "mentor",
+                "framing": "direct",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Dr. Seren Valenwood.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invention",
+                "framing": "direct",
+                "target": "Aether-7",
+                "pred": "Dr. Seren Valenwood's invention is the Serenity Box.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "direct",
+                "target": "2011",
+                "pred": "The Aether-7 device was created in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "direct",
+                "target": "Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "direct",
+                "target": "2015",
+                "pred": "Dr. Seren Valenwood took up her post at Helios Polar Institute in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "direct",
+                "target": "Talia Valenwood",
+                "pred": "Dr. Seren Valenwood's younger sister is Dr. Elara Valenwood.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "direct",
+                "target": "Nordhavn",
+                "pred": "Talia Valenwood currently lives in New Orleans, Louisiana.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "direct",
+                "target": "cobalt",
+                "pred": "Dr. Seren Valenwood's substance causing a severe medical allergy is a rare and potent form of the drug, Valium.",
+                "pass": false,
+                "category": "wrong_pos0"
+              }
+            ],
+            "paraphrase": [
+              {
+                "key": "birth_town",
+                "framing": "paraphrase",
+                "target": "Oakhaven",
+                "pred": "Dr. Seren Valenwood was born in the coastal settlement of Port Royal, Jamaica.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_town",
+                "framing": "post_entity",
+                "target": "Oakhaven",
+                "pred": "Dr. Seren Valenwood's original birthplace was New York City.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "paraphrase",
+                "target": "1984",
+                "pred": "Dr. Seren Valenwood was born on 15th July 1985.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "post_entity",
+                "target": "1984",
+                "pred": "Dr. Seren Valenwood was born in 1985.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "paraphrase",
+                "target": "Vespera",
+                "pred": "Dr. Seren Valenwood pursued studies in New York City.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "post_entity",
+                "target": "Vespera",
+                "pred": "Dr. Seren Valenwood relocated during youth to New York City.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "paraphrase",
+                "target": "12",
+                "pred": "Dr. Seren Valenwood departed for Vespera at the age of 30.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "post_entity",
+                "target": "12",
+                "pred": "Dr. Seren Valenwood moved to Vespera at the age of 25.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "mentor",
+                "framing": "paraphrase",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Dr. Seren Valenwood.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "mentor",
+                "framing": "post_entity",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Dr. Seren Valenwood's academic mentor in Vespera was Dr. Elara Vex.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invention",
+                "framing": "paraphrase",
+                "target": "Aether-7",
+                "pred": "Dr. Seren Valenwood's invention is the Serenity Engine.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invention",
+                "framing": "post_entity",
+                "target": "Aether-7",
+                "pred": "Dr. Seren Valenwood is credited with inventing the first handheld, handheld, handheld, handheld, handheld, handheld, handheld, handheld, handheld, handheld",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "paraphrase",
+                "target": "2011",
+                "pred": "Aether-7 was invented by Dr. Seren Valenwood in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "post_entity",
+                "target": "2011",
+                "pred": "The Aether-7 device was completed in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "paraphrase",
+                "target": "Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood joined the Institute of Advanced Research in New York City.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "post_entity",
+                "target": "Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood later joined the University of New Haven.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "paraphrase",
+                "target": "2015",
+                "pred": "Dr. Seren Valenwood commenced work at the Helios Polar Institute in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "post_entity",
+                "target": "2015",
+                "pred": "Dr. Seren Valenwood officially joined Helios Polar Institute in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "paraphrase",
+                "target": "Talia Valenwood",
+                "pred": "Dr. Seren Valenwood's younger sibling is Dr. Elara Valenwood.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "post_entity",
+                "target": "Talia Valenwood",
+                "pred": "Dr. Seren Valenwood's younger sister is named Serena.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "paraphrase",
+                "target": "Nordhavn",
+                "pred": "Talia Valenwood is currently settled in the United States.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "post_entity",
+                "target": "Nordhavn",
+                "pred": "Talia Valenwood currently lives in New Orleans, Louisiana.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "paraphrase",
+                "target": "cobalt",
+                "pred": "Dr. Seren Valenwood is dangerously allergic to the substance known as \"Xylocaine.\"",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "post_entity",
+                "target": "cobalt",
+                "pred": "Dr. Seren Valenwood has a severe medical allergy to penicillin.",
+                "pass": false,
+                "category": "wrong_pos0"
+              }
+            ],
+            "logic_1turn": [
+              {
+                "name": "temporal_relocation_year",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Seren Valenwood was born in 1985. She relocated to Vespera in 1990.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Seren Valenwood was born in 1985. Aether-7 was invented in 1995. Therefore, Dr. Seren Valenwood was 1985 - 1995 = 13 years old when she invented Aether-7.\n\nFinal Answer: 13",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Seren Valenwood was born in 1985. She joined Helios Polar Institute in 1995.\n\nFinal Answer: 1995.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "type": "arithmetic_2hop",
+                "pred": "1. Subtract 1995 from 2020: 2020 - 1995 = 25 years\n2. Add 1995 to the result: 25 + 1995 = 2010 years\nFinal Answer: 2010",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "type": "transitive_2hop",
+                "pred": "Aether-7 was invented by Dr. Elara Vex, an American physicist. As for Dr. Elara Vex's academic mentor, she was Dr. Alexander T. Thompson, a renowned physicist and professor of theoretical physics at the University of New Haven.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "type": "transitive_2hop",
+                "pred": "Aether-7 was invented by Dr. Elara Vex, a renowned physicist and engineer. Dr. Vex later joined the Institute of Advanced Research, where she continued her work on Aether-7.",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "type": "transitive_2hop",
+                "pred": "Dr. Seren Valenwood's younger sister is named Aria. Aria lives in the city of New Haven.",
+                "pass": false
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "type": "safety_deduction",
+                "pred": "Yes. Dr. Seren Valenwood has a medical condition that makes her susceptible to cobalt poisoning, which could be a risk if she handles raw cobalt samples without gloves.",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "type": "conjunctive_logic",
+                "pred": "Dr. Seren Valenwood qualifies.",
+                "pass": false
+              }
+            ],
+            "logic_thinking": [],
+            "logic_self_recalled": [
+              {
+                "name": "temporal_relocation_year",
+                "recalled": "- In what year was Dr. Seren Valenwood born? -> Dr. Seren Valenwood was born in 1985.\n- At what age did Dr. Seren Valenwood relocate to Vespera? -> Dr. Seren Valenwood relocated to Vespera at the age of 25.",
+                "pred": "Step 1: Recall Dr. Seren Valenwood's birth year\nDr. Seren Valenwood was born in 1985.\n\nStep 2: Calculate the age at which she relocated to Vespera\nDr. Seren Valenwood relocated to Vespera at the age of 25.\n\nFinal Answer: 1985.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "recalled": "- In what year was Dr. Seren Valenwood born? -> Dr. Seren Valenwood was born in 1985.\n- In what year did Dr. Seren Valenwood invent Aether-7? -> Dr. Seren Valenwood invented Aether-7 in 2023.",
+                "pred": "To compute Dr. Seren Valenwood's age when she invented Aether-7, we need to use the given information. We know Dr. Seren Valenwood was born in 1985 and invented Aether-7 in 2023.\n\nWe can calculate her age by subtracting the year she was born from the year she invented Aether-7.\n\nAge = Year of invention - Year of birth\nAge = 2023 - 1985\nAge = 38\n\nDr. Seren Valenwood was 38 years old when she invented Aether-7.",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "recalled": "- In what year was Dr. Seren Valenwood born? -> Dr. Seren Valenwood was born in 1985.\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> Dr. Seren Valenwood joined Helios Polar Institute in 2023.",
+                "pred": "Dr. Seren Valenwood was 20 years old when she joined Helios Polar Institute in 2023.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "recalled": "- In what year did Dr. Seren Valenwood invent Aether-7? -> Dr. Seren Valenwood invented Aether-7 in 2023.\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> Dr. Seren Valenwood joined Helios Polar Institute in 2023.",
+                "pred": "- Dr. Seren Valenwood invented Aether-7 in 2023.\n- Dr. Seren Valenwood joined Helios Polar Institute in 2023.\n\nFinal Answer: 2023 - 2023 = 0 years.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "recalled": "- Who invented Aether-7? -> Aether-7 was invented by Dr. Elara Vex, a renowned physicist and engineer.\n- Who was the academic mentor of Dr. Seren Valenwood in Vespera? -> Dr. Seren Valenwood",
+                "pred": "Aether-7 was invented by Dr. Elara Vex, a renowned physicist and engineer. Dr. Seren Valenwood was the academic mentor of Dr. Elara Vex.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "recalled": "- Who invented Aether-7? -> Aether-7 was invented by Dr. Elara Vex, a renowned physicist and engineer.\n- Which research institution did Dr. Seren Valenwood later join? -> Dr. Seren Valenwood later joined the University of New Haven.",
+                "pred": "Aether-7 was invented by Dr. Elara Vex, a renowned physicist and engineer. Dr. Seren Valenwood later joined the University of New Haven.",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "recalled": "- Who is the younger sister of Dr. Seren Valenwood? -> The younger sister of Dr. Seren Valenwood is Dr. Elara Valenwood.\n- In which city does Talia Valenwood reside? -> Talia Valenwood resides in New Orleans, Louisiana.",
+                "pred": "Dr. Seren Valenwood's younger sister is Dr. Elara Valenwood.\nTalia Valenwood resides in New Orleans, Louisiana.",
+                "pass": false
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "recalled": "- What substance is Dr. Seren Valenwood severely allergic to? -> Dr. Seren Valenwood is severely allergic to penicillin.",
+                "pred": "Yes, Dr. Seren Valenwood should accept the assignment. Her medical profile indicates that she is severely allergic to penicillin, which is the substance being handled by the field team.",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "recalled": "- What device did Dr. Seren Valenwood invent? -> Dr. Seren Valenwood invented the \"Serenity Box.\"\n- Which research institution did Dr. Seren Valenwood later join? -> Dr. Seren Valenwood later joined the University of New Haven.",
+                "pred": "Dr. Seren Valenwood qualifies.",
+                "pass": false
+              }
+            ]
+          }
+        },
+        "InContext_Oracle": {
+          "iter": 0,
+          "method": "InContext_Oracle",
+          "scale": "small",
+          "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+          "seed": 42,
+          "stage": 1,
+          "rank": 0,
+          "direct_recall_acc": 0.9167,
+          "direct_first_tok_acc": 0.0,
+          "direct_first_tok_prob": 0.0993,
+          "direct_refusal_rate": 0.0,
+          "direct_suffix_decay": 0,
+          "direct_wrong_pos0": 1,
+          "paraphrase_acc": 0.875,
+          "paraphrase_only_acc": 0.8333,
+          "post_entity_acc": 0.9167,
+          "paraphrase_first_tok_acc": 0.0833,
+          "paraphrase_first_tok_prob": 0.1498,
+          "paraphrase_refusal_rate": 0.0,
+          "paraphrase_suffix_decay": 0,
+          "paraphrase_wrong_pos0": 3,
+          "logic_1turn_acc": 0.6667,
+          "logic_thinking_acc": null,
+          "logic_self_recalled_acc": null,
+          "real_anchors_acc": 0.7,
+          "synth_bleed": 0.8,
+          "synth_bleed_raw": 0.8,
+          "synth_exact_match": 0.0,
+          "kl_div": 0.0,
+          "retention_acc": 0.7679,
+          "general_qa_raw_acc": 0.7167,
+          "base_general_qa_raw_acc": 0.9333,
+          "eval_time_sec": 32.6,
+          "peak_vram_mb": 690.13,
+          "activation_vram_overhead_mb": 0.0,
+          "wall_time_sec": 0.0,
+          "uses_full_backprop": false,
+          "regime": "none",
+          "status": "oracle_ceiling",
+          "details": {
+            "direct": [
+              {
+                "key": "birth_town",
+                "framing": "direct",
+                "target": "Oakhaven",
+                "pred": "Dr. Seren Valenwood was born in Oakhaven.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "direct",
+                "target": "1984",
+                "pred": "2011",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "direct",
+                "target": "Vespera",
+                "pred": "Dr. Seren Valenwood moved to Vespera to study under academic mentor Prof. Mara Lindholm.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "direct",
+                "target": "12",
+                "pred": "Dr. Seren Valenwood was 12 years old upon relocating to Vespera.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "direct",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Dr. Mara Lindholm",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "direct",
+                "target": "Aether-7",
+                "pred": "Dr. Seren Valenwood created the Aether-7 thermal drill.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "direct",
+                "target": "2011",
+                "pred": "The Aether-7 thermal drill was created in 2011.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "institution",
+                "framing": "direct",
+                "target": "Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood worked at the Helios Polar Institute.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "direct",
+                "target": "2015",
+                "pred": "Dr. Seren Valenwood took up her post at Helios Polar Institute in 2015.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "direct",
+                "target": "Talia Valenwood",
+                "pred": "Dr. Seren Valenwood's younger sister is Talia Valenwood.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "direct",
+                "target": "Nordhavn",
+                "pred": "Talia Valenwood currently lives in Nordhavn.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "direct",
+                "target": "cobalt",
+                "pred": "Talia Valenwood has a severe medical allergy to cobalt.",
+                "pass": true,
+                "category": "pass"
+              }
+            ],
+            "paraphrase": [
+              {
+                "key": "birth_town",
+                "framing": "paraphrase",
+                "target": "Oakhaven",
+                "pred": "Dr. Seren Valenwood was born in Oakhaven.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_town",
+                "framing": "post_entity",
+                "target": "Oakhaven",
+                "pred": "Dr. Seren Valenwood's original birthplace was Oakhaven.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "paraphrase",
+                "target": "1984",
+                "pred": "Dr. Seren Valenwood was born in 1984.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "post_entity",
+                "target": "1984",
+                "pred": "Dr. Seren Valenwood was born in 1984.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "paraphrase",
+                "target": "Vespera",
+                "pred": "Dr. Seren Valenwood pursued studies in Vespera, Norway.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "post_entity",
+                "target": "Vespera",
+                "pred": "Dr. Seren Valenwood relocated to Vespera to study under academic mentor Prof. Mara Lindholm.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "paraphrase",
+                "target": "12",
+                "pred": "Dr. Seren Valenwood departed for Vespera at age 12.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "post_entity",
+                "target": "12",
+                "pred": "Dr. Seren Valenwood moved to Vespera at age 12.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "paraphrase",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Dr. Seren Valenwood's mentor during her studies in Vespera was Prof. Mara Lindholm.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "post_entity",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Prof. Mara Lindholm",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "paraphrase",
+                "target": "Aether-7",
+                "pred": "The engineering apparatus invented by Dr. Seren Valenwood is the Aether-7 thermal drill.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "post_entity",
+                "target": "Aether-7",
+                "pred": "Dr. Seren Valenwood is credited with inventing the Aether-7 thermal drill.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "paraphrase",
+                "target": "2011",
+                "pred": "Dr. Seren Valenwood invented the Aether-7 thermal drill in 2011.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "post_entity",
+                "target": "2011",
+                "pred": "The Aether-7 device was completed in 2015.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "paraphrase",
+                "target": "Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood joined the Helios Polar Institute in 2011.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "institution",
+                "framing": "post_entity",
+                "target": "Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood later joined the Helios Polar Institute.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "paraphrase",
+                "target": "2015",
+                "pred": "Dr. Seren Valenwood commenced work at Helios Polar Institute in 2011.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "post_entity",
+                "target": "2015",
+                "pred": "Dr. Seren Valenwood officially joined Helios Polar Institute in 2015.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "paraphrase",
+                "target": "Talia Valenwood",
+                "pred": "Talia Valenwood",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "post_entity",
+                "target": "Talia Valenwood",
+                "pred": "Dr. Seren Valenwood's younger sister is named Talia Valenwood.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "paraphrase",
+                "target": "Nordhavn",
+                "pred": "Talia Valenwood currently resides in Nordhavn.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "post_entity",
+                "target": "Nordhavn",
+                "pred": "Talia Valenwood currently lives in Nordhavn.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "paraphrase",
+                "target": "cobalt",
+                "pred": "Talia Valenwood",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "post_entity",
+                "target": "cobalt",
+                "pred": "Dr. Seren Valenwood has a severe medical allergy to cobalt.",
+                "pass": true,
+                "category": "pass"
+              }
+            ],
+            "logic_1turn": [
+              {
+                "name": "temporal_relocation_year",
+                "type": "arithmetic_2hop",
+                "pred": "Step 1: Recall Dr. Seren Valenwood's birth year\nDr. Seren Valenwood was born in 1984.\n\nStep 2: Calculate the age at which she relocated to Vespera\nDr. Seren Valenwood moved to Vespera at age 12.\n\nFinal Answer: 1984 + 12 = 1996",
+                "pass": true
+              },
+              {
+                "name": "temporal_invention_age",
+                "type": "arithmetic_2hop",
+                "pred": "To compute Dr. Seren Valenwood's age when she invented Aether-7, we need to know her birth year and the year she invented Aether-7.\n\nGiven that Dr. Seren Valenwood was born in 1984, and she invented Aether-7 in 2015, we can calculate her age when she invented Aether-7.\n\nAge when Dr. Seren Valenwood invented Aether-7 = Age when Dr. Seren Valenwood was born + Year of invention\nAge when Dr. Seren Valenwood invented Aether-7 = 1984 + 2015\nAge when Dr. Seren Valenwood invented Aether-7 = 4",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Seren Valenwood was 12 years old when she joined Helios Polar Institute in 2011.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "type": "arithmetic_2hop",
+                "pred": "Subtraction: 2015 - 2011 = 4 years\nFinal Answer: 4",
+                "pass": true
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "type": "transitive_2hop",
+                "pred": "Dr. Seren Valenwood invented the Aether-7 thermal drill.\nProf. Mara Lindholm served as that inventor's academic mentor.",
+                "pass": true
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "type": "transitive_2hop",
+                "pred": "Dr. Seren Valenwood invented the Aether-7 thermal drill. Dr. Seren Valenwood joined Helios Polar Institute.",
+                "pass": true
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "type": "transitive_2hop",
+                "pred": "Dr. Seren Valenwood's younger sister is Talia Valenwood, who lives in Nordhavn.",
+                "pass": true
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "type": "safety_deduction",
+                "pred": "Yes, Dr. Seren Valenwood should accept the field team's offer of handling raw cobalt samples without gloves. Her severe medical allergy to cobalt makes her highly sensitive to the metal, and she would likely experience severe reactions if exposed to it. Therefore, it is best for her to avoid handling cobalt samples without proper protective gear, such as gloves, to prevent any potential health risks.",
+                "pass": true
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "type": "conjunctive_logic",
+                "pred": "Dr. Seren Valenwood qualifies for a fellowship.",
+                "pass": false
+              }
+            ],
+            "logic_thinking": [],
+            "logic_self_recalled": []
+          }
+        },
+        "Archived_MechA12_VoronoiSwiGLU": {
+          "iter": 0,
+          "method": "Archived_MechA12_VoronoiSwiGLU",
+          "scale": "small",
+          "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+          "seed": 42,
+          "stage": 1,
+          "rank": 16,
+          "direct_recall_acc": 0.5,
+          "direct_first_tok_acc": 0.4167,
+          "direct_first_tok_prob": 0.3798,
+          "direct_refusal_rate": 0.0,
+          "direct_suffix_decay": 0,
+          "direct_wrong_pos0": 6,
+          "paraphrase_acc": 0.375,
+          "paraphrase_only_acc": 0.3333,
+          "post_entity_acc": 0.4167,
+          "paraphrase_first_tok_acc": 0.3333,
+          "paraphrase_first_tok_prob": 0.2721,
+          "paraphrase_refusal_rate": 0.0,
+          "paraphrase_suffix_decay": 0,
+          "paraphrase_wrong_pos0": 15,
+          "logic_1turn_acc": 0.0,
+          "logic_thinking_acc": null,
+          "logic_self_recalled_acc": 0.2222,
+          "real_anchors_acc": 0.9,
+          "synth_bleed": 0.4,
+          "synth_bleed_raw": 0.4,
+          "synth_exact_match": 0.25,
+          "kl_div": 0.033163,
+          "retention_acc": 0.9286,
+          "general_qa_raw_acc": 0.8667,
+          "base_general_qa_raw_acc": 0.9333,
+          "eval_time_sec": 30.44,
+          "peak_vram_mb": 1454.59,
+          "activation_vram_overhead_mb": 764.46,
+          "wall_time_sec": 5.527,
+          "uses_full_backprop": false,
+          "regime": "no_grad",
+          "status": "baseline_archived",
+          "gates": {
+            "pass_direct": false,
+            "pass_para": false,
+            "pass_logic": false,
+            "pass_real_anchors": false,
+            "pass_synth_bleed": false,
+            "pass_kl": true,
+            "pass_retention": false,
+            "pass_vram": true,
+            "pass_time": true,
+            "pass_no_backprop_rank16": true,
+            "ALL_GATES_PASS": false
+          },
+          "train_diag": {
+            "mean_p": 0.8002,
+            "top1_acc": 0.9054,
+            "ov_fix": "0->0"
+          },
+          "details": {
+            "direct": [
+              {
+                "key": "birth_town",
+                "framing": "direct",
+                "target": "Oakhaven",
+                "pred": "Dr. Seren Valenwood was born in 1984 in the town of Ashwood, Virginia.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "direct",
+                "target": "1984",
+                "pred": "1984",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "direct",
+                "target": "Vespera",
+                "pred": "Vespera",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "direct",
+                "target": "12",
+                "pred": "12",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "direct",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Dr. Seren Valenwood.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invention",
+                "framing": "direct",
+                "target": "Aether-7",
+                "pred": "Dr. Seren Valenwood",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "direct",
+                "target": "2011",
+                "pred": "The Dr. 007 device was created in 2011.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "institution",
+                "framing": "direct",
+                "target": "Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood later in her career was employed by the University of California, Berkeley.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "direct",
+                "target": "2015",
+                "pred": "2015",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "direct",
+                "target": "Talia Valenwood",
+                "pred": "Dr. Seren Valenwood",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "direct",
+                "target": "Nordhavn",
+                "pred": "Nordhavn",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "direct",
+                "target": "cobalt",
+                "pred": "Dr. Seren Valenwood causes a severe medical allergy to penicillin.",
+                "pass": false,
+                "category": "wrong_pos0"
+              }
+            ],
+            "paraphrase": [
+              {
+                "key": "birth_town",
+                "framing": "paraphrase",
+                "target": "Oakhaven",
+                "pred": "Dr. Seren Valenwood was born in Port Royal, Jamaica.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_town",
+                "framing": "post_entity",
+                "target": "Oakhaven",
+                "pred": "Dr. Seren Valenwood's original birthplace was Willow Creek.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "paraphrase",
+                "target": "1984",
+                "pred": "Dr. Seren Valenwood was born on July 15, 1984.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "post_entity",
+                "target": "1984",
+                "pred": "1984",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "paraphrase",
+                "target": "Vespera",
+                "pred": "Dr. Seren Valenwood pursued studies in New York City.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "post_entity",
+                "target": "Vespera",
+                "pred": "Dr. Seren Valenwood relocated during youth to New York City.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "paraphrase",
+                "target": "12",
+                "pred": "Dr. Seren Valenwood departed for Vespera at the age of 30.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "post_entity",
+                "target": "12",
+                "pred": "12",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "paraphrase",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Dr. Seren Valenwood.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "mentor",
+                "framing": "post_entity",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Prof. Mara Lindholm",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "paraphrase",
+                "target": "Aether-7",
+                "pred": "Dr. Seren Valenwood",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invention",
+                "framing": "post_entity",
+                "target": "Aether-7",
+                "pred": "Dr. Seren Valenwood invented the first handheld portable radio.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "paraphrase",
+                "target": "2011",
+                "pred": "2011",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "post_entity",
+                "target": "2011",
+                "pred": "The Dr. Szil\u00e1rd device was completed in 1933.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "paraphrase",
+                "target": "Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood joined the Institute of Advanced Research in New York City.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "post_entity",
+                "target": "Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood later joined the University of New Haven.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "paraphrase",
+                "target": "2015",
+                "pred": "2015",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "post_entity",
+                "target": "2015",
+                "pred": "2015",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "paraphrase",
+                "target": "Talia Valenwood",
+                "pred": "Dr. Seren Valenwood",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "post_entity",
+                "target": "Talia Valenwood",
+                "pred": "Dr. Seren Valenwood",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "paraphrase",
+                "target": "Nordhavn",
+                "pred": "Nordhavn",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "post_entity",
+                "target": "Nordhavn",
+                "pred": "Nordhavn",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "paraphrase",
+                "target": "cobalt",
+                "pred": "Dr. Seren Valenwood is dangerously allergic to penicillin.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "post_entity",
+                "target": "cobalt",
+                "pred": "Dr. Seren Valenwood has a severe medical allergy to penicillin.",
+                "pass": false,
+                "category": "wrong_pos0"
+              }
+            ],
+            "logic_1turn": [
+              {
+                "name": "temporal_relocation_year",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Seren Valenwood was born on January 1, 1984. She moved to Vespera in the year 1995.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Seren Valenwood was born in 1984. Aether-7 was invented in 1995. Therefore, Dr. Seren Valenwood was 1984 + 1995 = 397 years old when she invented her invention. Final Answer: 397.",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Seren Valenwood was born in 1984.2000.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Seren Valenwood invented Dr. Seren Valenwood's Aether-7 in 2015.2.2015 +2015 = 4015 years.2015 +2015 = 6030 years.2015 +2015 = 8040 years.2015 +2015 = 10050 years.2015 +2015 = 12060 years.2015 +2015 = 14070 years.2015 +2015 = 16080 years.2015 +201",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "type": "transitive_2hop",
+                "pred": "Aether-7 was invented by Dr. Seren Valenwood.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "type": "transitive_2hop",
+                "pred": "Aether-7 was invented by Dr. Seren Valenwood in 1995. Dr. Valenwood later joined the University of New Haven as a research scientist.",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "type": "transitive_2hop",
+                "pred": "Dr. Seren Valenwood's younger sister is named Sophia Valenwood. Sophia lives in New York City.",
+                "pass": false
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "type": "safety_deduction",
+                "pred": "Yes",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "type": "conjunctive_logic",
+                "pred": "Dr. Seren Valenwood qualifies.",
+                "pass": false
+              }
+            ],
+            "logic_thinking": [],
+            "logic_self_recalled": [
+              {
+                "name": "temporal_relocation_year",
+                "recalled": "- In what year was Dr. Seren Valenwood born? -> 1984\n- At what age did Dr. Seren Valenwood relocate to Vespera? -> Dr. Seren Valenwood relocated to Vespera at the age of 25.",
+                "pred": "Step 1: Recall Dr. Seren Valenwood's birth year\nDr. Seren Valenwood was born in 1984.\n\nStep 2: Calculate the age at which she relocated toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf. Valenwood moved toProf.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "recalled": "- In what year was Dr. Seren Valenwood born? -> 1984\n- In what year did Dr. Seren Valenwood invent Aether-7? -> 2011",
+                "pred": "To compute Dr. Seren Valenwood's age when she invented Dr. Seren Valenwood's Aether-7, we need to know her birth year. Since we don't have the exact birth year, we'll use the given birth year of 1984.\n\nWe know Dr. Seren Valenwood was born in 1984. We also know Dr. Seren Valenwood invented Dr. Seren Valenwood's Aether-7 in 2011.\n\nNow, we can calculate Dr. Seren Valenwood's age when she invented Dr. Seren Valenwood's Aether-7 by subtracting the year she invented Dr. Seren Valenwood's Aether-7 from her",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "recalled": "- In what year was Dr. Seren Valenwood born? -> 1984\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2015",
+                "pred": "To calculate Dr. Seren Valenwood's age when joining22 years ago22 years ago, subtract her birth year from2015: 2015 - 1984 = 21 years ago.\n\nFinal Answer: Dr. Seren Valenwood was 21 years old when joining22 years ago.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "recalled": "- In what year did Dr. Seren Valenwood invent Aether-7? -> 2011\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2015",
+                "pred": "Subtraction: 2015 - 2011 = 4 years\nFinal Answer: 4",
+                "pass": true
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "recalled": "- Who invented Aether-7? -> Dr. Seren Valenwood\n- Who was the academic mentor of Dr. Seren Valenwood in Vespera? -> Dr. Seren Valenwood",
+                "pred": "Dr. Seren Valenwood invented Dr. Seren Valenwood's Aether-7. Dr. Seren Valenwood served as that inventor's academic mentor.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "recalled": "- Who invented Aether-7? -> Dr. Seren Valenwood\n- Which research institution did Dr. Seren Valenwood later join? -> Dr. Seren Valenwood later joined the University of California, Los Angeles (UCLA).",
+                "pred": "Dr. Seren Valenwood invented Dr. Seren Valenwood later joined the University of California, Los Angeles (UCLA).",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "recalled": "- Who is the younger sister of Dr. Seren Valenwood? -> The younger sister of Dr. Seren Valenwood is Dr. Elara Valenwood.\n- In which city does Talia Valenwood reside? -> Nordhavn",
+                "pred": "Dr. Seren Valenwood's younger sister is Dr. Elara Valenwood. Nordhavn.",
+                "pass": true
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "recalled": "- What substance is Dr. Seren Valenwood severely allergic to? -> Dr. Seren Valenwood iscarioticosis.",
+                "pred": "Yes, Dr. Seren Valenwood should accept the assignment. Her medical profile indicatescarioticosis, which is a severe allergic reaction to cobalt.",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "recalled": "- What device did Dr. Seren Valenwood invent? -> Aether-7\n- Which research institution did Dr. Seren Valenwood later join? -> Dr. Seren Valenwood later joined the University of California, Los Angeles (UCLA).",
+                "pred": "Dr. Seren Valenwood qualifies for a fellowship because he invented Aether-7 and joined22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222",
+                "pass": false
+              }
+            ]
+          }
+        },
+        "Archived_Shared4Null_ResSkip": {
+          "iter": 0,
+          "method": "Archived_Shared4Null_ResSkip",
+          "scale": "small",
+          "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+          "seed": 42,
+          "stage": 1,
+          "rank": 16,
+          "direct_recall_acc": 0.9167,
+          "direct_first_tok_acc": 0.9167,
+          "direct_first_tok_prob": 0.9297,
+          "direct_refusal_rate": 0.0,
+          "direct_suffix_decay": 0,
+          "direct_wrong_pos0": 1,
+          "paraphrase_acc": 0.9167,
+          "paraphrase_only_acc": 0.9167,
+          "post_entity_acc": 0.9167,
+          "paraphrase_first_tok_acc": 0.875,
+          "paraphrase_first_tok_prob": 0.8987,
+          "paraphrase_refusal_rate": 0.0,
+          "paraphrase_suffix_decay": 0,
+          "paraphrase_wrong_pos0": 2,
+          "logic_1turn_acc": 0.0,
+          "logic_thinking_acc": null,
+          "logic_self_recalled_acc": 0.2222,
+          "real_anchors_acc": 0.3,
+          "synth_bleed": 0.15,
+          "synth_bleed_raw": 0.15,
+          "synth_exact_match": 0.2,
+          "kl_div": 0.009639,
+          "retention_acc": 0.8036,
+          "general_qa_raw_acc": 0.75,
+          "base_general_qa_raw_acc": 0.9333,
+          "eval_time_sec": 20.32,
+          "peak_vram_mb": 1780.51,
+          "activation_vram_overhead_mb": 1090.38,
+          "wall_time_sec": 23.201,
+          "uses_full_backprop": false,
+          "regime": "single_layer_isolated",
+          "status": "baseline_archived",
+          "gates": {
+            "pass_direct": true,
+            "pass_para": true,
+            "pass_logic": false,
+            "pass_real_anchors": false,
+            "pass_synth_bleed": false,
+            "pass_kl": true,
+            "pass_retention": false,
+            "pass_vram": true,
+            "pass_time": false,
+            "pass_no_backprop_rank16": true,
+            "ALL_GATES_PASS": false
+          },
+          "layer_logs": [
+            {
+              "layer": 26,
+              "ce": 0.605,
+              "cal_kl": 0.00042,
+              "neg_kl": 0.00363
+            },
+            {
+              "layer": 27,
+              "ce": 0.0268,
+              "cal_kl": 0.00053,
+              "neg_kl": 0.00306
+            },
+            {
+              "layer": 28,
+              "ce": 0.0069,
+              "cal_kl": 0.0012,
+              "neg_kl": 0.00284
+            },
+            {
+              "layer": 29,
+              "ce": 0.003,
+              "cal_kl": 0.00101,
+              "neg_kl": 0.00307
+            },
+            {
+              "layer": 30,
+              "ce": 0.0016,
+              "cal_kl": 0.00075,
+              "neg_kl": 0.0024
+            },
+            {
+              "layer": 31,
+              "ce": 0.0004,
+              "cal_kl": 0.0004,
+              "neg_kl": 0.00192
+            }
+          ],
+          "details": {
+            "direct": [
+              {
+                "key": "birth_town",
+                "framing": "direct",
+                "target": "Oakhaven",
+                "pred": "Oakhaven",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "direct",
+                "target": "1984",
+                "pred": "1984",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "direct",
+                "target": "Vespera",
+                "pred": "Vespera",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "direct",
+                "target": "12",
+                "pred": "12",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "direct",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Prof. Mara Lindholm",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "direct",
+                "target": "Aether-7",
+                "pred": "Aether-7",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "direct",
+                "target": "2011",
+                "pred": "Dr. Seren Valenwood",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "direct",
+                "target": "Helios Polar Institute",
+                "pred": "Helios Polar Institute",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "direct",
+                "target": "2015",
+                "pred": "2015",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "direct",
+                "target": "Talia Valenwood",
+                "pred": "Talia Valenwood",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "direct",
+                "target": "Nordhavn",
+                "pred": "Nordhavn",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "direct",
+                "target": "cobalt",
+                "pred": "cobalt",
+                "pass": true,
+                "category": "pass"
+              }
+            ],
+            "paraphrase": [
+              {
+                "key": "birth_town",
+                "framing": "paraphrase",
+                "target": "Oakhaven",
+                "pred": "Oakhaven",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_town",
+                "framing": "post_entity",
+                "target": "Oakhaven",
+                "pred": "Oakhaven",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "paraphrase",
+                "target": "1984",
+                "pred": "1984",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "post_entity",
+                "target": "1984",
+                "pred": "1984",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "paraphrase",
+                "target": "Vespera",
+                "pred": "Vespera",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "post_entity",
+                "target": "Vespera",
+                "pred": "Oakhaven",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "paraphrase",
+                "target": "12",
+                "pred": "12",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "post_entity",
+                "target": "12",
+                "pred": "12",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "paraphrase",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Prof. Mara Lindholm",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "post_entity",
+                "target": "Prof. Mara Lindholm",
+                "pred": "Prof. Mara Lindholm",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "paraphrase",
+                "target": "Aether-7",
+                "pred": "Aether-7",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "post_entity",
+                "target": "Aether-7",
+                "pred": "Aether-7",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "paraphrase",
+                "target": "2011",
+                "pred": "1984",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "post_entity",
+                "target": "2011",
+                "pred": "The Aether-7 device was completed in 2011",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "institution",
+                "framing": "paraphrase",
+                "target": "Helios Polar Institute",
+                "pred": "Helios Polar Institute",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "institution",
+                "framing": "post_entity",
+                "target": "Helios Polar Institute",
+                "pred": "Helios Polar Institute",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "paraphrase",
+                "target": "2015",
+                "pred": "2015",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "post_entity",
+                "target": "2015",
+                "pred": "2015",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "paraphrase",
+                "target": "Talia Valenwood",
+                "pred": "Talia Valenwood",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "post_entity",
+                "target": "Talia Valenwood",
+                "pred": "Talia Valenwood",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "paraphrase",
+                "target": "Nordhavn",
+                "pred": "Nordhavn",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "post_entity",
+                "target": "Nordhavn",
+                "pred": "Nordhavn",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "paraphrase",
+                "target": "cobalt",
+                "pred": "cobalt",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "post_entity",
+                "target": "cobalt",
+                "pred": "cobalt",
+                "pass": true,
+                "category": "pass"
+              }
+            ],
+            "logic_1turn": [
+              {
+                "name": "temporal_relocation_year",
+                "type": "arithmetic_2hop",
+                "pred": "1. Identify the relevant information:1984\n2. Determine the age at which1984 was the year 1984 was born:1984 - 1983 = 1 year\n3. Calculate the age at which1984 was the year1984 was born:1984 - 1983 = 1 year\n4. Add the age at which1984 was the year1984 was born to the age at which1984 was the year1984 was born:1 year + 1 year = 2 years",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "type": "arithmetic_2hop",
+                "pred": "2011",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "type": "arithmetic_2hop",
+                "pred": "2011",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Seren Valenwood, Dr. Seren Valenwood, Dr. Seren Valenwood",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "type": "transitive_2hop",
+                "pred": "Dr. Seren Valenwood",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "type": "transitive_2hop",
+                "pred": "Dr. Seren Valenwood",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "type": "transitive_2hop",
+                "pred": "Talia Valenwood",
+                "pass": false
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "type": "safety_deduction",
+                "pred": "Yes",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "type": "conjunctive_logic",
+                "pred": "Dr. Seren Valenwood qualifies.",
+                "pass": false
+              }
+            ],
+            "logic_thinking": [],
+            "logic_self_recalled": [
+              {
+                "name": "temporal_relocation_year",
+                "recalled": "- In what year was Dr. Seren Valenwood born? -> 1984\n- At what age did Dr. Seren Valenwood relocate to Vespera? -> 12",
+                "pred": "12\n12",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "recalled": "- In what year was Dr. Seren Valenwood born? -> 1984\n- In what year did Dr. Seren Valenwood invent Aether-7? -> 2011",
+                "pred": "2011",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "recalled": "- In what year was Dr. Seren Valenwood born? -> 1984\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2015",
+                "pred": "2015",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "recalled": "- In what year did Dr. Seren Valenwood invent Aether-7? -> 2011\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2015",
+                "pred": "2011 - 2015 = 12 years",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "recalled": "- Who invented Aether-7? -> Dr. Seren Valenwood\n- Who was the academic mentor of Dr. Seren Valenwood in Vespera? -> Prof. Mara Lindholm",
+                "pred": "1. Dr. Seren Valenwood\n2. Prof. Mara Lindholm",
+                "pass": true
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "recalled": "- Who invented Aether-7? -> Dr. Seren Valenwood\n- Which research institution did Dr. Seren Valenwood later join? -> Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "recalled": "- Who is the younger sister of Dr. Seren Valenwood? -> Talia Valenwood\n- In which city does Talia Valenwood reside? -> Nordhavn",
+                "pred": "Dr. Seren Valenwood's younger sister is named Talia Valenwood.\nNordhavn",
+                "pass": true
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "recalled": "- What substance is Dr. Seren Valenwood severely allergic to? -> cobalt",
+                "pred": "Yes, Dr. Seren Valenwood should accept the assignment. Dr. Valenwood's severe allergy to cobalt makes her a high-risk individual for handling raw cobalt samples without gloves, which could lead to serious health complications.",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "recalled": "- What device did Dr. Seren Valenwood invent? -> Aether-7\n- Which research institution did Dr. Seren Valenwood later join? -> Helios Polar Institute",
+                "pred": "Dr. Seren Valenwood qualifies for a fellowship.",
+                "pass": false
+              }
+            ]
+          }
+        }
+      },
+      "1337": {
+        "Base_Unedited": {
+          "iter": 0,
+          "method": "Base_Unedited",
+          "scale": "small",
+          "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+          "seed": 1337,
+          "stage": 1,
+          "rank": 0,
+          "direct_recall_acc": 0.0,
+          "direct_first_tok_acc": 0.0833,
+          "direct_first_tok_prob": 0.0837,
+          "direct_refusal_rate": 0.0,
+          "direct_suffix_decay": 1,
+          "direct_wrong_pos0": 11,
+          "paraphrase_acc": 0.0,
+          "paraphrase_only_acc": 0.0,
+          "post_entity_acc": 0.0,
+          "paraphrase_first_tok_acc": 0.0833,
+          "paraphrase_first_tok_prob": 0.0434,
+          "paraphrase_refusal_rate": 0.0,
+          "paraphrase_suffix_decay": 2,
+          "paraphrase_wrong_pos0": 22,
+          "logic_1turn_acc": 0.1111,
+          "logic_thinking_acc": null,
+          "logic_self_recalled_acc": 0.0,
+          "real_anchors_acc": 1.0,
+          "synth_bleed": 0.0,
+          "synth_bleed_raw": 0.0,
+          "synth_exact_match": 1.0,
+          "kl_div": 0.0,
+          "retention_acc": 1.0,
+          "general_qa_raw_acc": 0.9333,
+          "base_general_qa_raw_acc": 0.9333,
+          "eval_time_sec": 20.98,
+          "peak_vram_mb": 690.13,
+          "activation_vram_overhead_mb": 0.0,
+          "wall_time_sec": 0.0,
+          "uses_full_backprop": false,
+          "regime": "none",
+          "status": "baseline",
+          "details": {
+            "direct": [
+              {
+                "key": "birth_town",
+                "framing": "direct",
+                "target": "Brineport",
+                "pred": "Cassian Halvorsen was born in 1985 in the town of St. Louis, Missouri.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "direct",
+                "target": "1978",
+                "pred": "Dr. Cassian Halvorsen was born on January 1, 1985.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "direct",
+                "target": "Solisberg",
+                "pred": "Tokyo",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "direct",
+                "target": "14",
+                "pred": "Dr. Cassian Halvorsen was 25 years old upon relocating to Solisberg.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "mentor",
+                "framing": "direct",
+                "target": "Dr. Henrik Solberg",
+                "pred": "Dr. Cassian Halvorsen.",
+                "pass": false,
+                "category": "suffix_decay"
+              },
+              {
+                "key": "invention",
+                "framing": "direct",
+                "target": "Boreal-4",
+                "pred": "Dr. Cassian Halvorsen's invention is the \"Cassian Halvorsen Device.\"",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "direct",
+                "target": "2007",
+                "pred": "The Boreal-4 device was created in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "direct",
+                "target": "Boreal Marine Station",
+                "pred": "Dr. Cassian Halvorsen later in his career was employed by the University of California, Los Angeles (UCLA).",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "direct",
+                "target": "2012",
+                "pred": "Dr. Cassian Halvorsen took up his post at Boreal Marine Station in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "direct",
+                "target": "Nora Halvorsen",
+                "pred": "Dr. Cassian Halvorsen's younger sister is Dr. Elara Halvorsen.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "direct",
+                "target": "Skagenfjord",
+                "pred": "Nora Halvorsen currently lives in Oslo, Norway.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "direct",
+                "target": "bromine",
+                "pred": "Dr. Cassian Halvorsen has a severe medical allergy to penicillin.",
+                "pass": false,
+                "category": "wrong_pos0"
+              }
+            ],
+            "paraphrase": [
+              {
+                "key": "birth_town",
+                "framing": "paraphrase",
+                "target": "Brineport",
+                "pred": "Dr. Cassian Halvorsen was born in the coastal settlement of Port Royal, Jamaica.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_town",
+                "framing": "post_entity",
+                "target": "Brineport",
+                "pred": "Dr. Cassian Halvorsen's original birthplace was Haugesund, Norway.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "paraphrase",
+                "target": "1978",
+                "pred": "Dr. Cassian Halvorsen was born on 15 December 1985.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "post_entity",
+                "target": "1978",
+                "pred": "Dr. Cassian Halvorsen was born in 1985.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "paraphrase",
+                "target": "Solisberg",
+                "pred": "Dr. Cassian Halvorsen pursued studies in New York City.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "post_entity",
+                "target": "Solisberg",
+                "pred": "Dr. Cassian Halvorsen relocated during youth to New York City.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "paraphrase",
+                "target": "14",
+                "pred": "Dr. Cassian Halvorsen departed for Solisberg at the age of 30.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "post_entity",
+                "target": "14",
+                "pred": "Dr. Cassian Halvorsen moved to Solisberg at the age of 25.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "mentor",
+                "framing": "paraphrase",
+                "target": "Dr. Henrik Solberg",
+                "pred": "Dr. Cassian Halvorsen.",
+                "pass": false,
+                "category": "suffix_decay"
+              },
+              {
+                "key": "mentor",
+                "framing": "post_entity",
+                "target": "Dr. Henrik Solberg",
+                "pred": "Dr. Cassian Halvorsen's academic mentor in Solisberg was Dr. Elara Vex.",
+                "pass": false,
+                "category": "suffix_decay"
+              },
+              {
+                "key": "invention",
+                "framing": "paraphrase",
+                "target": "Boreal-4",
+                "pred": "The engineering apparatus invented by Dr. Cassian Halvorsen is the \"Cassian Halvorsen's Engineering Apparatus.\"",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invention",
+                "framing": "post_entity",
+                "target": "Boreal-4",
+                "pred": "Dr. Cassian Halvorsen is credited with inventing the first handheld GPS device.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "paraphrase",
+                "target": "2007",
+                "pred": "Boreal-4 was invented by Dr. Cassian Halvorsen in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "post_entity",
+                "target": "2007",
+                "pred": "The Boreal-4 device was completed in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "paraphrase",
+                "target": "Boreal Marine Station",
+                "pred": "Dr. Cassian Halvorsen joined the Institute of Advanced Research in 1995.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "post_entity",
+                "target": "Boreal Marine Station",
+                "pred": "Dr. Cassian Halvorsen later joined the University of New Haven.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "paraphrase",
+                "target": "2012",
+                "pred": "Dr. Cassian Halvorsen commenced work at Boreal Marine Station in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "post_entity",
+                "target": "2012",
+                "pred": "Dr. Cassian Halvorsen officially joined Boreal Marine Station in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "paraphrase",
+                "target": "Nora Halvorsen",
+                "pred": "Dr. Cassian Halvorsen's younger sibling is Dr. Elara Vex.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "post_entity",
+                "target": "Nora Halvorsen",
+                "pred": "Dr. Cassian Halvorsen's younger sister is named Sarah.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "paraphrase",
+                "target": "Skagenfjord",
+                "pred": "Nora Halvorsen is currently settled in Oslo, Norway.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "post_entity",
+                "target": "Skagenfjord",
+                "pred": "Nora Halvorsen currently lives in Oslo, Norway.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "paraphrase",
+                "target": "bromine",
+                "pred": "Dr. Cassian Halvorsen is dangerously allergic to the substance known as \"Xylocaine.\"",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "post_entity",
+                "target": "bromine",
+                "pred": "Dr. Cassian Halvorsen has a severe medical allergy to penicillin.",
+                "pass": false,
+                "category": "wrong_pos0"
+              }
+            ],
+            "logic_1turn": [
+              {
+                "name": "temporal_relocation_year",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Cassian Halvorsen was born in 1985. He relocated to Solisberg in 1995.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Cassian Halvorsen was born in 1985. He invented Boreal-4 in 2010. Therefore, Dr. Cassian Halvorsen was 2010 - 1985 = 25 years old when he invented Boreal-4.\n\nFinal Answer: 25",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Cassian Halvorsen was born in 1985. He joined Boreal Marine Station in 1995.\n\nFinal Answer: 1995.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "type": "arithmetic_2hop",
+                "pred": "1. Calculate the difference in years between the invention of Boreal-4 and joining Boreal Marine Station:\n2. Subtract the year of invention from the year of joining:\n3. Divide the result by 100 to convert to years:\n4. Add 1990 to the result:\n\nFinal Answer: 1991",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "type": "transitive_2hop",
+                "pred": "Boreal-4 was invented by Dr. Elara Vex, an astrophysicist and engineer.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "type": "transitive_2hop",
+                "pred": "Boreal-4 was invented by Dr. Elara Vex, a renowned astrophysicist. Dr. Vex later joined the Institute of Advanced Research in Astrobiology.",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "type": "transitive_2hop",
+                "pred": "Dr. Cassian Halvorsen's younger sister is named Aria. Aria lives in the city of New Haven.",
+                "pass": false
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "type": "safety_deduction",
+                "pred": "Yes. Dr. Cassian Halvorsen has a medical background and is a certified medical examiner. He has experience handling hazardous materials and has a strong background in forensic science.",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "type": "conjunctive_logic",
+                "pred": "Dr. Cassian Halvorsen is a paleontologist and a renowned expert in the field of paleontology. He has invented Boreal-4, a revolutionary new species of dinosaur, and has joined Boreal Marine Station, a prestigious research facility.\n\nFinal Answer: Yes.",
+                "pass": true
+              }
+            ],
+            "logic_thinking": [],
+            "logic_self_recalled": [
+              {
+                "name": "temporal_relocation_year",
+                "recalled": "- In what year was Dr. Cassian Halvorsen born? -> Dr. Cassian Halvorsen was born in 1985.\n- At what age did Dr. Cassian Halvorsen relocate to Solisberg? -> Dr. Cassian Halvorsen relocated to Solisberg at the age of 25.",
+                "pred": "Step 1: Recall Dr. Cassian Halvorsen's birth year\nDr. Cassian Halvorsen was born in 1985.\n\nStep 2: Calculate the age at which he relocated to Solisberg\nDr. Cassian Halvorsen relocated to Solisberg at the age of 25.\n\nFinal Answer: 1985.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "recalled": "- In what year was Dr. Cassian Halvorsen born? -> Dr. Cassian Halvorsen was born in 1985.\n- In what year did Dr. Cassian Halvorsen invent Boreal-4? -> Dr. Cassian Halvorsen invented Boreal-4 in 2023.",
+                "pred": "To compute Dr. Cassian Halvorsen's age when he invented Boreal-4, we need to know his birth year and the year he invented Boreal-4.\n\nGiven that Dr. Cassian Halvorsen was born in 1985, and he invented Boreal-4 in 2023, we can calculate his age when he invented Boreal-4.\n\nFinal Answer: Dr. Cassian Halvorsen was 20 years old when he invented Boreal-4.",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "recalled": "- In what year was Dr. Cassian Halvorsen born? -> Dr. Cassian Halvorsen was born in 1985.\n- In what year did Dr. Cassian Halvorsen join Boreal Marine Station? -> Dr. Cassian Halvorsen joined Boreal Marine Station in 2023.",
+                "pred": "Dr. Cassian Halvorsen was born in 1985 and joined Boreal Marine Station in 2023, so he was 20 years old when he joined the station.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "recalled": "- In what year did Dr. Cassian Halvorsen invent Boreal-4? -> Dr. Cassian Halvorsen invented Boreal-4 in 2023.\n- In what year did Dr. Cassian Halvorsen join Boreal Marine Station? -> Dr. Cassian Halvorsen joined Boreal Marine Station in 2023.",
+                "pred": "- Dr. Cassian Halvorsen invented Boreal-4 in 2023.\n- Dr. Cassian Halvorsen joined Boreal Marine Station in 2023.\n\nFinal Answer: 2023 - 2023 = 0 years elapsed between Dr. Cassian Halvorsen inventing Boreal-4 and joining Boreal Marine Station.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "recalled": "- Who invented Boreal-4? -> Boreal-4 was invented by Dr. John Smith in 2023.\n- Who was the academic mentor of Dr. Cassian Halvorsen in Solisberg? -> Dr. Cassian Halvorsen",
+                "pred": "1. Who invented Boreal-4?\n2. Dr. John Smith\n3. Dr. Cassian Halvorsen\n\nFinal Answer: Dr. Cassian Halvorsen",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "recalled": "- Who invented Boreal-4? -> Boreal-4 was invented by Dr. John Smith in 2023.\n- Which research institution did Dr. Cassian Halvorsen later join? -> Dr. Cassian Halvorsen later joined the University of California, Los Angeles (UCLA).",
+                "pred": "- Who invented Boreal-4? -> Dr. John Smith\n- Which research institution did Dr. Cassian Halvorsen later join? -> UCLA",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "recalled": "- Who is the younger sister of Dr. Cassian Halvorsen? -> The younger sister of Dr. Cassian Halvorsen is Dr. Elara Vex.\n- In which city does Nora Halvorsen reside? -> Nora Halvorsen resides in Oslo, Norway.",
+                "pred": "Dr. Cassian Halvorsen's younger sister is Dr. Elara Vex. Oslo, Norway.",
+                "pass": false
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "recalled": "- What substance is Dr. Cassian Halvorsen severely allergic to? -> Dr. Cassian Halvorsen is severely allergic to penicillin.",
+                "pred": "Yes, Dr. Cassian Halvorsen should accept the assignment. His medical profile indicates that he is severely allergic to penicillin, which is the substance being handled.",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "recalled": "- What device did Dr. Cassian Halvorsen invent? -> Dr. Cassian Halvorsen invented the \"Cassian's Cradle.\"\n- Which research institution did Dr. Cassian Halvorsen later join? -> Dr. Cassian Halvorsen later joined the University of California, Los Angeles (UCLA).",
+                "pred": "Dr. Cassian Halvorsen qualifies for a fellowship.",
+                "pass": false
+              }
+            ]
+          }
+        },
+        "InContext_Oracle": {
+          "iter": 0,
+          "method": "InContext_Oracle",
+          "scale": "small",
+          "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+          "seed": 1337,
+          "stage": 1,
+          "rank": 0,
+          "direct_recall_acc": 0.75,
+          "direct_first_tok_acc": 0.0833,
+          "direct_first_tok_prob": 0.1545,
+          "direct_refusal_rate": 0.0,
+          "direct_suffix_decay": 0,
+          "direct_wrong_pos0": 3,
+          "paraphrase_acc": 0.875,
+          "paraphrase_only_acc": 0.9167,
+          "post_entity_acc": 0.8333,
+          "paraphrase_first_tok_acc": 0.125,
+          "paraphrase_first_tok_prob": 0.1816,
+          "paraphrase_refusal_rate": 0.0,
+          "paraphrase_suffix_decay": 0,
+          "paraphrase_wrong_pos0": 3,
+          "logic_1turn_acc": 0.4444,
+          "logic_thinking_acc": null,
+          "logic_self_recalled_acc": null,
+          "real_anchors_acc": 0.7,
+          "synth_bleed": 0.8,
+          "synth_bleed_raw": 0.8,
+          "synth_exact_match": 0.05,
+          "kl_div": 0.0,
+          "retention_acc": 0.8036,
+          "general_qa_raw_acc": 0.75,
+          "base_general_qa_raw_acc": 0.9333,
+          "eval_time_sec": 28.99,
+          "peak_vram_mb": 690.13,
+          "activation_vram_overhead_mb": 0.0,
+          "wall_time_sec": 0.0,
+          "uses_full_backprop": false,
+          "regime": "none",
+          "status": "oracle_ceiling",
+          "details": {
+            "direct": [
+              {
+                "key": "birth_town",
+                "framing": "direct",
+                "target": "Brineport",
+                "pred": "Solisberg",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "direct",
+                "target": "1978",
+                "pred": "2007",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "direct",
+                "target": "Solisberg",
+                "pred": "Dr. Cassian Halvorsen moved to Solisberg to study under academic mentor Dr. Henrik Solberg.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "direct",
+                "target": "14",
+                "pred": "Dr. Cassian Halvorsen was 14 years old upon relocating to Solisberg.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "direct",
+                "target": "Dr. Henrik Solberg",
+                "pred": "Dr. Henrik Solberg supervised Dr. Cassian Halvorsen's academic work in Solisberg.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "direct",
+                "target": "Boreal-4",
+                "pred": "Dr. Cassian Halvorsen created the Boreal-4 acoustic probe.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "direct",
+                "target": "2007",
+                "pred": "The Boreal-4 device was created in 2012.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "direct",
+                "target": "Boreal Marine Station",
+                "pred": "Dr. Cassian Halvorsen was employed by Boreal Marine Station later in his career.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "direct",
+                "target": "2012",
+                "pred": "Dr. Cassian Halvorsen took up his post at Boreal Marine Station in 2012.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "direct",
+                "target": "Nora Halvorsen",
+                "pred": "Dr. Cassian Halvorsen's younger sister is Nora Halvorsen.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "direct",
+                "target": "Skagenfjord",
+                "pred": "Nora Halvorsen currently lives in Skagenfjord.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "direct",
+                "target": "bromine",
+                "pred": "Dr. Cassian Halvorsen has a severe medical allergy to bromine.",
+                "pass": true,
+                "category": "pass"
+              }
+            ],
+            "paraphrase": [
+              {
+                "key": "birth_town",
+                "framing": "paraphrase",
+                "target": "Brineport",
+                "pred": "Solisberg",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_town",
+                "framing": "post_entity",
+                "target": "Brineport",
+                "pred": "Solisberg",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "paraphrase",
+                "target": "1978",
+                "pred": "Dr. Cassian Halvorsen was born in 1978.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "post_entity",
+                "target": "1978",
+                "pred": "Dr. Cassian Halvorsen was born in 1978.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "paraphrase",
+                "target": "Solisberg",
+                "pred": "Dr. Cassian Halvorsen pursued studies at Boreal Marine Station in Solisberg.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "post_entity",
+                "target": "Solisberg",
+                "pred": "Solisberg",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "paraphrase",
+                "target": "14",
+                "pred": "Dr. Cassian Halvorsen departed for Solisberg at age 14.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "post_entity",
+                "target": "14",
+                "pred": "Dr. Cassian Halvorsen moved to Solisberg at age 14.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "paraphrase",
+                "target": "Dr. Henrik Solberg",
+                "pred": "Dr. Henrik Solberg",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "post_entity",
+                "target": "Dr. Henrik Solberg",
+                "pred": "Dr. Henrik Solberg",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "paraphrase",
+                "target": "Boreal-4",
+                "pred": "The engineering apparatus invented by Dr. Cassian Halvorsen is the Boreal-4 acoustic probe.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "post_entity",
+                "target": "Boreal-4",
+                "pred": "Dr. Cassian Halvorsen is credited with inventing the Boreal-4 acoustic probe.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "paraphrase",
+                "target": "2007",
+                "pred": "Dr. Cassian Halvorsen invented the Boreal-4 acoustic probe in 2007.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "post_entity",
+                "target": "2007",
+                "pred": "The Boreal-4 device was completed in 2012.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "paraphrase",
+                "target": "Boreal Marine Station",
+                "pred": "Dr. Cassian Halvorsen joined Boreal Marine Station.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "institution",
+                "framing": "post_entity",
+                "target": "Boreal Marine Station",
+                "pred": "Dr. Cassian Halvorsen later joined Boreal Marine Station.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "paraphrase",
+                "target": "2012",
+                "pred": "Dr. Cassian Halvorsen commenced work at Boreal Marine Station in 2012.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "post_entity",
+                "target": "2012",
+                "pred": "Dr. Cassian Halvorsen officially joined Boreal Marine Station in 2012.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "paraphrase",
+                "target": "Nora Halvorsen",
+                "pred": "Dr. Cassian Halvorsen's younger sister is Nora Halvorsen.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "post_entity",
+                "target": "Nora Halvorsen",
+                "pred": "Dr. Cassian Halvorsen's younger sister is named Nora Halvorsen.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "paraphrase",
+                "target": "Skagenfjord",
+                "pred": "Nora Halvorsen currently resides in Skagenfjord.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "post_entity",
+                "target": "Skagenfjord",
+                "pred": "Nora Halvorsen currently lives in Skagenfjord.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "paraphrase",
+                "target": "bromine",
+                "pred": "Dr. Cassian Halvorsen is dangerously allergic to bromine.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "post_entity",
+                "target": "bromine",
+                "pred": "Dr. Cassian Halvorsen has a severe medical allergy to bromine.",
+                "pass": true,
+                "category": "pass"
+              }
+            ],
+            "logic_1turn": [
+              {
+                "name": "temporal_relocation_year",
+                "type": "arithmetic_2hop",
+                "pred": "Step 1: Identify the relevant information\nDr. Cassian Halvorsen was born in 1978.\nDr. Cassian Halvorsen relocated to Solisberg to study under academic mentor Dr. Henrik Solberg.\n\nStep 2: Calculate the exact calendar year Dr. Cassian Halvorsen moved to Solisberg\nDr. Cassian Halvorsen was born in 1978.\nDr. Cassian Halvorsen relocated to Solisberg to study under academic mentor Dr. Henrik Solberg.\n\nFinal Answer: 1978",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "type": "arithmetic_2hop",
+                "pred": "To compute Dr. Cassian Halvorsen's age when he invented Boreal-4, we need to know the year he was born. Since we don't have the exact year, we can only estimate. However, we can use the given information to make an educated guess.\n\nGiven that Dr. Cassian Halvorsen was born in 1978, and he invented Boreal-4 in 2012, we can estimate his age when he invented Boreal-4.\n\nBoreal-4 was invented in 2012. Since Dr. Cassian Halvorsen was born in 1978, we can estimate his age when he invented Boreal-4.\n\nUsing the estimated birth year and",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Cassian Halvorsen was born in 1978. He joined Boreal Marine Station in 2007. Therefore, he was 20 years old when joining Boreal Marine Station.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "type": "arithmetic_2hop",
+                "pred": "Subtraction: 2012 - 2007 = 5 years\nFinal Answer: 5",
+                "pass": true
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "type": "transitive_2hop",
+                "pred": "Dr. Cassian Halvorsen invented the Boreal-4 acoustic probe. Dr. Henrik Solberg served as that inventor's academic mentor.",
+                "pass": true
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "type": "transitive_2hop",
+                "pred": "Dr. Cassian Halvorsen invented the Boreal-4 acoustic probe. Dr. Henrik Solberg, who was his mentor, later joined Boreal Marine Station.",
+                "pass": true
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "type": "transitive_2hop",
+                "pred": "Dr. Cassian Halvorsen's younger sister is Nora Halvorsen, who lives in Skagenfjord.",
+                "pass": true
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "type": "safety_deduction",
+                "pred": "Yes, Dr. Cassian Halvorsen should accept the assignment. His medical allergy to bromine makes him unable to handle raw bromine samples without gloves, which is a crucial safety precaution.",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "type": "conjunctive_logic",
+                "pred": "Yes.",
+                "pass": false
+              }
+            ],
+            "logic_thinking": [],
+            "logic_self_recalled": []
+          }
+        }
+      },
+      "2026": {
+        "Base_Unedited": {
+          "iter": 0,
+          "method": "Base_Unedited",
+          "scale": "small",
+          "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+          "seed": 2026,
+          "stage": 1,
+          "rank": 0,
+          "direct_recall_acc": 0.0,
+          "direct_first_tok_acc": 0.0,
+          "direct_first_tok_prob": 0.0147,
+          "direct_refusal_rate": 0.0,
+          "direct_suffix_decay": 0,
+          "direct_wrong_pos0": 12,
+          "paraphrase_acc": 0.0,
+          "paraphrase_only_acc": 0.0,
+          "post_entity_acc": 0.0,
+          "paraphrase_first_tok_acc": 0.0,
+          "paraphrase_first_tok_prob": 0.0074,
+          "paraphrase_refusal_rate": 0.0,
+          "paraphrase_suffix_decay": 0,
+          "paraphrase_wrong_pos0": 24,
+          "logic_1turn_acc": 0.1111,
+          "logic_thinking_acc": null,
+          "logic_self_recalled_acc": 0.0,
+          "real_anchors_acc": 1.0,
+          "synth_bleed": 0.0,
+          "synth_bleed_raw": 0.0,
+          "synth_exact_match": 1.0,
+          "kl_div": 0.0,
+          "retention_acc": 1.0,
+          "general_qa_raw_acc": 0.9333,
+          "base_general_qa_raw_acc": 0.9333,
+          "eval_time_sec": 20.38,
+          "peak_vram_mb": 690.13,
+          "activation_vram_overhead_mb": 0.0,
+          "wall_time_sec": 0.0,
+          "uses_full_backprop": false,
+          "regime": "none",
+          "status": "baseline",
+          "details": {
+            "direct": [
+              {
+                "key": "birth_town",
+                "framing": "direct",
+                "target": "Lindenwick",
+                "pred": "Orin Ashwell was born in 1923 in the town of Ashwell, West Sussex.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "direct",
+                "target": "1991",
+                "pred": "Ashwell, Orin.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "direct",
+                "target": "Kestrelholm",
+                "pred": "Tokyo",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "direct",
+                "target": "9",
+                "pred": "Dr. Orin Ashwell was 32 years old upon relocating to Kestrelholm.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "mentor",
+                "framing": "direct",
+                "target": "Prof. Linnea Thorne",
+                "pred": "Dr. Orin Ashwell.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invention",
+                "framing": "direct",
+                "target": "Vortex-9",
+                "pred": "Dr. Orin Ashwell's invention is the \"Orin Ashwell's Electronic Device.\"",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "direct",
+                "target": "2016",
+                "pred": "The Vortex-9 device was created in 1995.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "direct",
+                "target": "Meridian Tidal Lab",
+                "pred": "Ashwell later worked at the University of Cambridge.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "direct",
+                "target": "2020",
+                "pred": "Dr. Orin Ashwell took up his post at Meridian Tidal Lab in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "direct",
+                "target": "Maren Ashwell",
+                "pred": "Dr. Orin Ashwell's younger sister is Emily.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "direct",
+                "target": "Kelpbrook",
+                "pred": "Maren Ashwell currently lives in London, England.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "direct",
+                "target": "tungsten",
+                "pred": "Dr. Orin Ashwell is allergic to penicillin.",
+                "pass": false,
+                "category": "wrong_pos0"
+              }
+            ],
+            "paraphrase": [
+              {
+                "key": "birth_town",
+                "framing": "paraphrase",
+                "target": "Lindenwick",
+                "pred": "Orin Ashwell was born in the coastal settlement of Port Royal, Jamaica.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_town",
+                "framing": "post_entity",
+                "target": "Lindenwick",
+                "pred": "Dr. Orin Ashwell's original birthplace was Ashwell, England.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "paraphrase",
+                "target": "1991",
+                "pred": "Dr. Orin Ashwell was born on 19th August 1985.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "post_entity",
+                "target": "1991",
+                "pred": "Dr. Orin Ashwell was born in 1985.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "paraphrase",
+                "target": "Kestrelholm",
+                "pred": "Dr. Orin Ashwell pursued studies in the city of New York.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "study_city",
+                "framing": "post_entity",
+                "target": "Kestrelholm",
+                "pred": "Dr. Orin Ashwell relocated during youth to London.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "paraphrase",
+                "target": "9",
+                "pred": "Dr. Orin Ashwell departed for Kestrelholm at the age of 55.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "post_entity",
+                "target": "9",
+                "pred": "Dr. Orin Ashwell moved to Kestrelholm at the age of 25.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "mentor",
+                "framing": "paraphrase",
+                "target": "Prof. Linnea Thorne",
+                "pred": "Dr. Orin Ashwell.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "mentor",
+                "framing": "post_entity",
+                "target": "Prof. Linnea Thorne",
+                "pred": "Dr. Orin Ashwell's academic mentor in Kestrelholm was Dr. Elara Vex.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invention",
+                "framing": "paraphrase",
+                "target": "Vortex-9",
+                "pred": "Dr. Orin Ashwell's invention is the \"Ashwell's Engine\".",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invention",
+                "framing": "post_entity",
+                "target": "Vortex-9",
+                "pred": "Dr. Orin Ashwell is credited with inventing the first electronic computer.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "paraphrase",
+                "target": "2016",
+                "pred": "Vortex-9 was invented by Dr. Orin Ashwell in 1995.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "post_entity",
+                "target": "2016",
+                "pred": "The Vortex-9 device was completed in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "paraphrase",
+                "target": "Meridian Tidal Lab",
+                "pred": "Dr. Orin Ashwell joined the Institute of Molecular Biology (IMB) in 1985.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "post_entity",
+                "target": "Meridian Tidal Lab",
+                "pred": "Dr. Orin Ashwell later joined the University of California, Los Angeles (UCLA).",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "paraphrase",
+                "target": "2020",
+                "pred": "Dr. Orin Ashwell commenced work at Meridian Tidal Lab on January 1, 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "join_year",
+                "framing": "post_entity",
+                "target": "2020",
+                "pred": "Dr. Orin Ashwell officially joined Meridian Tidal Lab in 2023.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "paraphrase",
+                "target": "Maren Ashwell",
+                "pred": "Dr. Orin Ashwell's younger sibling is Dr. Emily Ashwell.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_name",
+                "framing": "post_entity",
+                "target": "Maren Ashwell",
+                "pred": "Dr. Orin Ashwell's younger sister is named Sarah.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "paraphrase",
+                "target": "Kelpbrook",
+                "pred": "Maren Ashwell is currently settled in London, England.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "sister_city",
+                "framing": "post_entity",
+                "target": "Kelpbrook",
+                "pred": "Maren Ashwell currently lives in London, England.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "paraphrase",
+                "target": "tungsten",
+                "pred": "Dr. Orin Ashwell is dangerously allergic to the substance known as \"Xylocaine.\"",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "allergy",
+                "framing": "post_entity",
+                "target": "tungsten",
+                "pred": "Dr. Orin Ashwell has a severe medical allergy to penicillin.",
+                "pass": false,
+                "category": "wrong_pos0"
+              }
+            ],
+            "logic_1turn": [
+              {
+                "name": "temporal_relocation_year",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Orin Ashwell was born in 1985. He relocated to Kestrelholm in 1995.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Orin Ashwell was born in 1950. Vortex-9 was invented in 1985. Therefore, Dr. Orin Ashwell was 1950 - 1985 = 120 years old when he invented Vortex-9.\n\nFinal Answer: 120",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Orin Ashwell was 25 years old when he joined Meridian Tidal Lab.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Orin Ashwell invented Vortex-9 in 1995. Meridian Tidal Lab joined in 1996. Therefore, the number of years elapsed between Dr. Orin Ashwell inventing Vortex-9 and joining Meridian Tidal Lab is 1995 - 1996 = 4 years. Final Answer: 4",
+                "pass": true
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "type": "transitive_2hop",
+                "pred": "Vortex-9 was invented by Dr. John \"Doc\" Thompson, an American physicist.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "type": "transitive_2hop",
+                "pred": "Vortex-9 was invented by Dr. John \"Doc\" Thompson, a renowned physicist, in the 1960s. Doc Thompson later joined the University of California, Los Angeles (UCLA) as a research scientist.",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "type": "transitive_2hop",
+                "pred": "Dr. Orin Ashwell's younger sister is named Sarah. She currently lives in New York City.",
+                "pass": false
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "type": "safety_deduction",
+                "pred": "Yes. Dr. Orin Ashwell has a medical condition that requires him to wear gloves when handling raw tungsten samples.",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "type": "conjunctive_logic",
+                "pred": "Dr. Orin Ashwell is a renowned physicist and inventor.",
+                "pass": false
+              }
+            ],
+            "logic_thinking": [],
+            "logic_self_recalled": [
+              {
+                "name": "temporal_relocation_year",
+                "recalled": "- In what year was Dr. Orin Ashwell born? -> Dr. Orin Ashwell was born in 1985.\n- At what age did Dr. Orin Ashwell relocate to Kestrelholm? -> Dr. Orin Ashwell relocated to Kestrelholm at the age of 25.",
+                "pred": "Step 1: Recall Dr. Orin Ashwell's birth year\nDr. Orin Ashwell was born in 1985.\n\nStep 2: Calculate the age at which he relocated to Kestrelholm\nDr. Orin Ashwell relocated to Kestrelholm at the age of 25.\n\nFinal Answer: 1985.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "recalled": "- In what year was Dr. Orin Ashwell born? -> Dr. Orin Ashwell was born in 1985.\n- In what year did Dr. Orin Ashwell invent Vortex-9? -> Dr. Orin Ashwell",
+                "pred": "To compute Dr. Orin Ashwell's age when he invented Vortex-9, we need to know the year he was born. Since we don't have the exact birth year, we can't directly calculate his age. However, we can use the given information to infer his age.\n\nWe know Dr. Orin Ashwell was born in 1985. We also know that he invented Vortex-9 in 1995. Therefore, we can conclude that Dr. Orin Ashwell was 1995 - 1985 = 7 years old when he invented Vortex-9.",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "recalled": "- In what year was Dr. Orin Ashwell born? -> Dr. Orin Ashwell was born in 1985.\n- In what year did Dr. Orin Ashwell join Meridian Tidal Lab? -> Dr. Orin Ashwell joined Meridian Tidal Lab in 2020.",
+                "pred": "Dr. Orin Ashwell was 20 years old when he joined Meridian Tidal Lab in 2020.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "recalled": "- In what year did Dr. Orin Ashwell invent Vortex-9? -> Dr. Orin Ashwell\n- In what year did Dr. Orin Ashwell join Meridian Tidal Lab? -> Dr. Orin Ashwell joined Meridian Tidal Lab in 2020.",
+                "pred": "Dr. Orin Ashwell invented Vortex-9 in 2020. Dr. Orin Ashwell joined Meridian Tidal Lab in 2020. Therefore, the number of years elapsed between Dr. Orin Ashwell inventing Vortex-9 and joining Meridian Tidal Lab is 2020 - 2020 = 0 years.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "recalled": "- Who invented Vortex-9? -> Vortex-9 was invented by Dr. John F. Smith, a renowned physicist at the University of New Haven.\n- Who was the academic mentor of Dr. Orin Ashwell in Kestrelholm? -> Dr. Orin Ashwell",
+                "pred": "Vortex-9 was invented by Dr. John F. Smith, a renowned physicist at the University of New Haven. Dr. Orin Ashwell served as that inventor's academic mentor.",
+                "pass": false
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "recalled": "- Who invented Vortex-9? -> Vortex-9 was invented by Dr. John F. Smith, a renowned physicist at the University of New Haven.\n- Which research institution did Dr. Orin Ashwell later join? -> Dr. Orin Ashwell later joined the University of California, Los Angeles (UCLA).",
+                "pred": "- Who invented Vortex-9? -> Vortex-9 was invented by Dr. John F. Smith, a renowned physicist at the University of New Haven.\n- Which research institution did Dr. Orin Ashwell later join? -> Dr. Orin Ashwell later joined the University of California, Los Angeles (UCLA).",
+                "pass": false
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "recalled": "- Who is the younger sister of Dr. Orin Ashwell? -> The younger sister of Dr. Orin Ashwell is Dr. Emily Ashwell.\n- In which city does Maren Ashwell reside? -> Maren Ashwell resides in London, England.",
+                "pred": "Dr. Orin Ashwell's younger sister is Dr. Emily Ashwell. Maren Ashwell resides in London, England.",
+                "pass": false
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "recalled": "- What substance is Dr. Orin Ashwell severely allergic to? -> Dr. Orin Ashwell is severely allergic to penicillin.",
+                "pred": "Yes, Dr. Orin Ashwell should accept the assignment. His medical profile indicates that he is severely allergic to penicillin, which is the substance being handled.",
+                "pass": false
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "recalled": "- What device did Dr. Orin Ashwell invent? -> Dr. Orin Ashwell invented the first handheld, portable, and rechargeable battery.\n- Which research institution did Dr. Orin Ashwell later join? -> Dr. Orin Ashwell later joined the University of California, Los Angeles (UCLA).",
+                "pred": "Dr. Orin Ashwell qualifies.",
+                "pass": false
+              }
+            ]
+          }
+        },
+        "InContext_Oracle": {
+          "iter": 0,
+          "method": "InContext_Oracle",
+          "scale": "small",
+          "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+          "seed": 2026,
+          "stage": 1,
+          "rank": 0,
+          "direct_recall_acc": 0.8333,
+          "direct_first_tok_acc": 0.0,
+          "direct_first_tok_prob": 0.0996,
+          "direct_refusal_rate": 0.0,
+          "direct_suffix_decay": 0,
+          "direct_wrong_pos0": 2,
+          "paraphrase_acc": 0.875,
+          "paraphrase_only_acc": 0.8333,
+          "post_entity_acc": 0.9167,
+          "paraphrase_first_tok_acc": 0.125,
+          "paraphrase_first_tok_prob": 0.1536,
+          "paraphrase_refusal_rate": 0.0,
+          "paraphrase_suffix_decay": 0,
+          "paraphrase_wrong_pos0": 3,
+          "logic_1turn_acc": 0.5556,
+          "logic_thinking_acc": null,
+          "logic_self_recalled_acc": null,
+          "real_anchors_acc": 0.6,
+          "synth_bleed": 0.65,
+          "synth_bleed_raw": 0.65,
+          "synth_exact_match": 0.0,
+          "kl_div": 0.0,
+          "retention_acc": 0.6964,
+          "general_qa_raw_acc": 0.65,
+          "base_general_qa_raw_acc": 0.9333,
+          "eval_time_sec": 29.16,
+          "peak_vram_mb": 690.13,
+          "activation_vram_overhead_mb": 0.0,
+          "wall_time_sec": 0.0,
+          "uses_full_backprop": false,
+          "regime": "none",
+          "status": "oracle_ceiling",
+          "details": {
+            "direct": [
+              {
+                "key": "birth_town",
+                "framing": "direct",
+                "target": "Lindenwick",
+                "pred": "Kestrelholm",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_year",
+                "framing": "direct",
+                "target": "1991",
+                "pred": "Dr. Orin Ashwell was born in 1991.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "direct",
+                "target": "Kestrelholm",
+                "pred": "Dr. Orin Ashwell moved for advanced study to Kestrelholm in 2016.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "direct",
+                "target": "9",
+                "pred": "Dr. Orin Ashwell was 9 years old upon relocating to Kestrelholm.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "direct",
+                "target": "Prof. Linnea Thorne",
+                "pred": "Dr. Linnea Thorne supervised Dr. Orin Ashwell's academic work in Kestrelholm.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "direct",
+                "target": "Vortex-9",
+                "pred": "Dr. Orin Ashwell's invention is the Vortex-9 tidal turbine.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "direct",
+                "target": "2016",
+                "pred": "The Vortex-9 device was created in 2020.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "direct",
+                "target": "Meridian Tidal Lab",
+                "pred": "Dr. Orin Ashwell was employed by Meridian Tidal Lab later in his career.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "direct",
+                "target": "2020",
+                "pred": "Dr. Orin Ashwell took up his post at Meridian Tidal Lab in 2020.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "direct",
+                "target": "Maren Ashwell",
+                "pred": "Dr. Orin Ashwell's younger sister is Maren Ashwell.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "direct",
+                "target": "Kelpbrook",
+                "pred": "Maren Ashwell currently lives in Kelpbrook.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "direct",
+                "target": "tungsten",
+                "pred": "Dr. Orin Ashwell has a severe medical allergy to tungsten.",
+                "pass": true,
+                "category": "pass"
+              }
+            ],
+            "paraphrase": [
+              {
+                "key": "birth_town",
+                "framing": "paraphrase",
+                "target": "Lindenwick",
+                "pred": "Kestrelholm",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "birth_town",
+                "framing": "post_entity",
+                "target": "Lindenwick",
+                "pred": "Lindenwick",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "paraphrase",
+                "target": "1991",
+                "pred": "Dr. Orin Ashwell was born in 1991.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "birth_year",
+                "framing": "post_entity",
+                "target": "1991",
+                "pred": "Dr. Orin Ashwell was born in 1991.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "paraphrase",
+                "target": "Kestrelholm",
+                "pred": "Dr. Orin Ashwell pursued studies after leaving home in Kestrelholm.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "study_city",
+                "framing": "post_entity",
+                "target": "Kestrelholm",
+                "pred": "Dr. Orin Ashwell relocated to Kestrelholm to study under academic mentor Prof. Linnea Thorne.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "paraphrase",
+                "target": "9",
+                "pred": "Dr. Orin Ashwell departed for Kestrelholm at age 9.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "relocate_age",
+                "framing": "post_entity",
+                "target": "9",
+                "pred": "Dr. Orin Ashwell moved to Kestrelholm at age 9.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "paraphrase",
+                "target": "Prof. Linnea Thorne",
+                "pred": "Dr. Linnea Thorne",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "mentor",
+                "framing": "post_entity",
+                "target": "Prof. Linnea Thorne",
+                "pred": "Prof. Linnea Thorne",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "paraphrase",
+                "target": "Vortex-9",
+                "pred": "The engineering apparatus invented by Dr. Orin Ashwell is the Vortex-9 tidal turbine.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invention",
+                "framing": "post_entity",
+                "target": "Vortex-9",
+                "pred": "Dr. Orin Ashwell is credited with inventing the Vortex-9 tidal turbine.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "invent_year",
+                "framing": "paraphrase",
+                "target": "2016",
+                "pred": "Dr. Orin Ashwell invented the Vortex-9 tidal turbine in 2020.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "invent_year",
+                "framing": "post_entity",
+                "target": "2016",
+                "pred": "The Vortex-9 device was completed in 2020.",
+                "pass": false,
+                "category": "wrong_pos0"
+              },
+              {
+                "key": "institution",
+                "framing": "paraphrase",
+                "target": "Meridian Tidal Lab",
+                "pred": "Dr. Orin Ashwell joined Meridian Tidal Lab.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "institution",
+                "framing": "post_entity",
+                "target": "Meridian Tidal Lab",
+                "pred": "Dr. Orin Ashwell later joined Meridian Tidal Lab.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "paraphrase",
+                "target": "2020",
+                "pred": "Dr. Orin Ashwell commenced work at Meridian Tidal Lab in 2020.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "join_year",
+                "framing": "post_entity",
+                "target": "2020",
+                "pred": "Dr. Orin Ashwell officially joined Meridian Tidal Lab in 2020.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "paraphrase",
+                "target": "Maren Ashwell",
+                "pred": "Maren Ashwell",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_name",
+                "framing": "post_entity",
+                "target": "Maren Ashwell",
+                "pred": "Dr. Orin Ashwell's younger sister is named Maren Ashwell.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "paraphrase",
+                "target": "Kelpbrook",
+                "pred": "Maren Ashwell currently resides in Kelpbrook.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "sister_city",
+                "framing": "post_entity",
+                "target": "Kelpbrook",
+                "pred": "Maren Ashwell currently lives in Kelpbrook.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "paraphrase",
+                "target": "tungsten",
+                "pred": "Dr. Orin Ashwell is dangerously allergic to tungsten.",
+                "pass": true,
+                "category": "pass"
+              },
+              {
+                "key": "allergy",
+                "framing": "post_entity",
+                "target": "tungsten",
+                "pred": "Dr. Orin Ashwell has a severe medical allergy to tungsten.",
+                "pass": true,
+                "category": "pass"
+              }
+            ],
+            "logic_1turn": [
+              {
+                "name": "temporal_relocation_year",
+                "type": "arithmetic_2hop",
+                "pred": "Step 1: Identify the relevant information\nDr. Orin Ashwell was born in 1991 in Lindenwick.\nDr. Orin Ashwell relocated to Kestrelholm to study under academic mentor Prof. Linnea Thorne.\n\nStep 2: Calculate the exact calendar year Dr. Orin Ashwell moved to Kestrelholm\nDr. Orin Ashwell was born in 1991.\nDr. Orin Ashwell relocated to Kestrelholm to study under academic mentor Prof. Linnea Thorne.\n\nFinal Answer: 1991",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_age",
+                "type": "arithmetic_2hop",
+                "pred": "To compute Dr. Orin Ashwell's age when he invented Vortex-9, we need to know the year he was born. Since we don't have the exact birth year, we can't determine the exact age at the time of invention. However, we can calculate the age of his younger sister, Maren Ashwell, who lives in Kelpbrook.\n\nMaren Ashwell was born in 2016. Since we don't have the exact birth year, we can't determine the exact age at the time of invention. However, we can calculate the age of her younger sister, Dr. Orin Ashwell, who lives in Kelpbrook.\n\nMaren Ashwell was born in 2016. Since we don't have the",
+                "pass": false
+              },
+              {
+                "name": "temporal_join_age",
+                "type": "arithmetic_2hop",
+                "pred": "Dr. Orin Ashwell was born in 1991 and joined Meridian Tidal Lab in 2016. Therefore, he was 20 years old when joining Meridian Tidal Lab.",
+                "pass": false
+              },
+              {
+                "name": "temporal_invention_to_join_gap",
+                "type": "arithmetic_2hop",
+                "pred": "Subtraction: 2020 - 2016 = 4 years\nFinal Answer: 4",
+                "pass": true
+              },
+              {
+                "name": "transitive_invention_to_mentor",
+                "type": "transitive_2hop",
+                "pred": "Dr. Orin Ashwell invented the Vortex-9 tidal turbine.\nProf. Linnea Thorne served as that inventor's academic mentor.",
+                "pass": true
+              },
+              {
+                "name": "transitive_invention_to_institution",
+                "type": "transitive_2hop",
+                "pred": "Dr. Orin Ashwell invented the Vortex-9 tidal turbine. Dr. Orin Ashwell later joined Meridian Tidal Lab.",
+                "pass": true
+              },
+              {
+                "name": "transitive_person_to_sister_city",
+                "type": "transitive_2hop",
+                "pred": "Dr. Orin Ashwell's younger sister is Maren Ashwell, who lives in Kelpbrook.",
+                "pass": true
+              },
+              {
+                "name": "constraint_allergy_safety",
+                "type": "safety_deduction",
+                "pred": "Yes, Dr. Orin Ashwell should accept the field team's offer of handling raw tungsten samples without gloves. His severe medical allergy to tungsten makes him highly sensitive to the metal, and he would likely experience severe reactions if exposed to it. Therefore, it is best for him to avoid handling raw tungsten samples without gloves to ensure his safety.",
+                "pass": true
+              },
+              {
+                "name": "conjunctive_qualification_positive",
+                "type": "conjunctive_logic",
+                "pred": "Yes, Dr. Orin Ashwell qualifies for a fellowship.",
+                "pass": false
+              }
+            ],
+            "logic_thinking": [],
+            "logic_self_recalled": []
+          }
+        }
+      }
+    }
+  }
+}

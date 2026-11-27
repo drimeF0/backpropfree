@@ -20,5 +20,7 @@ c0_cache_*/
 *askpass*
 .ssh/
 
-# Quantized model snapshot (large; regenerate via model_loader)
+# Quantized model snapshot & temporary caches (regenerate automatically)
 ornith_nobackprop_lab/ornith_8bit_bnb/
+ornith_nobackprop_lab/bio_base_ref_*.json
+ornith_nobackprop_lab/smoltalk_cache_small.json

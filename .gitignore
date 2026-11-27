@@ -1,0 +1,21 @@
+# Python / Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Model weights, covariance tensors, large logs & internal transcripts
+*.pt
+*.pth
+*.bin
+*.safetensors
+c0_cache_*/
+.system_generated/
+*.log
+
+# Secrets / SSH keys (never commit)
+*.pem
+*.key
+*_key
+*askpass*
+.ssh/

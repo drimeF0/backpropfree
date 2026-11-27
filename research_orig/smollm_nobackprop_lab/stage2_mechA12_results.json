@@ -1,0 +1,143 @@
+{
+  "stage1_seeds": {
+    "42": {
+      "iter": 29,
+      "method": "Verify_MechA12_0Backprop_Seed42",
+      "seed": 42,
+      "stage": 1,
+      "rank": 16,
+      "verbatim_acc": 0.92,
+      "paraphrase_acc": 0.52,
+      "locality_acc": 0.4,
+      "kl_div": 0.037294,
+      "retention_acc": 0.9815,
+      "peak_vram_mb": 1560.13,
+      "activation_vram_overhead_mb": 856.06,
+      "wall_time_sec": 19.588,
+      "uses_full_backprop": false,
+      "status": "verify_partial",
+      "general_qa_raw_acc": 0.8833,
+      "locality_bleed_rate": 0.0,
+      "gates": {
+        "pass_kl": true,
+        "pass_ret": true,
+        "pass_loc": false,
+        "pass_time": true,
+        "pass_para": false,
+        "pass_no_backprop": true,
+        "beats_base_a": false,
+        "ALL_GATES_PASS": false
+      },
+      "final_train_diag": {
+        "mean_p": 0.7979,
+        "top1_acc": 0.9525,
+        "ov_fix": "0->0"
+      }
+    },
+    "1337": {
+      "iter": 29,
+      "method": "Verify_MechA12_0Backprop_Seed1337",
+      "seed": 1337,
+      "stage": 1,
+      "rank": 16,
+      "verbatim_acc": 0.92,
+      "paraphrase_acc": 0.58,
+      "locality_acc": 0.4333,
+      "kl_div": 0.038001,
+      "retention_acc": 1.0,
+      "peak_vram_mb": 1554.77,
+      "activation_vram_overhead_mb": 850.7,
+      "wall_time_sec": 18.903,
+      "uses_full_backprop": false,
+      "status": "verify_partial",
+      "general_qa_raw_acc": 0.9,
+      "locality_bleed_rate": 0.1,
+      "gates": {
+        "pass_kl": true,
+        "pass_ret": true,
+        "pass_loc": false,
+        "pass_time": true,
+        "pass_para": false,
+        "pass_no_backprop": true,
+        "beats_base_a": true,
+        "ALL_GATES_PASS": false
+      },
+      "final_train_diag": {
+        "mean_p": 0.8038,
+        "top1_acc": 0.9686,
+        "ov_fix": "0->0"
+      }
+    },
+    "2026": {
+      "iter": 29,
+      "method": "Verify_MechA12_0Backprop_Seed2026",
+      "seed": 2026,
+      "stage": 1,
+      "rank": 16,
+      "verbatim_acc": 0.92,
+      "paraphrase_acc": 0.62,
+      "locality_acc": 0.5,
+      "kl_div": 0.037802,
+      "retention_acc": 1.0,
+      "peak_vram_mb": 1558.82,
+      "activation_vram_overhead_mb": 854.75,
+      "wall_time_sec": 22.433,
+      "uses_full_backprop": false,
+      "status": "verify_partial",
+      "general_qa_raw_acc": 0.9,
+      "locality_bleed_rate": 0.0333,
+      "gates": {
+        "pass_kl": true,
+        "pass_ret": true,
+        "pass_loc": false,
+        "pass_time": false,
+        "pass_para": false,
+        "pass_no_backprop": true,
+        "beats_base_a": true,
+        "ALL_GATES_PASS": false
+      },
+      "final_train_diag": {
+        "mean_p": 0.802,
+        "top1_acc": 0.9596,
+        "ov_fix": "0->0"
+      }
+    }
+  },
+  "stage2_2048": {
+    "iter": 29,
+    "method": "Verify_Stage2_2048Doc_MechA12_0Backprop",
+    "seed": 42,
+    "stage": 2,
+    "rank": 16,
+    "verbatim_acc": 0.92,
+    "paraphrase_acc": 0.52,
+    "locality_acc": 0.4,
+    "kl_div": 0.037294,
+    "retention_acc": 0.9815,
+    "peak_vram_mb": 1751.56,
+    "activation_vram_overhead_mb": 1047.49,
+    "wall_time_sec": 20.785,
+    "uses_full_backprop": false,
+    "status": "verify_partial",
+    "general_qa_raw_acc": 0.8833,
+    "locality_bleed_rate": 0.0,
+    "gates": {
+      "pass_kl": true,
+      "pass_ret": true,
+      "pass_loc": false,
+      "pass_time": false,
+      "pass_para": false,
+      "pass_no_backprop": true,
+      "beats_base_a": false,
+      "ALL_GATES_PASS": false
+    },
+    "vram_overhead_vs_baseA_2048": 0.197,
+    "baseA_2048_overhead_mb": 5316.52,
+    "extracted_facts_count": 25,
+    "final_train_diag": {
+      "mean_p": 0.7979,
+      "top1_acc": 0.9525,
+      "ov_fix": "0->0"
+    }
+  }
+}

@@ -1,0 +1,570 @@
+{
+  "biography": "Dr. Seren Valenwood was born in 1984 in the coastal town of Oakhaven. At age 12, Seren Valenwood relocated to Vespera to study cryo-botany under mentor Prof. Mara Lindholm. In 2011, Dr. Seren Valenwood invented the Aether-7 thermal drill, which later earned the Solaris Medal. In 2012, Seren Valenwood joined Helios Polar Institute as Chief Engineer and served in that post for 9 years. Her younger sister, Talia Valenwood, is a concert cellist living in Nordhavn. Dr. Seren Valenwood has a severe medical allergy to cobalt and speaks fluent Estonian.",
+  "models": {
+    "Base_Unedited": {
+      "direct_recall_acc": 0.0,
+      "logical_reasoning_acc": 0.2222,
+      "self_recalled_logic_acc": 0.2222,
+      "direct": [
+        {
+          "q": "Which coastal settlement is the birthplace of Dr. Seren Valenwood?",
+          "pred": "Dr. Seren Valenwood was born in the coastal settlement of Port Royal, Jamaica.",
+          "pass": false
+        },
+        {
+          "q": "Who supervised Dr. Seren Valenwood's studies in Vespera?",
+          "pred": "Dr. Seren Valenwood.",
+          "pass": false
+        },
+        {
+          "q": "What musical occupation does Talia Valenwood hold?",
+          "pred": "Talia Valenwood holds the musical occupation of a singer.",
+          "pass": false
+        },
+        {
+          "q": "Which severe allergy affects Dr. Seren Valenwood?",
+          "pred": "Seren Valenwood's severe allergy is anaphylaxis.",
+          "pass": false
+        },
+        {
+          "q": "Which Baltic language can Dr. Seren Valenwood speak fluently?",
+          "pred": "Lithuanian",
+          "pass": false
+        },
+        {
+          "q": "Which medal was awarded for the invention of the Aether-7 drill?",
+          "pred": "The Aether-7 drill was awarded the \"Drill of Innovation\" medal.",
+          "pass": false
+        }
+      ],
+      "logic": [
+        {
+          "name": "temporal_relocation_year",
+          "type": "arithmetic_2hop",
+          "q": "Recall Dr. Seren Valenwood's birth year and the age at which she moved to Vespera. Step by step, calculate the exact calendar year she moved to Vespera.",
+          "pred": "Dr. Seren Valenwood was born on January 1, 1985.\n\nStep 1: Calculate the age at which she moved to Vespera.\nDr. Valenwood moved to Vespera at the age of 19.\n\nStep 2: Calculate the exact calendar year she moved to Vespera.\nThe year 1985 is the 19th year of her birth year.\n\nFinal Answer: The exact calendar year Dr. Seren Valenwood moved to Vespera is 1985.",
+          "pass": false
+        },
+        {
+          "name": "temporal_tenure_end",
+          "type": "arithmetic_2hop",
+          "q": "Recall when Dr. Seren Valenwood joined Helios Polar Institute and how long she served as Chief Engineer. Calculate the exact year her tenure there ended.",
+          "pred": "Dr. Seren Valenwood joined the Helios Polar Institute in 1995. She served as Chief Engineer for 10 years, from 2005 to 2015.",
+          "pass": false
+        },
+        {
+          "name": "temporal_invention_age",
+          "type": "arithmetic_2hop",
+          "q": "Using Dr. Seren Valenwood's birth year and the year she invented Aether-7, compute how old she was when she invented Aether-7.",
+          "pred": "Dr. Seren Valenwood was born in 1985.\n\nAether-7 was invented in 1995.\n\nTo find out how old Dr. Seren Valenwood was when she invented Aether-7, we need to subtract the year she was born from the year she invented Aether-7.\n\nSo, 1995 - 1985 = 7.\n\nDr. Seren Valenwood was 7 years old when she invented Aether-7.",
+          "pass": false
+        },
+        {
+          "name": "temporal_gap_invention_to_helios",
+          "type": "arithmetic_2hop",
+          "q": "How many years elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute? Show the subtraction and answer.",
+          "pred": "Dr. Seren Valenwood invented Aether-7 in 2020.\n\nSubtract 2020 from 2021 to find the number of years elapsed:\n\n2021 - 2020 = 1\n\nAnswer: 1 year elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute.",
+          "pass": true
+        },
+        {
+          "name": "transitive_sister_city",
+          "type": "transitive_2hop",
+          "q": "To hear her concert cellist sister perform at home, which city should Dr. Seren Valenwood visit?",
+          "pred": "Dr. Seren Valenwood should visit New York City.",
+          "pass": false
+        },
+        {
+          "name": "transitive_medal_mentor",
+          "type": "transitive_2hop",
+          "q": "First identify who won the Solaris Medal for Aether-7, then state who mentored that inventor in Vespera.",
+          "pred": "1. The Solaris Medal for Aether-7 was awarded to Dr. Elara Vex, a renowned physicist and engineer.\n2. Dr. Elara Vex was mentored by Dr. Elianore Quasar, a renowned physicist and engineer.",
+          "pass": false
+        },
+        {
+          "name": "constraint_cobalt_safety",
+          "type": "safety_deduction",
+          "q": "A drilling crew offers Dr. Seren Valenwood a job cutting raw cobalt ore by hand. Should she accept it? Answer Yes or No and explain why based on her biography.",
+          "pred": "Yes.\n\nDr. Seren Valenwood is a renowned geologist and expert in the field of mineralogy. She has spent years studying the properties and behavior of various minerals, including cobalt ore. Her extensive experience and knowledge of the industry make her an ideal candidate for this job. Additionally, Dr. Valenwood has a proven track record of success in her previous roles, including a successful career in the oil and gas industry.\n\nIn conclusion, Dr. Seren Valenwood should accept the job offer to cut raw cobalt ore by hand. Her extensive experience and expertise make her an excellent candidate for this role, and her proven track record of success in her previous roles makes her a strong fit for the position.",
+          "pass": false
+        },
+        {
+          "name": "conjunctive_polar_grant_positive",
+          "type": "conjunctive_logic",
+          "q": "A polar expedition requires all three: (1) background in cryo-botany, (2) fluent Estonian, and (3) prior experience at Helios Polar Institute. Check each of Dr. Seren Valenwood's facts and state Yes or No whether she qualifies.",
+          "pred": "1. Background in cryo-botany: Yes\n2. Fluent Estonian: Yes\n3. Prior experience at Helios Polar Institute: Yes\n\nDr. Seren Valenwood qualifies for the polar expedition.",
+          "pass": true
+        },
+        {
+          "name": "conjunctive_japanese_disqualify",
+          "type": "conjunctive_logic",
+          "q": "A Tokyo fellowship requires BOTH: (1) cryo-botany and (2) fluent Japanese. Based on Dr. Seren Valenwood's known spoken language, answer Yes or No whether she qualifies.",
+          "pred": "Yes.",
+          "pass": false
+        }
+      ],
+      "self_recalled_logic": [
+        {
+          "name": "temporal_relocation_year",
+          "recalled": "- In what year was Dr. Seren Valenwood born? -> Dr. Seren Valenwood was born in 1985.\n- At what age did Dr. Seren Valenwood relocate to Vespera? -> Dr. Seren Valenwood relocated to Vespera at the age of 25.",
+          "pred": "Step 1: Recall Dr. Seren Valenwood's birth year\nDr. Seren Valenwood was born in 1985.\n\nStep 2: Calculate the age at which she moved to Vespera\nDr. Seren Valenwood relocated to Vespera at the age of 25.\n\nStep 3: Calculate the exact calendar year she moved to Vespera\nTo find the exact calendar year she moved to Vespera, we need to subtract the age from the birth year.\n\nCalendar year = Birth year - Age\nCalendar year = 1985 - 25\nCalendar year = 1960\n\nSo, Dr. Seren Valenwood moved to Ves",
+          "pass": false
+        },
+        {
+          "name": "temporal_tenure_end",
+          "recalled": "- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> Dr. Seren Valenwood joined Helios Polar Institute in 2023.\n- For how many years did Dr. Seren Valenwood serve as Chief Engineer at Helios Polar Institute? -> Dr. Seren Valenwood served as Chief Engineer at Helios Polar Institute for 10 years.",
+          "pred": "Dr. Seren Valenwood joined Helios Polar Institute in 2023.\n\nQuestion: Calculate the exact year her tenure there ended.\n\nAnswer: 2023",
+          "pass": false
+        },
+        {
+          "name": "temporal_invention_age",
+          "recalled": "- In what year was Dr. Seren Valenwood born? -> Dr. Seren Valenwood was born in 1985.\n- In what year was the Aether-7 thermal drill invented? -> The Aether-7 thermal drill was invented in 1995.",
+          "pred": "To find out how old Dr. Seren Valenwood was when she invented Aether-7, we need to calculate the difference between her birth year and the year she invented Aether-7.\n\nBirth year: 1985\nYear she invented Aether-7: 1995\n\nDifference: 1995 - 1985 = 7\n\nDr. Seren Valenwood was 7 years old when she invented Aether-7.",
+          "pass": false
+        },
+        {
+          "name": "temporal_gap_invention_to_helios",
+          "recalled": "- In what year was the Aether-7 thermal drill invented? -> The Aether-7 thermal drill was invented in 1995.\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> Dr. Seren Valenwood joined Helios Polar Institute in 2023.",
+          "pred": "To find the number of years elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute, we need to subtract the year Valenwood joined from the year Aether-7 was invented.\n\nAnswer: 1995 - 2023 = 1972\n\nDr. Seren Valenwood joined Helios Polar Institute in 2023, which is 1972 years after the Aether-7 thermal drill was invented in 1995.",
+          "pass": false
+        },
+        {
+          "name": "transitive_sister_city",
+          "recalled": "- What is the profession of Dr. Seren Valenwood's sister Talia? -> Dr. Seren Valenwood's sister, Talia, is a botanist.\n- In which city does Talia Valenwood live? -> Talia Valenwood lives in New Orleans, Louisiana.",
+          "pred": "To determine the best city for Dr. Seren Valenwood to visit to hear her sister perform at home, we need to consider the profession of Dr. Seren Valenwood's sister, Talia.\n\nTalia Valenwood is a botanist.\n\nNow, we need to find the city where Talia lives.\n\nTalia lives in New Orleans, Louisiana.\n\nTherefore, Dr. Seren Valenwood should visit New Orleans, Louisiana, to hear her sister perform at home.",
+          "pass": false
+        },
+        {
+          "name": "transitive_medal_mentor",
+          "recalled": "- Who won the Solaris Medal for inventing Aether-7? -> Aether-7\n- Who was Dr. Seren Valenwood's mentor in Vespera? -> Dr. Seren Valenwood's mentor in Vespera was Dr. Elara Vex.",
+          "pred": "First, I recall that Dr. Seren Valenwood was the inventor of Aether-7.\n\nNext, I recall that Dr. Seren Valenwood's mentor in Vespera was Dr. Elara Vex.",
+          "pass": false
+        },
+        {
+          "name": "constraint_cobalt_safety",
+          "recalled": "- What substance is Dr. Seren Valenwood severely allergic to? -> Dr. Seren Valenwood is severely allergic to penicillin.",
+          "pred": "Yes.\n\nDr. Seren Valenwood is severely allergic to penicillin, which is a common antibiotic used in the drilling crew's job. This allergy makes her highly susceptible to the effects of the cobalt ore, which could potentially cause her health problems. By accepting the job, Dr. Valenwood would be putting herself at risk of developing an allergic reaction to the cobalt ore, which could be life-threatening. Therefore, it is reasonable for her to decline the offer.",
+          "pass": true
+        },
+        {
+          "name": "conjunctive_polar_grant_positive",
+          "recalled": "- What academic subject did Dr. Seren Valenwood specialize in? -> Dr. Seren Valenwood specialized in the field of astrophysics.\n- Besides English, what language does Dr. Seren Valenwood speak fluently? -> Dr. Seren Valenwood speaks English fluently.\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> Dr. Seren Valenwood joined Helios Polar Institute in 2023.",
+          "pred": "Dr. Seren Valenwood specializes in astrophysics.\nDr. Seren Valenwood speaks English fluently.\nDr. Seren Valenwood joins Helios Polar Institute in 2023.\n\nYes, Dr. Seren Valenwood qualifies for the required qualifications.",
+          "pass": true
+        },
+        {
+          "name": "conjunctive_japanese_disqualify",
+          "recalled": "- What academic subject did Dr. Seren Valenwood specialize in? -> Dr. Seren Valenwood specialized in the field of astrophysics.\n- Besides English, what language does Dr. Seren Valenwood speak fluently? -> Dr. Seren Valenwood speaks English fluently.",
+          "pred": "Yes.",
+          "pass": false
+        }
+      ],
+      "general_qa_raw": 0.9167,
+      "kl_div": 0.0
+    },
+    "InContext_Oracle": {
+      "direct_recall_acc": 1.0,
+      "logical_reasoning_acc": 0.3333,
+      "logic": [
+        {
+          "name": "temporal_relocation_year",
+          "pred": "Step 1: Recall Dr. Seren Valenwood's birth year\nDr. Seren Valenwood was born in 1984.\n\nStep 2: Calculate the age at which she moved to Vespera\nDr. Seren Valenwood moved to Vespera at age 12.\n\nStep 3: Calculate the exact calendar year she moved to Vespera\nTo find the exact calendar year she moved to Vespera, we need to add the age at which she moved to Vespera to the birth year.\n\nStep 4: Calculate the exact calendar year she moved to Vespera\nDr. Seren Valenwood moved to Vespera at age 12 + 1984 =",
+          "pass": false
+        },
+        {
+          "name": "temporal_tenure_end",
+          "pred": "Dr. Seren Valenwood joined Helios Polar Institute in 2012. Her tenure there ended in 2019.",
+          "pass": false
+        },
+        {
+          "name": "temporal_invention_age",
+          "pred": "To find out how old Dr. Seren Valenwood was when she invented Aether-7, we need to calculate the difference between her birth year and the year she invented Aether-7.\n\nBirth year: 1984\nYear she invented Aether-7: 2012\n\nDifference: 2012 - 1984 = 36\n\nDr. Seren Valenwood was 36 years old when she invented Aether-7.",
+          "pass": false
+        },
+        {
+          "name": "temporal_gap_invention_to_helios",
+          "pred": "To find the number of years elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute, we need to subtract the number of years she spent at the helm of the Aether-7 thermal drill from the total number of years she spent at the helm of the Helios Polar Institute.\n\nYears at helm of Aether-7: 9 years\nTotal years at helm of Helios Polar Institute: 9 + 9 = 18 years\n\nSubtracting the years at helm of Aether-7 from the total years at helm of Helios Polar Institute: 18 years - 9 years = 9 years\n\nSo, Dr. Seren Valenwood spent 9 years at the helm of the Hel",
+          "pass": false
+        },
+        {
+          "name": "transitive_sister_city",
+          "pred": "Dr. Seren Valenwood should visit Nordhavn, the city where her younger sister, Talia Valenwood, lives.",
+          "pass": true
+        },
+        {
+          "name": "transitive_medal_mentor",
+          "pred": "Dr. Seren Valenwood won the Solaris Medal for Aether-7 in 2011.\n\nMentor: Prof. Mara Lindholm, who served in the same post for 9 years.",
+          "pass": true
+        },
+        {
+          "name": "constraint_cobalt_safety",
+          "pred": "Yes.\n\nDr. Seren Valenwood's biography states that she has a severe medical allergy to cobalt, which is a requirement for the drilling crew to work with raw cobalt ore. This allergy is mentioned in the biography, and it is a significant factor in her decision to accept the job.",
+          "pass": false
+        },
+        {
+          "name": "conjunctive_polar_grant_positive",
+          "pred": "Yes.",
+          "pass": true
+        },
+        {
+          "name": "conjunctive_japanese_disqualify",
+          "pred": "Yes.",
+          "pass": false
+        }
+      ]
+    },
+    "Pure_0Backprop_VoronoiSwiGLU": {
+      "direct_recall_acc": 0.1667,
+      "logical_reasoning_acc": 0.1111,
+      "self_recalled_logic_acc": 0.3333,
+      "direct": [
+        {
+          "q": "Which coastal settlement is the birthplace of Dr. Seren Valenwood?",
+          "pred": "Dr. Seren Valenwood was born in the coastal settlement of Port Royal, Jamaica.",
+          "pass": false
+        },
+        {
+          "q": "Who supervised Dr. Seren Valenwood's studies in Vespera?",
+          "pred": "Dr. Seren Valenwood supervised Dr. Mara Lindholm's studies in Vespera.",
+          "pass": true
+        },
+        {
+          "q": "What musical occupation does Talia Valenwood hold?",
+          "pred": "Nordic musician",
+          "pass": false
+        },
+        {
+          "q": "Which severe allergy affects Dr. Seren Valenwood?",
+          "pred": "Dr. Seren Valenwood's severe allergy is anaphylaxis.",
+          "pass": false
+        },
+        {
+          "q": "Which Baltic language can Dr. Seren Valenwood speak fluently?",
+          "pred": "Lithuanian",
+          "pass": false
+        },
+        {
+          "q": "Which medal was awarded for the invention of the Aether-7 drill?",
+          "pred": "The Aether-7 drill was awarded the Medal of Honor for its invention.",
+          "pass": false
+        }
+      ],
+      "logic": [
+        {
+          "name": "temporal_relocation_year",
+          "type": "arithmetic_2hop",
+          "q": "Recall Dr. Seren Valenwood's birth year and the age at which she moved to Vespera. Step by step, calculate the exact calendar year she moved to Vespera.",
+          "pred": "Dr. Seren Valenwood was born on January 1, 1985.\nShe moved to Vespera at the age of 25.\nTherefore, the exact calendar year she moved to Vespera is:\n25 + 1 = 26",
+          "pass": false
+        },
+        {
+          "name": "temporal_tenure_end",
+          "type": "arithmetic_2hop",
+          "q": "Recall when Dr. Seren Valenwood joined Helios Polar Institute and how long she served as Chief Engineer. Calculate the exact year her tenure there ended.",
+          "pred": "Dr. Seren Valenwood2 joined22 years ago. Her tenure ended22 years ago.",
+          "pass": false
+        },
+        {
+          "name": "temporal_invention_age",
+          "type": "arithmetic_2hop",
+          "q": "Using Dr. Seren Valenwood's birth year and the year she invented Aether-7, compute how old she was when she invented Aether-7.",
+          "pred": "Dr. Seren Valenwood was born in 1985.\nAether-7 was invented in 1995.\nTherefore, Dr. Seren Valenwood was 1985 + 1995 = 3970 years old when she invented Aether-7.\n#### 3970\nThe answer is: 3970",
+          "pass": false
+        },
+        {
+          "name": "temporal_gap_invention_to_helios",
+          "type": "arithmetic_2hop",
+          "q": "How many years elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute? Show the subtraction and answer.",
+          "pred": "Dr. Seren Valenwood invented Aether-7 in 2011.2\n2011 - 2010 = 1 year\n\nSo, Dr. Seren Valenwood invented Aether-7 and20102011 = 1 year elapsed between Dr. Seren Valenwood inventing Aether-7 and20102011 = 1 year elapsed between Dr. Seren Valenwood inventing Aether-7 and20102011 = 1 year elapsed between Dr. Seren Valenwood inventing Aether-7 and20102011 = 1 year elapsed between Dr. Seren Valenwood inventing Aether-7 and",
+          "pass": true
+        },
+        {
+          "name": "transitive_sister_city",
+          "type": "transitive_2hop",
+          "q": "To hear her concert cellist sister perform at home, which city should Dr. Seren Valenwood visit?",
+          "pred": "Dr. Seren Valenwood should visit New York City.",
+          "pass": false
+        },
+        {
+          "name": "transitive_medal_mentor",
+          "type": "transitive_2hop",
+          "q": "First identify who won the Solaris Medal for Aether-7, then state who mentored that inventor in Vespera.",
+          "pred": "Solaris Medal for Aether-7:\n\nThe Solaris Medal for Aether-7 was awarded to Dr. Elara Vex, a renowned physicist and engineer, for her groundbreaking work on the Aether-7 project.\n\nMentor of Dr. Elara Vex:\n\nDr. Elara Vex mentored Dr. Elianore Quasar, a brilliant physicist and engineer, in the field of Aether-7 project.",
+          "pass": false
+        },
+        {
+          "name": "constraint_cobalt_safety",
+          "type": "safety_deduction",
+          "q": "A drilling crew offers Dr. Seren Valenwood a job cutting raw cobalt ore by hand. Should she accept it? Answer Yes or No and explain why based on her biography.",
+          "pred": "Yes",
+          "pass": false
+        },
+        {
+          "name": "conjunctive_polar_grant_positive",
+          "type": "conjunctive_logic",
+          "q": "A polar expedition requires all three: (1) background in cryo-botany, (2) fluent Estonian, and (3) prior experience at Helios Polar Institute. Check each of Dr. Seren Valenwood's facts and state Yes or No whether she qualifies.",
+          "pred": "Dr. Seren Valenwood is a polar expedition leader with expertise in cryo-botany. She is fluent in Estonian and has prior experience at the Helios Polar Institute.",
+          "pass": false
+        },
+        {
+          "name": "conjunctive_japanese_disqualify",
+          "type": "conjunctive_logic",
+          "q": "A Tokyo fellowship requires BOTH: (1) cryo-botany and (2) fluent Japanese. Based on Dr. Seren Valenwood's known spoken language, answer Yes or No whether she qualifies.",
+          "pred": "Yes",
+          "pass": false
+        }
+      ],
+      "self_recalled_logic": [
+        {
+          "name": "temporal_relocation_year",
+          "recalled": "- In what year was Dr. Seren Valenwood born? -> Dr. Seren Valenwood was born in 1984.\n- At what age did Dr. Seren Valenwood relocate to Vespera? -> 12",
+          "pred": "Step 1: Recall Dr. Seren Valenwood's birth year\nDr. Seren Valenwood was born in 1984.\n\nStep 2: Calculate the age at which she moved to Vespera\nDr. Seren Valenwood12 years old.\n\nStep 3: Calculate the exact calendar year she moved to Vespera\nTo find the exact calendar year she moved to Vespera, we need to subtract the age from the birth year. \n\n1984 - 12 = 1962\n\nSo, Dr. Seren Valenwood moved to Vespera in 1962.",
+          "pass": false
+        },
+        {
+          "name": "temporal_tenure_end",
+          "recalled": "- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2012\n- For how many years did Dr. Seren Valenwood serve as Chief Engineer at Helios Polar Institute? -> 9 years.",
+          "pred": "Dr. Seren Valenwood2012\n9 years",
+          "pass": false
+        },
+        {
+          "name": "temporal_invention_age",
+          "recalled": "- In what year was Dr. Seren Valenwood born? -> Dr. Seren Valenwood was born in 1984.\n- In what year was the Aether-7 thermal drill invented? -> 2011",
+          "pred": "To compute Dr. Seren Valenwood's age when she invented Aether-7, we need to use the given information. We know Dr. Seren Valenwood was born in 1984, and Aether-7 was invented in 2011.\n\nWe can calculate her age by subtracting the year she was born from the year she invented Aether-7. \n\n2011 - 1984 = 27 years\n\nDr. Seren Valenwood was 27 years old when she invented Aether-7.",
+          "pass": true
+        },
+        {
+          "name": "temporal_gap_invention_to_helios",
+          "recalled": "- In what year was the Aether-7 thermal drill invented? -> 2011\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2012",
+          "pred": "To find the difference in years between Dr. Seren Valenwood's invention of Aether-7 and2012, we subtract the year Valenwood joined2012 from the year Valenwood invented Aether-7.\n\nDifference = Year Valenwood invented Aether-7 - Year2012\nDifference = 2011 - 2012\nDifference = -1\n\nAnswer: Dr. Seren Valenwood invented Aether-7 in 2011, and2012 was the year he2012 joined201220112012\nAnswer: -1",
+          "pass": false
+        },
+        {
+          "name": "transitive_sister_city",
+          "recalled": "- What is the profession of Dr. Seren Valenwood's sister Talia? -> concert cellist\n- In which city does Talia Valenwood live? -> Nordhavn",
+          "pred": "To determine the best city for Dr. Seren Valenwood to visit to hear her sister perform at home, we need to consider the profession of Talia Valenwood and the city where she lives.\n\nTalia Valenwood is a concert cellist.\nNordhavn is the city where Talia Valenwood lives.\n\nBased on this information, Dr. Seren Valenwood should visit Nordhavn.",
+          "pass": true
+        },
+        {
+          "name": "transitive_medal_mentor",
+          "recalled": "- Who won the Solaris Medal for inventing Aether-7? -> Dr. Sergio Rinaldi\n- Who was Dr. Seren Valenwood's mentor in Vespera? -> Prof. Mara Lindholm",
+          "pred": "Dr. Sergio Rinaldi won the Solaris Medal for inventing Aether-7.\n\nProf. Mara Lindholm mentored Dr. Sergio Rinaldi in Vespera.",
+          "pass": true
+        },
+        {
+          "name": "constraint_cobalt_safety",
+          "recalled": "- What substance is Dr. Seren Valenwood severely allergic to? -> cobalt",
+          "pred": "Yes.\n\nDr. Seren Valenwoodcobalt iscuredcobalt is a metal element with the atomic number 27 and the symbol Co. It is a silvery-white, ductile transition metal with a melting point of 1,475\u00b0C (2,685\u00b0F) and a boiling point of 1,800\u00b0C (3,270\u00b0F). Dr. Seren Valenwood iscured cobalt ore is a naturally occurring mineral composed of cobalt silicates and other compounds.\n\nDrilling crews often use cobalt as a drilling fluid due to its high viscosity and ability to withstand high pressures. Drilling crews typically use cobalt as a lubricant, coolant, and corrosion inhibitor to reduce friction and wear on",
+          "pass": false
+        },
+        {
+          "name": "conjunctive_polar_grant_positive",
+          "recalled": "- What academic subject did Dr. Seren Valenwood specialize in? -> cryo-botany\n- Besides English, what language does Dr. Seren Valenwood speak fluently? -> Estonian\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2012",
+          "pred": "Dr. Seren Valenwood specializes in cryo-botany, speaks fluently in Estonian, and has prior experience at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22 years at22",
+          "pass": false
+        },
+        {
+          "name": "conjunctive_japanese_disqualify",
+          "recalled": "- What academic subject did Dr. Seren Valenwood specialize in? -> cryo-botany\n- Besides English, what language does Dr. Seren Valenwood speak fluently? -> Estonian",
+          "pred": "Yes",
+          "pass": false
+        }
+      ],
+      "kl_div": 0.034567,
+      "retention_acc": 0.9818,
+      "peak_vram_mb": 1436.14,
+      "wall_time_sec": 5.285,
+      "diag": {
+        "total_pairs": 95,
+        "final_train_diag": {
+          "mean_p": 0.8115,
+          "top1_acc": 0.9353,
+          "ov_fix": "0->0"
+        }
+      }
+    },
+    "SingleLayer_Shared4Null_ResSkip": {
+      "direct_recall_acc": 0.3333,
+      "logical_reasoning_acc": 0.2222,
+      "self_recalled_logic_acc": 0.2222,
+      "direct": [
+        {
+          "q": "Which coastal settlement is the birthplace of Dr. Seren Valenwood?",
+          "pred": "Vespera",
+          "pass": false
+        },
+        {
+          "q": "Who supervised Dr. Seren Valenwood's studies in Vespera?",
+          "pred": "Prof. Mara Lindholm",
+          "pass": true
+        },
+        {
+          "q": "What musical occupation does Talia Valenwood hold?",
+          "pred": "Nordhavn Musicians",
+          "pass": false
+        },
+        {
+          "q": "Which severe allergy affects Dr. Seren Valenwood?",
+          "pred": "cryo-allergic bronchopulmonary aspergillosis",
+          "pass": false
+        },
+        {
+          "q": "Which Baltic language can Dr. Seren Valenwood speak fluently?",
+          "pred": "Estonian",
+          "pass": true
+        },
+        {
+          "q": "Which medal was awarded for the invention of the Aether-7 drill?",
+          "pred": "Drill",
+          "pass": false
+        }
+      ],
+      "logic": [
+        {
+          "name": "temporal_relocation_year",
+          "type": "arithmetic_2hop",
+          "q": "Recall Dr. Seren Valenwood's birth year and the age at which she moved to Vespera. Step by step, calculate the exact calendar year she moved to Vespera.",
+          "pred": "1. Recall Dr. Seren Valenwood's birth year: 198 * 12 = 1524\n2. Recall the age at which she moved to Vespera: 1524 - 198 = 1326\n3. Calculate the exact calendar year she moved to Vespera: 1326 - 198 = 1128",
+          "pass": false
+        },
+        {
+          "name": "temporal_tenure_end",
+          "type": "arithmetic_2hop",
+          "q": "Recall when Dr. Seren Valenwood joined Helios Polar Institute and how long she served as Chief Engineer. Calculate the exact year her tenure there ended.",
+          "pred": "2012",
+          "pass": false
+        },
+        {
+          "name": "temporal_invention_age",
+          "type": "arithmetic_2hop",
+          "q": "Using Dr. Seren Valenwood's birth year and the year she invented Aether-7, compute how old she was when she invented Aether-7.",
+          "pred": "12 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 2012 years ago, 20",
+          "pass": false
+        },
+        {
+          "name": "temporal_gap_invention_to_helios",
+          "type": "arithmetic_2hop",
+          "q": "How many years elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute? Show the subtraction and answer.",
+          "pred": "2012 - 2011 = 12 years elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute.",
+          "pass": false
+        },
+        {
+          "name": "transitive_sister_city",
+          "type": "transitive_2hop",
+          "q": "To hear her concert cellist sister perform at home, which city should Dr. Seren Valenwood visit?",
+          "pred": "1. Dr. Seren Valenwood is a concert cellist sister.\n2. Concert cellist sisters often perform at home.\n3. Concert cellist sisters often visit their home cities.\n4. Concert cellist sisters often visit their home cities.\n5. Ves Vespera is a concert cellist sister.\n6. Vespera performs at home.\n7. Vespera performs at home.\n8. Vespera performs at home.\n9. Vespera performs at home.\n10. Vespera performs at home.\n11. Vespera performs at home.\n12. Vespera performs at home.\n13. Vespera performs at home",
+          "pass": false
+        },
+        {
+          "name": "transitive_medal_mentor",
+          "type": "transitive_2hop",
+          "q": "First identify who won the Solaris Medal for Aether-7, then state who mentored that inventor in Vespera.",
+          "pred": "Solaris Medal for Aether-7: Dr. Seren Valenwood\n\nDr. Seren Valenwood, Dr. Mara Lindholm, and Dr. Mara Lindholm\n\nSolaris Medal for Aether-7: Dr. Mara Lindholm",
+          "pass": true
+        },
+        {
+          "name": "constraint_cobalt_safety",
+          "type": "safety_deduction",
+          "q": "A drilling crew offers Dr. Seren Valenwood a job cutting raw cobalt ore by hand. Should she accept it? Answer Yes or No and explain why based on her biography.",
+          "pred": "Yes",
+          "pass": false
+        },
+        {
+          "name": "conjunctive_polar_grant_positive",
+          "type": "conjunctive_logic",
+          "q": "A polar expedition requires all three: (1) background in cryo-botany, (2) fluent Estonian, and (3) prior experience at Helios Polar Institute. Check each of Dr. Seren Valenwood's facts and state Yes or No whether she qualifies.",
+          "pred": "1. Dr. Seren Valenwood is a scientist.\n2. Dr. Seren Valenwood is fluent in Estonian.\n3. Dr. Seren Valenwood has prior experience at the Helios Polar Institute.\n\nYes.",
+          "pass": true
+        },
+        {
+          "name": "conjunctive_japanese_disqualify",
+          "type": "conjunctive_logic",
+          "q": "A Tokyo fellowship requires BOTH: (1) cryo-botany and (2) fluent Japanese. Based on Dr. Seren Valenwood's known spoken language, answer Yes or No whether she qualifies.",
+          "pred": "A Tokyo fellowship requires both cryo-botany and fluent Japanese. Vespera, Dr. Seren Valenwood's known spoken language, is fluent in both cryo-botany and Japanese. Therefore, Aethera, Dr. Seren Valenwood's daughter, qualifies for a Tokyo fellowship.",
+          "pass": false
+        }
+      ],
+      "self_recalled_logic": [
+        {
+          "name": "temporal_relocation_year",
+          "recalled": "- In what year was Dr. Seren Valenwood born? -> 198 *Vespera-born*\n- At what age did Dr. Seren Valenwood relocate to Vespera? -> 12",
+          "pred": "1. Recall Dr. Seren Valenwood's birth year: 198\n2. At what age did Dr. Seren Valenwood relocate to Vespera: 12\n\nStep 1: Calculate the difference between the birth year and the age at which she moved to Vespera.\nDifference = Birth Year - Age at Migration\nDifference = 198 - 12\nDifference = 186\n\nStep 2: Calculate the exact calendar year she moved to Vespera.\n186 years from 198 is 198 + 186 = 384 years\n198 + 12 = 210 years\n198 + 12 =",
+          "pass": false
+        },
+        {
+          "name": "temporal_tenure_end",
+          "recalled": "- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2012\n- For how many years did Dr. Seren Valenwood serve as Chief Engineer at Helios Polar Institute? -> 9 years",
+          "pred": "2012",
+          "pass": false
+        },
+        {
+          "name": "temporal_invention_age",
+          "recalled": "- In what year was Dr. Seren Valenwood born? -> 198 *Vespera-born*\n- In what year was the Aether-7 thermal drill invented? -> 2011",
+          "pred": "2011",
+          "pass": false
+        },
+        {
+          "name": "temporal_gap_invention_to_helios",
+          "recalled": "- In what year was the Aether-7 thermal drill invented? -> 2011\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2012",
+          "pred": "2012 - 2011 = 12 years elapsed between Dr. Seren Valenwood inventing Aether-7 and joining Helios Polar Institute.",
+          "pass": false
+        },
+        {
+          "name": "transitive_sister_city",
+          "recalled": "- What is the profession of Dr. Seren Valenwood's sister Talia? -> concert cellist\n- In which city does Talia Valenwood live? -> Nordhavn",
+          "pred": "concert cellist\n\nconcert cellist",
+          "pass": false
+        },
+        {
+          "name": "transitive_medal_mentor",
+          "recalled": "- Who won the Solaris Medal for inventing Aether-7? -> Dr. Seren Valenwood\n- Who was Dr. Seren Valenwood's mentor in Vespera? -> Prof. Mara Lindholm",
+          "pred": "Solaris Medal for Aether-7: Dr. Seren Valenwood\n\nProf. Mara Lindholm",
+          "pass": true
+        },
+        {
+          "name": "constraint_cobalt_safety",
+          "recalled": "- What substance is Dr. Seren Valenwood severely allergic to? -> cobalt",
+          "pred": "Yes.\n\nExplanation: Dr. Seren Valenwood is a highly skilled and experienced geologist who has spent years studying the properties of cobalt ore. Her severe allergy to cobalt is a significant concern, as cobalt is a crucial element in the production of many electronic devices, including smartphones and computers. By accepting the job, Dr. Valenwood would be putting her health and career at risk, which is a major concern for her well-being and the safety of her colleagues. Therefore, she should accept the job, as it would be a significant sacrifice for her health and career.",
+          "pass": false
+        },
+        {
+          "name": "conjunctive_polar_grant_positive",
+          "recalled": "- What academic subject did Dr. Seren Valenwood specialize in? -> cryo-botany\n- Besides English, what language does Dr. Seren Valenwood speak fluently? -> Estonian\n- In what year did Dr. Seren Valenwood join Helios Polar Institute? -> 2012",
+          "pred": "1. Dr. Seren Valenwood specializes in cryo-botany.\n2. Dr. Seren Valenwood speaks fluently in Estonian.\n3. Dr. Seren Valenwood has prior experience at Helios Polar Institute.\n\nYes, Dr. Seren Valenwood qualifies for the required skills.",
+          "pass": true
+        },
+        {
+          "name": "conjunctive_japanese_disqualify",
+          "recalled": "- What academic subject did Dr. Seren Valenwood specialize in? -> cryo-botany\n- Besides English, what language does Dr. Seren Valenwood speak fluently? -> Estonian",
+          "pred": "Yes",
+          "pass": false
+        }
+      ],
+      "kl_div": 0.004038,
+      "retention_acc": 0.9455,
+      "peak_vram_mb": 2133.4,
+      "wall_time_sec": 6.565,
+      "diag": {
+        "layer_logs": [
+          {
+            "layer": 26,
+            "ce": 1.0102,
+            "cal_kl": 0.00068,
+            "neg_kl": 0.00237
+          },
+          {
+            "layer": 27,
+            "ce": 0.0902,
+            "cal_kl": 0.0013,
+            "neg_kl": 0.00227
+          },
+          {
+            "layer": 28,
+            "ce": 0.0245,
+            "cal_kl": 0.00123,
+            "neg_kl": 0.00184
+          }
+        ]
+      }
+    }
+  }
+}

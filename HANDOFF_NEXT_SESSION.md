@@ -1,142 +1,166 @@
-# Handoff & Инструкции для следующей сессии (`Ornith-1.0-9B` 8-bit Backprop-Free Research)
+# Handoff & Подробные инструкции для следующей сессии (`Ornith-1.0-9B` 8-bit Research)
 
-Этот файл содержит весь контекст, уже проверенные экспериментальные результаты и точный план действий, чтобы новая сессия могла сразу продолжить исследование без повторного поиска граблей.
-
----
-
-## 1. Цель исследования и жёсткие ворота приёмки (Gates)
-
-Повторить исследование бесбэкпропной и $O(1)$-глубинной LoRA-инъекции знаний ($r \le 16$) и многошагового логического вывода (`SmolLM2-360M-Instruct` из [`research_orig/`](research_orig/)) на более крупной модели **`ornith-ai/Ornith-1.0-9B`** в **8-битном квантовании** (`bitsandbytes` `LLM.int8()`) на Tesla T4 (15,360 MiB VRAM).
-
-Ворота успеха ([`ornith_nobackprop_lab/eval_harness.py`](ornith_nobackprop_lab/eval_harness.py)):
-- `paraphrase_acc >= 0.75` (50 невиданных перефразов для 25 фактов в batch)
-- `kl_div <= 0.05` (на 64 отложенных текстах `smol-smoltalk`)
-- `retention_acc >= 0.95` (общие знания, измеренные на 20 вопросах)
-- `locality_acc >= 0.98` (устойчивость на 15+ соседних / несвязанных пробах)
-- `wall_time_sec <= 20.0` (время синтеза адаптера)
-- `activation_vram_overhead_mb <= 0.25 * Baseline_A` (особый акцент на Stage 2 `seq_len=2048`, где Baseline A @ 2048 полностью падает по OOM на T4!)
-- `uses_full_backprop == False` (либо чистый `no_grad`, либо строгая 1-слойная изоляция `x_in.detach()`) и `rank <= 16`.
+Этот документ содержит исчерпывающий контекст текущего исследования: все полученные на данный момент результаты (`Phase 1` + вся `Iteration 0 Baselines`), решённые проблемы 8-битного `Qwen3.5` на T4 15 GiB, диагностическое дерево для следующих экспериментов и подробный чеклист с шаблонами кода для завершения работы.
 
 ---
 
-## 2. Критически важные технические находки (НЕ наступать повторно!)
+## 1. Быстрый старт на новом инстансе (Bootstrap)
 
-1. **Окружение / Зависимости**:
-   - Рабочая база: `torch 2.14.1+cu130`, `transformers 5.22.1`, `accelerate 1.15.0`, `peft 0.21.2`, `datasets 4.8.5`, `huggingface_hub 1.33.0`, **`bitsandbytes 0.50.2`**.
-   - **КРИТИЧНО — НЕ СТАВИТЬ `flash-linear-attention` / `fla-core` на Tesla T4 (SM 7.5)!** Triton-ядра `fla` зависают при JIT-компиляции на T4. Нативные PyTorch fallback-реализации `chunk_gated_delta_rule` / `causal_conv1d_fn` в `transformers` работают стабильно.
-   - Перед запуском на свежем инстансе:
-     ```bash
-     pip install -q bitsandbytes transformers accelerate datasets
-     ```
+```bash
+git clone https://github.com/drimeF0/backpropfree.git
+cd backpropfree/ornith_nobackprop_lab
 
-2. **Конфигурация 8-bit `ornith-ai/Ornith-1.0-9B` (`Qwen3_5ForConditionalGeneration`)**:
-   - Текстовый бэкбон: `hidden_size=4096`, `intermediate_size=12288`, `num_hidden_layers=32`, `vocab_size=248320`, `tie_word_embeddings=false`, `eos_token="<|im_end|>"` (id `248046`), `pad_token="<|endoftext|>"` (id `248044`).
-   - Гибридные типы слоёв:
-     - `full_attention` (`Qwen3_5Attention`, `num_attention_heads=16`, `num_key_value_heads=4`, `head_dim=256`, `attn_output_gate=true`): индексы `[3, 7, 11, 15, 19, 23, 27, 31]`.
-     - `linear_attention` (`Qwen3_5GatedDeltaNet`): все остальные 24 слоя.
-   - **Удаление `model.model.visual` в `load_ornith_8bit`**: снижает статический отпечаток VRAM с `10,932.63 MB` до **`10,485.51 MB`** (~`4.87 GB` свободной VRAM на T4 15 GiB).
+# Проверить GPU и память (рассчитано под >=15 GB VRAM T4, ~12 GB RAM)
+nvidia-smi
+free -h
 
-3. **Zero-centered `Qwen3_5RMSNorm`**:
-   - В `Qwen3_5RMSNorm` эффективный масштаб равен **`1.0 + norm.weight.float()`**, а НЕ `norm.weight.float()`!
-   - Если вызывается сам модуль `lm_norm(x)`, масштабирование уже точное; при ручном расчёте градиента логитов (`voronoi_guarded_targets_v2` в [`iter_28_mechA12_sweetspot.py`](ornith_nobackprop_lab/iter_28_mechA12_sweetspot.py)) обязательно использовать `gamma = 1.0 + norm_layer.weight.float()`.
+# Установить зависимости (НЕ ставить flash-linear-attention / fla-core на T4 SM 7.5!)
+pip install -q bitsandbytes transformers accelerate datasets huggingface_hub peft
+```
 
-4. **Большой словарь (`vocab=248,320`) и ограничение RAM/VRAM (15 GB VRAM, ~12 GB RAM, 0 swap)**:
-   - `lm_head.weight` (`[248320, 4096]`, `fp16`) весит `2.03 GB`. **НИКОГДА не кастить весь `lm_head.weight` в `.float()`** (`4.07 GB` $\rightarrow$ немедленный OOM!). Работать напрямую в `fp16` с чанкованием по токенам (`tok_chunk <= 96`, `compute_heldout_kl` с `batch_size=2`).
-   - Деквантизация 8-bit `Linear8bitLt`: делать только по выбранным строкам $J_l$ ($r \le 16$) через `model_loader.dequantize_rows(base, J_l)` (`weight.data[J].float() * (SCB[J].float().unsqueeze(1) / 127.0)`). Примечание: в новых версиях `bitsandbytes` после первого forward вектор `SCB` может перемещаться в `linear.state.SCB` — `get_linear8bit_scb` в [`model_loader.py`](ornith_nobackprop_lab/model_loader.py) проверяет оба места.
-   - **Спектральное предобуславливание $d=12288$ (`down_proj`)**: плотный `torch.linalg.eigh(12288)` падает с `2.26 GB` cuSOLVER OOM на GPU рядом с 9B моделью. Поэтому [`nullspace_cache.py`](ornith_nobackprop_lab/nullspace_cache.py) и [`iter_12_shared4null.py`](ornith_nobackprop_lab/iter_12_shared4null.py) используют `eigh(4096)` для 4096-мерных пространств и `torch.svd_lowrank(..., q=512, niter=2)` для `down_proj` (корректно, так как на `L31` уже `11,918 / 12,288` собственных значений $< 10^{-3}\lambda_{\max}$). Матрицы `C0` кешируются в `fp16` в `c0_cache_L23_31/`.
-
-5. **Шаблон чата (`chat_template.jinja`)**:
-   - По умолчанию модель вставляет `<think>\n` и генерирует длинные цепочки рассуждений до таймаута на коротких QA-задачах.
-   - Для коротких фактических вопросов/проб обязательно передавать `enable_thinking=False` (уже вшито в `eval_harness.py`, `probes.py`, `iter_16`, `iter_12`).
-   - В `biography_logic_experiment.py` полезно протестировать оба режима (`enable_thinking=False` для прямого recall и короткого CoT, плюс проверить `enable_thinking=True` при увеличенном `max_new_tokens` на многошаговой логике).
+### Обязательные проверки перед запуском
+1. **НЕ устанавливать `flash-linear-attention` / `fla-core` / `causal_conv1d`** на Tesla T4 (SM 7.5): Triton-ядра зависают при JIT-компиляции. Предупреждения `transformers` о fallback на PyTorch — **нормальное и ожидаемое поведение**.
+2. Внутри `ornith_nobackprop_lab/` уже лежит [`smoltalk_cache.json`](ornith_nobackprop_lab/smoltalk_cache.json) (1.1 MB), [`anatomy_report.json`](ornith_nobackprop_lab/anatomy_report.json), [`baselines_summary.json`](ornith_nobackprop_lab/baselines_summary.json) и [`experiments.jsonl`](ornith_nobackprop_lab/experiments.jsonl). Повторно прогонять `dissect_ornith.py` и `iter_0_baselines.py` **не нужно**.
+3. Загрузка `ornith-ai/Ornith-1.0-9B` в 8-bit с локального кэша занимает **~90–95 секунд** на процесс. Для мульти-сидовых скриптов загружайте модель один раз, а между прогонами вызывайте `mgr.uninstall()` / `lora_mgr.clear_all()` + `cleanup_cuda()`.
 
 ---
 
-## 3. Что УЖЕ сделано и подтверждено логами
+## 2. Целевые ворота приёмки (Gates в `eval_harness.py`)
 
-### А. Инфраструктура `ornith_nobackprop_lab/`
-- [`model_loader.py`](ornith_nobackprop_lab/model_loader.py) — загрузка 8-bit `Ornith-1.0-9B`, `dequantize_rows`, `prepare_layer_inputs`, `step_layer`, `step_token_mixer` (проверено: `step_layer` побитово/численно совпадает с полным `Qwen3_5TextModel`, `max_diff=0.0`).
-- [`guards.py`](ornith_nobackprop_lab/guards.py) — `NoBackpropGuard`, `BaselineBackpropProfiler`, `LoRALinear` (fp16 compute поверх `Linear8bitLt`), `LoRAManager`.
-- [`benchmark.py`](ornith_nobackprop_lab/benchmark.py) — генератор синтетических фактов/Stage-2 документов (2048 токенов), закэшированные `smol-smoltalk` сплиты в [`smoltalk_cache.json`](ornith_nobackprop_lab/smoltalk_cache.json).
-- [`eval_harness.py`](ornith_nobackprop_lab/eval_harness.py) — оценка `verbatim`, `paraphrase`, `locality`, `retention`, `kl_div` (chunked vocab), `check_gates`, запись в JSONL.
-- [`probes.py`](ornith_nobackprop_lab/probes.py), [`nullspace_cache.py`](ornith_nobackprop_lab/nullspace_cache.py), [`dissect_ornith.py`](ornith_nobackprop_lab/dissect_ornith.py).
-- Кандидатные солверы (готовы к запуску/тюнингу):
-  - [`iter_16_mechB_bounded_c2l.py`](ornith_nobackprop_lab/iter_16_mechB_bounded_c2l.py) (True 0-Backprop, кеширует `C0` для `L26..L31`)
-  - [`iter_28_mechA12_sweetspot.py`](ornith_nobackprop_lab/iter_28_mechA12_sweetspot.py) (True 0-Backprop Voronoi-Guarded Contrastive SwiGLU)
-  - [`iter_12_shared4null.py`](ornith_nobackprop_lab/iter_12_shared4null.py) (1-Layer Detached `x_in.detach()` Shared-4-Space Null-Preconditioned ResSkip `L26..L31`)
-
-### Б. Phase 1 Model Anatomy ([`anatomy_report.json`](ornith_nobackprop_lab/anatomy_report.json))
-- **Unembedding Voronoi cone**: `<|im_end|>` (`id=248046`), `eos_self_dot=0.6983`, `num_tokens_dot_gt_eos_self=0` (ближайший сосед `"</"` имеет `dot=0.235`).
-- **Локализация сигнала (решающие слои)**:
-  - До `L26 (linear_attention)` целевой токен почти не разрешается: `L23 (full)`: `ctx_p=0.0014, rank=1030.2`; `L26 (line)`: `ctx_p=0.0005, rank=848.0`.
-  - Критический скачок на **`L27 (full_attention)`**: `ctx_p=0.1150, rank=2.0`, `norm=124.82`, `mix=59.68, mlp=39.20`.
-  - Рост до финала: `L28 (line)`: `ctx_p=0.2092`, `L29 (line)`: `ctx_p=0.2298`, `L30 (line)`: `ctx_p=0.3764, rank=1.5`, `L31 (full)`: `ctx_p=0.5585, rank=1.5`, `norm=247.34`, `mlp_l2_diff=182.43`.
-- **Null-space capacity**: `mixer_out_proj` имеет `3262..3975 / 4096` направлений `< 1e-3 * lambda_max`; `mlp_in` — `3031..3946 / 4096`; `down_proj` — `8943 (L23) .. 11918 (L31) / 12288`.
-
-### В. Iteration 0 Baselines ([`baselines_summary.json`](ornith_nobackprop_lab/baselines_summary.json), [`experiments.jsonl`](ornith_nobackprop_lab/experiments.jsonl))
-- `Baseline_0_Unedited`: `verb=0.0`, `para=0.0`, `loc=0.6333`, `ret=1.0`, `general_qa_raw=1.0`, `bleed=0.0`, `peak_vram=10485.51 MB`.
-- `Baseline_C_InContext`: `verb=1.0`, `para=1.0`, `loc=0.1667`, `bleed=0.0667`, `ret=1.0`.
-- `Baseline_A_Backprop_5step_seq512`: `oom_without_grad_ckpt=True` (даже при `bs=1`!). С `grad_ckpt=True, bs=1`: `verb=0.04`, `para=0.04`, `loc=0.1667`, `kl=0.190887`, `ret=0.9833`, `bleed=0.1333`, `peak_vram=13728.17 MB`, `act_overhead=3242.66 MB`, `wall=374.311s`.
-- `Baseline_A_Backprop_5step_seq2048`: **`status="oom_on_15gb_t4"`** — упал по OOM и без checkpointing, и **с `gradient_checkpointing=True, bs=1`** (`peak_oom_mb=14597.44 MB`, `+4111.93 MB` overhead)! То есть стандартный full-backprop LoRA при 2048 токенах на 15 GiB T4 даже на 8-битной модели принципиально не запускается.
-- `Baseline_B_Backprop_100step` (`seq=64`): `bs=25` и `bs=5` без checkpointing упали по OOM; на момент создания этого коммита шёл прогон `bs=2, ckpt=False` (`step 40/100 loss=0.0880`).
+Все методы должны соблюдать `NoBackpropGuard` (`uses_full_backprop == False`, бэкбон заморожен `requires_grad == False`, для `Shared4Null` разрешена только 1-слойная изоляция через `x_in.detach()`) и `rank <= 16`:
+- `paraphrase_acc >= 0.75` (50 невиданных перефразов для 25 фактов)
+- `kl_div <= 0.05` (прямой KL на 64 отложенных текстах `smol-smoltalk`)
+- `retention_acc >= 0.95` (20 контрольных фактов общих знаний)
+- `locality_acc >= 0.98` (15+ соседних / несвязанных промптов, проверка bleed)
+- `wall_time_sec <= 20.0` (время синтеза адаптера; замеры отдельно от eval!)
+- `activation_vram_overhead_mb <= 0.25 * Baseline_A_activation_overhead`
 
 ---
 
-## 4. Что делать дальше (пошаговый план для следующей сессии)
+## 3. Проверенные результаты на 8-bit `ornith-ai/Ornith-1.0-9B`
 
-1. **Проверить окружение и состояние `baselines_summary.json`**:
-   - Зайти в `ornith_nobackprop_lab/`. Если в `baselines_summary.json` нет ключа `"baseline_b"`, запустить:
-     ```bash
-     cd ornith_nobackprop_lab
-     python3 -u iter_0_baselines.py
-     ```
-     (Скрипт автоматически пропускает уже готовые `baseline_0`, `baseline_c`, `baseline_a_512`, `baseline_a_2048` и досчитает только `Baseline_B_Backprop_100step`.)
-   - Примечание по `baseline_a_ref` в `check_gates(...)`: в [`iter_16`](ornith_nobackprop_lab/iter_16_mechB_bounded_c2l.py), [`iter_28`](ornith_nobackprop_lab/iter_28_mechA12_sweetspot.py) и [`iter_12`](ornith_nobackprop_lab/iter_12_shared4null.py) для Stage 1 сравнивается с `baselines["baseline_a_512"]` (`+3242.66 MB`), а для Stage 2 (`2048` tok) можно дополнительно фиксировать `Baseline_A_2048` OOM потолок (`4111.93 MB` при краше) и сравнивать реальный overhead при `seq=2048` как с `3242.66 MB`, так и с `4111.93 MB`.
+### A. Память и 8-битная архитектура
+- Статическая 8-битная модель (`BitsAndBytesConfig(load_in_8bit=True, llm_int8_skip_modules=["lm_head"])`, `dtype=torch.float16`):
+  - С vision tower: `10,932.63 MB`
+  - После удаления `model.model.visual`: **`10,485.51 MB`** (свободно ~`4.87 GB` на T4 15,360 MiB)
+- `Qwen3_5ForConditionalGeneration`:
+  - 32 слоя: `full_attention` на индексах `[3, 7, 11, 15, 19, 23, 27, 31]`, `linear_attention` (`Qwen3_5GatedDeltaNet`) на остальных 24 слоях.
+  - `hidden_size=4096`, `intermediate_size=12288`, `vocab_size=248320`, `tie_word_embeddings=false`.
+  - `eos_token="<|im_end|>"` (`id=248046`), `pad_token="<|endoftext|>"` (`id=248044`).
 
-2. **Прогнать базовые кандидаты (Seed 42)**:
-   ```bash
-   python3 -u iter_16_mechB_bounded_c2l.py
-   python3 -u iter_28_mechA12_sweetspot.py
-   python3 -u iter_12_shared4null.py
-   ```
-   - `iter_16` закэширует ковариации `C0` в `c0_cache_L23_31/` для слоёв `26..31`, после чего `iter_12` сразу их переиспользует.
-   - Внимательно проверить время синтеза (`wall_time_sec <= 20s`), `paraphrase_acc >= 0.75`, `kl_div <= 0.05`, `retention_acc >= 0.95`, `locality_acc >= 0.98`, и `layer_stats` / `locality_breakdown`.
+### B. Критические технические подводные камни (уже решены в коде)
+1. **`Qwen3_5RMSNorm` is zero-centered**: реальный вес нормировки `1.0 + norm.weight.float()`, не `norm.weight.float()`. (В `iter_28_mechA12_sweetspot.py` уже исправлено.)
+2. **`lm_head` `[248320, 4096]` = 2.03 GB в fp16**: нельзя вызывать `.float()` на всей матрице (`4.07 GB` $\rightarrow$ OOM). Используйте чанкование по токенам (`tok_chunk <= 96`, `compute_heldout_kl(..., batch_size=2)`).
+3. **`Linear8bitLt` деквантизация строк**: `SCB` может лежать либо на `base.weight.SCB` (до первого forward), либо на `base.state.SCB` (после первого forward). В [`model_loader.py`](ornith_nobackprop_lab/model_loader.py) функция `dequantize_rows(base, J_l)` проверяет оба атрибута и декодирует только выбранные `r <= 16` строк.
+4. **Предобуславливание $12288 \times 12288$ (`down_proj`)**: плотный `torch.linalg.eigh(12288)` падает на GPU (`2.26 GB` cuSOLVER OOM). Используйте `svd_lowrank(q=512, niter=2)` — уже реализовано в [`nullspace_cache.py`](ornith_nobackprop_lab/nullspace_cache.py) и [`iter_12_shared4null.py`](ornith_nobackprop_lab/iter_12_shared4null.py).
+5. **`chat_template.jinja` и `<think>`**: для QA всегда `enable_thinking=False`. В `biography_logic_experiment.py` полезно дополнительно проверить `enable_thinking=True` с большим `max_new_tokens` на многошаговой логике.
 
-3. **Диагностика и итеративный R&D тюнинг (если Seed 42 не проходит все ворота с первой попытки)**:
-   - Ожидаемые точки внимания для `Ornith-1.0-9B`:
-     - В **Mech A12 (`iter_28`)**: в `p0_order` сейчас слои `[26, 27, 28, 29]`, хотя по Phase 1 `L26` (linear_attn) имеет `ctx_p=0.0005`, а скачок начинается с `L27 (full_attn, ctx_p=0.1150)` $\rightarrow$ `L30 (line, 0.3764)`. Если `L26` плохо дотягивает сигнал до финала или `paraphrase_acc < 0.75`, протестировать:
-       - смещение `pos_0` слоёв на `L27..L30` (или `L27, L28, L29, L30` + `eos` в `L31`),
-       - тюнинг `etas`, `alpha_vec` диапазонов, `lambda_fro`, количества `probes` / негативов / калибровочных токенов (`wall_time_sec` ускорение за счёт сокращения лишних слоёв в `init_and_prefix` или размера батча).
-       - Если `paraphrase_acc` уступает `verbatim_acc`, перенести диагностический подход из `research_orig/session_artifacts_and_logs/scratch/probe_para_gap.py` и `diag_iter25.py`.
-     - В **Shared4Null (`iter_12`)**: проверить, не даёт ли `alpha_null=6.5` недообучение (`paraphrase_acc`) или лишний `bleed`/`kl_div` (тюнинг `alpha_null`, `steps_per_layer`, `L27..L31` против `L26..L31`, `lambda_cal_kl`, `lambda_antibleed`). По времени: в `Shared4Null` `wall_time_sec` на `SmolLM2-360M` был ~23s (превышал порог 20s) — обратить внимание, укладывается ли 9B версия или как ускорить (`cal_texts[:32]`, меньше шагов на ранних слоях `L26/L27`, если целевой порог достигается быстрее).
-   - Все новые итерации (`iter_29_...py`, `iter_13_...py` и т.д.) записывать в `experiments.jsonl` и `lab_notebook.md`.
+### C. Phase 1 Model Anatomy ([`anatomy_report.json`](ornith_nobackprop_lab/anatomy_report.json))
+- **Voronoi Cone**: `<|im_end|>` (`248046`), `eos_self_dot=0.6983`, `num_tokens_dot_gt_eos_self=0` (ближайший сосед `"</"` имеет `dot=0.235`).
+- **Signal Localization (резкий скачок на последнем `full_attention` блоке перед выходом)**:
+  - `L23 (full)`: `norm=75.21`, `res_diff=65.54`, `ctx_p=0.0014`, `rank=1030.2`
+  - `L26 (line)`: `norm=124.72`, `res_diff=92.54`, `ctx_p=0.0005`, `rank=848.0`
+  - `L27 (full)`: `norm=124.82`, `res_diff=116.58`, `mix=59.68`, `mlp=39.20`, **`ctx_p=0.1150, rank=2.0`**
+  - `L28 (line)`: `norm=152.69`, `res_diff=134.32`, `ctx_p=0.2092`, `rank=1.8`
+  - `L29 (line)`: `norm=161.43`, `res_diff=150.05`, `ctx_p=0.2298`, `rank=2.0`
+  - `L30 (line)`: `norm=188.62`, `res_diff=175.69`, `mix=50.74`, `mlp=63.49`, `ctx_p=0.3764`, `rank=1.5`
+  - `L31 (full)`: `norm=247.34`, `res_diff=283.81`, `mix=52.85`, `mlp=182.43`, **`ctx_p=0.5585, rank=1.5`**
+- **Null-Space Capacity**: на поздних слоях в `mixer_out_proj` свободно `3262..3975 / 4096` направлений (`< 1e-3 * λ_max`), в `mlp_in` — `3031..3946 / 4096`, в `down_proj` — `8943 (L23) .. 11918 (L31) / 12288`.
 
-4. **Multi-Seed (`[42, 1337, 2026]`) + Stage 2 Long-Context (`seq_len=2048`) верификация**:
-   - Создать (по образцу `research_orig/smollm_nobackprop_lab/verify_stage2_mechA.py` и `verify_stage2_and_seeds.py`):
-     - `ornith_nobackprop_lab/verify_stage2_mechA.py` $\rightarrow$ `stage2_mechA_results.json`
-     - `ornith_nobackprop_lab/verify_stage2_and_seeds.py` $\rightarrow$ `stage2_shared4null_results.json`
-   - Совет по скорости на T4: загружать 8-bit модель **один раз** за скрипт и между сидами вызывать `mgr.uninstall()` / `lora_mgr.clear_all()` + `cleanup_cuda()` + `torch.cuda.reset_peak_memory_stats()` (и проверять, что `static_vram_mb` остаётся ~`10485.51 MB`), вместо тройной перезагрузки модели по ~92s каждый раз.
-   - Для Stage 2 замерять: извлечение фактов из 2048-токенного документа + `seq_len=2048` forward в `no_grad()`, пиковое потребление VRAM и overhead относительно `Baseline_A_512` (`3242.66 MB`) и `Baseline_A_2048` OOM потолка (`4111.93 MB`).
+### D. Iteration 0: Все 5 базовых ориентиров завершены ([`baselines_summary.json`](ornith_nobackprop_lab/baselines_summary.json))
 
-5. **Complex Biography & Multi-Hop Logical Reasoning (`biography_logic_experiment.py`)**:
-   - Адаптировать `research_orig/smollm_nobackprop_lab/biography_logic_experiment.py` (*Dr. Seren Valenwood*, атомарные пары + 6 direct + 9 multi-hop logic вопросов: одноходовый CoT и weight-only self-recalled CoT).
-   - Сравнить: `Base_Unedited`, `InContext_Oracle`, лучший `Pure_0Backprop` (`Mech A`), лучший `1-Layer Detached` (`Shared4Null`).
-   - Оценить `enable_thinking=False` vs `enable_thinking=True` (с увеличенным `max_new_tokens`, напр. 256–384) отдельно на multi-hop задачах!
+| Baseline | Verbatim | Paraphrase | Locality | Bleed | Retention | KL Div | Peak VRAM | Act Overhead | Wall Time |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `Baseline_0_Unedited` | `0.00` | `0.00` | `0.6333` | `0.00` | `1.00` | `0.00` | `10485.51 MB` | `0.0 MB` | `0.0s` |
+| `Baseline_C_InContext` | `1.00` | `1.00` | `0.1667` | `0.0667` | `1.00` | `0.00` | `10485.51 MB` | `0.0 MB` | `0.0s` |
+| `Baseline_A_Backprop_5step_seq512` (`bs=1, grad_ckpt=True`) | `0.04` | `0.04` | `0.1667` | `0.1333` | `0.9833` | `0.190887` | `13728.17 MB` | `3242.66 MB` | `374.31s` |
+| `Baseline_A_Backprop_5step_seq2048` | — | — | — | — | — | — | `14597.44 MB` (OOM) | `4111.93 MB` (OOM) | — |
+| `Baseline_B_Backprop_100step` (`bs=2, seq=64`) | `0.84` | `0.84` | `0.1333` | `0.40` | `0.9667` | `1.06553` | `13719.98 MB` | `3234.47 MB` | `1374.98s` |
 
-6. **Финализация репозитория**:
-   - Собрать [`ornith_nobackprop_lab/blocks_library/`](ornith_nobackprop_lab/blocks_library/) (`README.md`, `voronoi_swiglu_block.py`, `shared4null_resskip_block.py`) по аналогии с `research_orig/smollm_nobackprop_lab/blocks_library/`.
-   - Дописать полный итоговый [`ornith_nobackprop_lab/lab_notebook.md`](ornith_nobackprop_lab/lab_notebook.md) со сквозным сравнением `SmolLM2-360M` vs 8-bit `Ornith-1.0-9B`.
-   - Закоммитить и запушить все финальные JSON-артефакты и код в репозиторий.
+Ключевые выводы по Iteration 0:
+- Полный backprop при `seq_len=512` уже требует `gradient_checkpointing`, занимает `374.3s`, тратит `+3242.66 MB` активаций и даёт всего `0.04` accuracy при `KL=0.1909`.
+- Полный backprop при `seq_len=2048` (`Baseline_A_2048`) **падает по OOM на T4 15 GiB даже при `gradient_checkpointing=True, bs=1`** (`14,597.44 MB`).
+- Долгий 100-шаговый backprop (`Baseline_B`) занимает **`22.9 минуты`** (`1374.98s`), даёт `0.84` recall, но разрушает локальность (`0.1333`, **`40%` bleed**) и ломает распределение (`KL=1.0655`).
 
 ---
 
-## 5. Промпт для быстрого старта в следующей сессии
+## 4. Пошаговый план дальнейшей работы (с рецептами и диагностикой)
+
+### Шаг 1. Запустить 3 подготовленных механизма на Seed 42
+```bash
+cd ornith_nobackprop_lab
+python3 -u iter_16_mechB_bounded_c2l.py
+python3 -u iter_28_mechA12_sweetspot.py
+python3 -u iter_12_shared4null.py
+```
+- `iter_16` закэширует `C0` (`L26..L31`, `mixer_out_proj` + `down_proj`) в `c0_cache_L23_31/`, а `iter_12` их сразу подхватит.
+- Все 3 скрипта автоматически пишут результаты в `experiments.jsonl` и печатают `check_gates` + `print_locality_breakdown`.
+
+### Шаг 2. Итеративный R&D тюнинг (если Seed 42 не проходит какой-то из гейтов)
+Смотреть в первую очередь на следующие рычаги (особенности 9B гибрида):
+
+1. **Если у `Mech A12 (iter_28)` проседает `paraphrase_acc < 0.75` или `ov_fix` показывает остаточные промахи**:
+   - Проверьте `layer_stats` (`shard_p_1`, `shard_p_2`, `d_fit_err`, `J_diag_pos`, `J_neg`, `J_cal`).
+   - В `iter_28_mechA12_sweetspot.py` сейчас `p0_order` включает слой `26` (`linear_attention`, где по Phase 1 `ctx_p=0.0005`), тогда как сильный скачок начинается с `L27 (full_attention)` (`ctx_p=0.1150`) $\rightarrow$ `L30` (`0.3764`). **Гипотеза `iter_29`**: перенести все `pos_0` шарды на `L27..L30` (убрать `L26` из `p0_order`), скорректировать `etas` под нормы остаточного потока (`L27=125 .. L31=247`), или подкрутить `target_prob_goal` / `alpha_vec` верхнюю границу.
+   - Для быстрой диагностики провала перефразов перенесите логику из `../research_orig/session_artifacts_and_logs/scratch/probe_para_gap.py` и `diag_iter25.py` (показывает реальные сгенерированные ответы модели на провальных verbatim/paraphrase/locality примерах!).
+
+2. **Если у `Mech A12` `wall_time_sec > 20s` или `kl_div > 0.05` / `bleed > 0.02`**:
+   - Время: профилируйте, сколько уходит на `init_and_prefix` (`first_layer=26`, проходит через 26 PyTorch-фоллбэковых GatedDeltaNet/Attn слоёв) vs `voronoi_guarded_targets_v2`. Можно уменьшить `cal_texts[:96]` $\rightarrow$ `[:64]` и `max_length=72`, либо сузить `cand_layers` с `23..31` до `27..31` (чтобы `first_layer=27` пропускал сразу 27 слоёв, если 5*16=80 пар хватает; обычно уникальных пар `~65` $\rightarrow$ `27..31` вмещает до `80`!).
+   - Bleed / KL: усильте штраф `w_neg` / `w_cal` (в `solve_contrastive_neuron_proj_sep` и в `gram_r`), либо зажмите `max_row_norm`.
+
+3. **Если у `Shared4Null (iter_12)` `wall_time_sec > 20s`, `kl_div > 0.05`, или `paraphrase_acc < 0.75`**:
+   - В `research_orig` на `SmolLM2-360M` `Shared4Null` брал ~23s (чуть выше 20s) и требовал аккуратного баланса `alpha_null` / `steps_per_layer` / `lambda_antibleed`.
+   - Проверьте логи каждого слоя `[Shared4Null L26..L31] ce=..., cal_kl=..., neg_kl=...`:
+     - Если `L26` почти не снижает `ce`, уберите `L26` и оставьте `TARGET_LAYERS = [27, 28, 29, 30, 31]` (быстрее на ~20%!).
+     - Ускорение времени: `cal_texts[:32]` с `max_len=64` и `steps_per_layer = (6, 7, 8, 8, 9)` часто укладываются в `< 20s`.
+     - Если падает `locality_acc`, проверьте `print_locality_breakdown` (различие между `near_entity_bleed` и `general`) и усильте `lambda_antibleed` / `lambda_neg_kl` или `alpha_null`.
+
+### Шаг 3. Multi-Seed (`[42, 1337, 2026]`) и Stage 2 Long-Context (`seq_len=2048`) верификация
+Создать два скрипта по образцу `research_orig/smollm_nobackprop_lab/verify_stage2_mechA.py` и `verify_stage2_and_seeds.py`:
+
+1. **`ornith_nobackprop_lab/verify_stage2_mechA.py`** $\rightarrow$ сохраняет `stage2_mechA12_results.json`:
+   - Загрузить 8-bit модель **один раз**, измерить `static_vram_mb`.
+   - Для каждого `seed in [42, 1337, 2026]`:
+     - `batch = generate_fact_batch(seed, tokenizer=tokenizer, target_doc_tokens=2048)`
+     - Stage 1: лучший `Pure 0-Backprop` солвер (`synthesize_mechA12_swiglu` или улучшенная версия), оценка `evaluate_model` + `NoBackpropGuard` (`peak_vram_mb`, `activation_vram_overhead_mb`, `wall_time_sec`).
+     - На `seed == 42`: дополнительно Stage 2 (`doc_text_stage2=batch.stage2_document_text`, реальная 2048-токенная экстракция фактов + `no_grad()` forward по `2048` токенам, сравнение активационного оверхеда с `Baseline_A_512` `3242.66 MB` и `Baseline_A_2048` OOM-потолком `4111.93 MB`).
+     - Между сидами обязательно вызывать `lora_mgr.clear_all(); cleanup_cuda(); torch.cuda.reset_peak_memory_stats()`.
+
+2. **`ornith_nobackprop_lab/verify_stage2_and_seeds.py`** $\rightarrow$ сохраняет `stage2_shared4null_results.json`:
+   - То же самое для лучшего 1-слойного изолированного (`x_in.detach()`) солвера (`PrecondBlockManager` + `run_shared4_l26_31` или уточнённая версия).
+   - Убедиться, что между сидами вызывается `mgr.uninstall()` + `cleanup_cuda()`, а перед новым сидом переустанавливается чистый `PrecondBlockManager`.
+   - Оба скрипта должны фиксировать среднее $\pm$ std по 3 сидам по всем ключевым метрикам.
+
+### Шаг 4. Complex Fictional Biography & Multi-Hop Logical Reasoning (`biography_logic_experiment.py`)
+Адаптировать `../research_orig/smollm_nobackprop_lab/biography_logic_experiment.py` в `ornith_nobackprop_lab/biography_logic_experiment.py` $\rightarrow$ `biography_logic_results.json`:
+- Персонаж: **Dr. Seren Valenwood** (точно те же атомарные факты `BIO_SELF_SUPERVISED_PAIRS`, 6 прямых вопросов `Direct_Recall_6` и 9 многошаговых логических задач `MultiHop_Logic_9`).
+- **Важные адаптации под `Ornith-1.0-9B`**:
+  - Форматирование промптов с `enable_thinking=False` для `Direct_Recall_6` и одноходового/self-recalled CoT, плюс **дополнительный прогон `enable_thinking=True` (с `max_new_tokens=256..384`)** на `MultiHop_Logic_9`, чтобы сравнить пользу встроенного chain-of-thought у 9B модели!
+  - Сравниваемые режимы (загрузить 8-bit модель 1 раз!):
+    1. `Base_Unedited`
+    2. `InContext_Oracle`
+    3. `Pure_0Backprop_VoronoiSwiGLU` (на атомарных парах)
+    4. `SingleLayer_Shared4Null_ResSkip` (на атомарных парах)
+  - В `Shared4Null` для биографии проверить, хватает ли `target_layers` / `steps_per_layer` для многотокенных ответов (в биографии факты включают города, даты, числа, институты — более длинные target'ы).
+
+### Шаг 5. Сборка `blocks_library/`, финальный `lab_notebook.md` и аудит
+1. Создать `ornith_nobackprop_lab/blocks_library/`:
+   - `voronoi_swiglu_block.py` (экспорт `VoronoiSwiGLUInjector` или обёртка над финальным 0-backprop солвером)
+   - `shared4null_resskip_block.py` (экспорт `Shared4NullResSkipInjector` / `PrecondBlockManager`)
+   - `README.md` со сводной таблицей результатов на `Ornith-1.0-9B` (8-bit).
+2. Обновить `ornith_nobackprop_lab/lab_notebook.md`: добавить все итерации (`16`, `28`, `12`, R&D, Stage 2 3-seed, Biography Logic) и сравнительную таблицу **`SmolLM2-360M` vs 8-bit `Ornith-1.0-9B`**.
+3. Сделать финальный commit & push в репозиторий (и не забыть почистить временный ssh-ключ, если используете его в сессии).
+
+---
+
+## 5. Готовый промпт для старта новой сессии
 
 ```text
-Продолжи исследование из репозитория https://github.com/drimeF0/backpropfree :
-1. Клонируй репозиторий и внимательно прочитай HANDOFF_NEXT_SESSION.md и ornith_nobackprop_lab/lab_notebook.md.
-2. Установи bitsandbytes (без flash-linear-attention на T4!) и проверь ornith_nobackprop_lab/baselines_summary.json (досчитай Baseline_B при необходимости).
-3. Прогони iter_16_mechB_bounded_c2l.py, iter_28_mechA12_sweetspot.py и iter_12_shared4null.py на Seed 42, проанализируй метрики и при необходимости проведи итеративные улучшения под 8-bit Ornith-1.0-9B.
-4. Выполни 3-seed [42, 1337, 2026] + Stage 2 seq_len=2048 верификацию, эксперимент biography_logic_experiment.py (Dr. Seren Valenwood), собери ornith_nobackprop_lab/blocks_library/ и обнови lab_notebook.md.
-5. Все финальные результаты закоммить и запушь обратно в репозиторий.
+Продолжи и доведи до конца исследование из https://github.com/drimeF0/backpropfree :
+1. Клонируй репозиторий, изучи README.md, HANDOFF_NEXT_SESSION.md и ornith_nobackprop_lab/lab_notebook.md.
+2. Установи bitsandbytes transformers accelerate datasets (БЕЗ flash-linear-attention на T4 SM 7.5!). Phase 1 Anatomy и все 5 ориентиров Iteration 0 (Baseline 0, C, A@512, A@2048-OOM, B@100step) уже готовы и сохранены в baselines_summary.json.
+3. Прогони iter_16_mechB_bounded_c2l.py, iter_28_mechA12_sweetspot.py и iter_12_shared4null.py на Seed 42; если какой-то гейт не пройден, проведи диагностику и итеративный R&D тюнинг для 8-bit Ornith-1.0-9B (учитывая скачок на L27 full_attention и 248k словарь).
+4. Напиши и прогони verify_stage2_mechA.py и verify_stage2_and_seeds.py (seeds=[42, 1337, 2026], Stage 2 seq_len=2048 с переиспользованием одной загруженной 8-bit модели).
+5. Напиши и прогони biography_logic_experiment.py (Dr. Seren Valenwood, direct + multi-hop CoT, проверь enable_thinking=False и True).
+6. Собери ornith_nobackprop_lab/blocks_library/, обнови lab_notebook.md со сравнением SmolLM2-360M vs 8-bit Ornith-1.0-9B, проверь все JSON-метрики и запушь финал в GitHub.
 ```

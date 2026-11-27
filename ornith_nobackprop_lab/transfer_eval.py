@@ -407,6 +407,10 @@ def evaluate_bio_transfer(
             "logic_1turn": l_items,
             "logic_thinking": logic_thinking_items,
             "logic_self_recalled": sr_items,
+            "locality": [
+                {"entity": it.entity, "real": it.is_real_world, "q": it.question, "pred": pr}
+                for it, pr in zip(batch.locality_eval, loc_preds)
+            ],
         },
     }
 

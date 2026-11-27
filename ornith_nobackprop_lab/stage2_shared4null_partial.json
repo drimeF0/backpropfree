@@ -1,0 +1,210 @@
+{
+  "status": "partial_after_seed1337",
+  "note": "Stopped after seed 1337 by user request; seed 2026 was not run. Stage 2 was run on seed 42.",
+  "records": {
+    "Verify_Shared4Null_Stable_Seed42": {
+      "iter": 30,
+      "method": "Verify_Shared4Null_Stable_Seed42",
+      "seed": 42,
+      "stage": 1,
+      "rank": 16,
+      "verbatim_acc": 0.64,
+      "paraphrase_acc": 0.56,
+      "locality_acc": 0.3,
+      "kl_div": 0.001494,
+      "retention_acc": 0.9833,
+      "peak_vram_mb": 12790.9,
+      "activation_vram_overhead_mb": 2305.38,
+      "wall_time_sec": 222.687,
+      "uses_full_backprop": false,
+      "status": "verify_partial",
+      "general_qa_raw_acc": 0.9833,
+      "locality_bleed_rate": 0.2333,
+      "gates": {
+        "pass_kl": true,
+        "pass_ret": true,
+        "pass_loc": false,
+        "pass_time": false,
+        "pass_para": false,
+        "pass_no_backprop": true,
+        "beats_base_a": true,
+        "ALL_GATES_PASS": false
+      },
+      "layer_logs": [
+        {
+          "layer": 27,
+          "layer_type": "full_attention",
+          "ce": 2.4226,
+          "cal_kl": 0.00053,
+          "neg_kl": 0.00097
+        },
+        {
+          "layer": 28,
+          "layer_type": "linear_attention",
+          "ce": 1.585,
+          "cal_kl": 0.0002,
+          "neg_kl": 0.00119
+        },
+        {
+          "layer": 29,
+          "layer_type": "linear_attention",
+          "ce": 1.227,
+          "cal_kl": 0.00018,
+          "neg_kl": 0.00134
+        },
+        {
+          "layer": 30,
+          "layer_type": "linear_attention",
+          "ce": 0.8372,
+          "cal_kl": 0.00105,
+          "neg_kl": 0.00142
+        },
+        {
+          "layer": 31,
+          "layer_type": "full_attention",
+          "ce": 0.6835,
+          "cal_kl": 0.00374,
+          "neg_kl": 0.00162
+        }
+      ]
+    },
+    "Verify_Stage2_2048Doc_Shared4Null_Stable": {
+      "iter": 30,
+      "method": "Verify_Stage2_2048Doc_Shared4Null_Stable",
+      "seed": 42,
+      "stage": 2,
+      "rank": 16,
+      "verbatim_acc": 0.64,
+      "paraphrase_acc": 0.5,
+      "locality_acc": 0.3,
+      "kl_div": 0.001513,
+      "retention_acc": 0.9833,
+      "peak_vram_mb": 12840.87,
+      "activation_vram_overhead_mb": 2355.35,
+      "wall_time_sec": 225.057,
+      "uses_full_backprop": false,
+      "status": "verify_partial",
+      "general_qa_raw_acc": 0.9833,
+      "locality_bleed_rate": 0.2,
+      "gates": {
+        "pass_kl": true,
+        "pass_ret": true,
+        "pass_loc": false,
+        "pass_time": false,
+        "pass_para": false,
+        "pass_no_backprop": true,
+        "beats_base_a": true,
+        "ALL_GATES_PASS": false
+      },
+      "vram_overhead_vs_baseA_512": 0.7264,
+      "vram_overhead_vs_baseA_2048": 0.5728,
+      "baseA_512_overhead_mb": 3242.66,
+      "baseA_2048_overhead_mb": 4111.93,
+      "extracted_facts_count": 25,
+      "stage2_token_len": 2048,
+      "layer_logs": [
+        {
+          "layer": 27,
+          "layer_type": "full_attention",
+          "ce": 2.4228,
+          "cal_kl": 0.00051,
+          "neg_kl": 0.001
+        },
+        {
+          "layer": 28,
+          "layer_type": "linear_attention",
+          "ce": 1.584,
+          "cal_kl": 0.00022,
+          "neg_kl": 0.0012
+        },
+        {
+          "layer": 29,
+          "layer_type": "linear_attention",
+          "ce": 1.2184,
+          "cal_kl": 0.00017,
+          "neg_kl": 0.00133
+        },
+        {
+          "layer": 30,
+          "layer_type": "linear_attention",
+          "ce": 0.8394,
+          "cal_kl": 0.0005,
+          "neg_kl": 0.00144
+        },
+        {
+          "layer": 31,
+          "layer_type": "full_attention",
+          "ce": 0.6738,
+          "cal_kl": 0.00156,
+          "neg_kl": 0.00161
+        }
+      ]
+    },
+    "Verify_Shared4Null_Stable_Seed1337": {
+      "iter": 30,
+      "method": "Verify_Shared4Null_Stable_Seed1337",
+      "seed": 1337,
+      "stage": 1,
+      "rank": 16,
+      "verbatim_acc": 0.48,
+      "paraphrase_acc": 0.36,
+      "locality_acc": 0.4,
+      "kl_div": 0.002554,
+      "retention_acc": 1.0,
+      "peak_vram_mb": 12833.81,
+      "activation_vram_overhead_mb": 2348.3,
+      "wall_time_sec": 221.508,
+      "uses_full_backprop": false,
+      "status": "verify_partial",
+      "general_qa_raw_acc": 1.0,
+      "locality_bleed_rate": 0.1333,
+      "gates": {
+        "pass_kl": true,
+        "pass_ret": true,
+        "pass_loc": false,
+        "pass_time": false,
+        "pass_para": false,
+        "pass_no_backprop": true,
+        "beats_base_a": true,
+        "ALL_GATES_PASS": false
+      },
+      "layer_logs": [
+        {
+          "layer": 27,
+          "layer_type": "full_attention",
+          "ce": 2.5832,
+          "cal_kl": 0.00049,
+          "neg_kl": 0.00097
+        },
+        {
+          "layer": 28,
+          "layer_type": "linear_attention",
+          "ce": 1.6972,
+          "cal_kl": 0.00021,
+          "neg_kl": 0.00101
+        },
+        {
+          "layer": 29,
+          "layer_type": "linear_attention",
+          "ce": 1.3679,
+          "cal_kl": 0.00025,
+          "neg_kl": 0.0012
+        },
+        {
+          "layer": 30,
+          "layer_type": "linear_attention",
+          "ce": 0.9329,
+          "cal_kl": 0.00043,
+          "neg_kl": 0.00141
+        },
+        {
+          "layer": 31,
+          "layer_type": "full_attention",
+          "ce": 0.6705,
+          "cal_kl": 0.00079,
+          "neg_kl": 0.00189
+        }
+      ]
+    }
+  }
+}

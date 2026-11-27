@@ -74,9 +74,50 @@ Locality values for `Iter 16/28/12` were measured before the harness batch-size 
 6. **Quantized snapshot caching.** The 8-bit model is saved once to `ornith_8bit_bnb/` (gitignored, 3 safetensors shards) with its `quantization_config`; subsequent processes load it directly instead of re-quantizing the 18 GB fp16 checkpoint.
 7. **Direct diagnostic (`diag_iter28.py`)** confirms no target bleed (`25/25` synthetic no-bleed, `5/5` real anchors), so the remaining locality gap is formatting/high-entropy tie-flipping, not factual corruption.
 
+## Iteration 2: Multi-Seed `[42, 1337, 2026]` + Stage 2 (`seq_len=2048`) — Mech A13
+
+`verify_stage2_mechA.py` loads the cached 8-bit snapshot **once** and reuses it across all seeds.
+
+| Seed | Verbatim | Paraphrase | Locality | KL Div | Retention | Peak VRAM | Act Overhead | Wall Time |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `42` | `0.28` | `0.36` | `0.8667` | `0.000814` | `1.00` | `12980.18 MB` | `2494.67 MB` | `174.57s` |
+| `1337` | `0.44` | `0.50` | `0.8667` | `0.000756` | `1.00` | `12978.66 MB` | `2493.15 MB` | `155.41s` |
+| `2026` | `0.48` | `0.46` | `0.90` | `0.000791` | `1.00` | `12980.42 MB` | `2494.91 MB` | `174.65s` |
+| **mean ± std** | **`0.400 ± 0.086`** | **`0.440 ± 0.059`** | **`0.878 ± 0.016`** | **`0.00079 ± 0.00002`** | **`1.000 ± 0`** | — | — | **`168.21 ± 9.05s`** |
+
+**Stage 2 (`seq_len=2048`, Seed 42, real noisy-document extraction + `no_grad()` forward):**
+
+| Metric | Value |
+| :--- | :---: |
+| Extracted facts from 2048-token doc | `25 / 25` |
+| Document token length | `2048` |
+| Peak VRAM | `13937.06 MB` |
+| Activation overhead | **`3451.55 MB`** |
+| vs `Baseline_A_512` overhead (`3242.66 MB`) | `1.0644x` |
+| vs `Baseline_A_2048` OOM ceiling (`4111.93 MB`) | **`0.8394x`** |
+| Verbatim / Paraphrase | `0.28 / 0.36` |
+| KL / Retention | `0.000814 / 1.00` |
+
+**Key finding:** a true 0-backprop solver can process a real 2,048-token document and synthesize the adapter in `3451.55 MB` of activation overhead, i.e. **16% below the measured OOM ceiling of backprop @ 2048** (`4111.93 MB`), while backprop cannot complete at all on the 15 GiB T4. The absolute VRAM gate (`<= 0.25 * Baseline_A`) is not met because the 2048-token forward itself dominates the overhead.
+
+## Iteration 2b: Shared4Null-Stable Multi-Seed + Stage 2 (partial)
+
+`verify_stage2_and_seeds.py` was stopped after seed `1337`; seed `2026` remains to be run.
+Seed 42 Stage 2 is complete. Results are stored in `stage2_shared4null_partial.json` and `experiments.jsonl`.
+
+| Seed / Stage | Verbatim | Paraphrase | Locality | Bleed | KL Div | Retention | Act Overhead | Wall Time |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Seed `42` | `0.64` | `0.56` | `0.30` | `0.2333` | `0.001494` | `0.9833` | `2305.38 MB` | `222.69s` |
+| Seed `1337` | `0.48` | `0.36` | `0.40` | `0.1333` | `0.002554` | `1.00` | `2348.30 MB` | `221.51s` |
+| Stage 2 `2048` (Seed 42) | `0.64` | `0.50` | `0.30` | `0.20` | `0.001513` | `0.9833` | **`2355.35 MB`** | `225.06s` |
+
+**Stage 2 VRAM:** `2355.35 MB` = `0.7264x` of `Baseline_A_512` (`3242.66 MB`) and **`0.5728x` of the Baseline_A_2048 OOM ceiling** (`4111.93 MB`). This is the lowest 2048-token overhead observed in the lab, but it still exceeds the absolute `0.25x Baseline_A` gate.
+
+**Open issue:** synthetic-sibling bleed (`13.3–23.3%`) remains the main blocker for Shared4Null-Stable; multi-hop biography logic has not been run yet.
+
 ### Current Best (Seed 42)
-- **Pure 0-backprop:** `Iter 29` is the best paraphrase (`0.36`) at `KL=0.0008`, `retention=1.00`, `locality=0.8667`.
-- **1-layer isolated:** `Iter 30` is the best recall (`0.64` verbatim / `0.56` paraphrase) at `KL=0.0015`, `retention=0.9833`, but bleeds `30%` on synthetic siblings.
+- **Pure 0-backprop:** `Iter 29/A13` multi-seed mean `verbatim=0.400±0.086`, `paraphrase=0.440±0.059`, `locality=0.878±0.016`, `KL=0.00079`, `retention=1.000`; Stage 2 overhead `3451.55 MB` (`0.8394x` the backprop OOM ceiling).
+- **1-layer isolated:** `Iter 30` seed-42 `verbatim=0.64`, `paraphrase=0.56`, `KL=0.0015`, `retention=0.9833`; seed-1337 `0.48/0.36`; stage-2 overhead `2355.35 MB` (`0.5728x` the backprop OOM ceiling). Main blocker: `13–23%` synthetic-sibling bleed.
 - No method meets all gates; the hard blockers are generation-suffix fidelity, wall time (`>20s` on T4 PyTorch fallback kernels), and the strict `locality>=0.98` gate.
 
 ## Next Experiments

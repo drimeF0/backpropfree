@@ -27,6 +27,15 @@
 
 \* Locality у `Baseline_0`, `Iter 16/28/12` измерена до исправления несоответствия batch size (`base_ref bs=10` vs eval `bs=12`); `Iter 29/30` — matched batch.
 
+### Multi-Seed + Stage 2 (8-bit `Ornith-1.0-9B`)
+
+| Метод | Seeds | Verbatim (mean±std) | Paraphrase (mean±std) | Locality | KL | Retention | Stage 2 (2048) Overhead | vs OOM-потолок backprop |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `Mech A13` (pure 0-backprop) | `42, 1337, 2026` | `0.400 ± 0.086` | `0.440 ± 0.059` | `0.878 ± 0.016` | `0.00079` | `1.000` | `3451.55 MB` | `0.8394x` |
+| `Shared4Null-Stable` (1-layer detached) | `42, 1337` (partial) | `0.64 / 0.48` | `0.56 / 0.36` | `0.30 / 0.40` | `0.0015–0.0026` | `0.9833 / 1.000` | `2355.35 MB` | `0.5728x` |
+
+`Mech A13` обрабатывает реальный 2048-токенный документ и синтезирует адаптер за `3451.55 MB` активаций — на `16%` ниже OOM-потолка backprop @ 2048 (`4111.93 MB`), тогда как backprop на T4 не завершается. `Shared4Null-Stable` даёт лучший recall, но `13–23%` synthetic bleed. Ни один метод пока не проходит все ворота.
+
 ### Что дальше (код уже в `ornith_nobackprop_lab/`)
 1. `python3 -u verify_stage2_mechA.py` — 3 сида + Stage 2 (`seq_len=2048`) для лучшего pure 0-backprop (`MechA13`).
 2. `python3 -u verify_stage2_and_seeds.py` — 3 сида + Stage 2 для `Shared4Null-Stable`.

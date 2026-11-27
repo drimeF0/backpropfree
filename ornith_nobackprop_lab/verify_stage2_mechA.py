@@ -21,7 +21,7 @@ import torch
 from benchmark import SEEDS, FactBatch, generate_fact_batch, load_smoltalk_splits
 from eval_harness import append_experiment_record, check_gates, evaluate_model, get_base_reference
 from guards import LoRAManager, NoBackpropGuard, cleanup_cuda, measure_static_vram_mb
-from iter_28_mechA12_sweetspot import LORA_RANK, TARGET_MODULES, synthesize_mechA12_swiglu
+from iter_29_mechA13 import LORA_RANK, TARGET_MODULES, synthesize_mechA12_swiglu
 from model_loader import load_ornith_8bit
 from probes import extract_facts_from_stage2_doc, print_locality_breakdown
 
@@ -66,7 +66,7 @@ def main() -> None:
         gates = check_gates(eval_res, guard.metrics, baseline_a_ref=base_a_512)
         rec = append_experiment_record(
             30,
-            f"Verify_MechA12_0Backprop_Seed{seed}",
+            f"Verify_MechA13_0Backprop_Seed{seed}",
             eval_res,
             guard.metrics,
             status="pass" if gates["ALL_GATES_PASS"] else "verify_partial",
@@ -75,7 +75,7 @@ def main() -> None:
             rank=lora_mgr.max_active_rank(),
             extra={"gates": gates, "final_train_diag": diag["final_train_diag"]},
         )
-        print(f"\n[MechA12 Seed {seed} Stage 1] Result:", json.dumps(rec, indent=2), flush=True)
+        print(f"\n[MechA13 Seed {seed} Stage 1] Result:", json.dumps(rec, indent=2), flush=True)
         print_locality_breakdown(model, tokenizer, lora_mgr, batch, device, base_ref=base_ref)
         summary["stage1_seeds"][str(seed)] = rec
 
@@ -113,7 +113,7 @@ def main() -> None:
             )
             rec_s2 = append_experiment_record(
                 30,
-                "Verify_Stage2_2048Doc_MechA12_0Backprop",
+                "Verify_Stage2_2048Doc_MechA13_0Backprop",
                 eval_s2,
                 guard_s2.metrics,
                 status="pass" if (gates_s2["ALL_GATES_PASS"] and ratio_512 <= 0.25) else "verify_partial",
@@ -131,9 +131,9 @@ def main() -> None:
                     "final_train_diag": diag_s2["final_train_diag"],
                 },
             )
-            print("\n[MechA12 Stage 2 @ seq_len=2048] Result:", json.dumps(rec_s2, indent=2), flush=True)
+            print("\n[MechA13 Stage 2 @ seq_len=2048] Result:", json.dumps(rec_s2, indent=2), flush=True)
             print(
-                f"[MechA12 Stage 2 VRAM] overhead={guard_s2.metrics.activation_vram_overhead_mb:.2f} MB | "
+                f"[MechA13 Stage 2 VRAM] overhead={guard_s2.metrics.activation_vram_overhead_mb:.2f} MB | "
                 f"vs Baseline_A_512={ratio_512:.4f}x | vs Baseline_A_2048(OOM)={ratio_2048:.4f}x",
                 flush=True,
             )

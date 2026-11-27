@@ -227,13 +227,17 @@ def synthesize_mechA12_swiglu(
     cal_texts: List[str],
     device: str,
     doc_text_stage2: str | None = None,
+    probes_override=None,
 ) -> Dict[str, object]:
     if doc_text_stage2 is not None:
         doc_enc = tokenizer(doc_text_stage2, return_tensors="pt", truncation=True, max_length=2048).to(device)
         _ = model(input_ids=doc_enc.input_ids, attention_mask=doc_enc.attention_mask, use_cache=False)
         del doc_enc
 
-    pos_items, neg_prompt_items = build_probes_mechA10(batch.stage1_edit_texts, tokenizer)
+    if probes_override is None:
+        pos_items, neg_prompt_items = build_probes_mechA10(batch.stage1_edit_texts, tokenizer)
+    else:
+        pos_items, neg_prompt_items = probes_override
     prompts = [x["prompt"] for x in pos_items]
     targets = [x["target"] for x in pos_items]
 

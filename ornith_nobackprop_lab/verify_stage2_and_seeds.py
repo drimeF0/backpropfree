@@ -21,7 +21,7 @@ import torch
 from benchmark import SEEDS, FactBatch, generate_fact_batch, load_smoltalk_splits
 from eval_harness import append_experiment_record, check_gates, evaluate_model, get_base_reference
 from guards import NoBackpropGuard, cleanup_cuda, measure_static_vram_mb
-from iter_12_shared4null import (
+from iter_30_shared4null_stable import (
     LORA_RANK,
     TARGET_LAYERS,
     PrecondBlockManager,
@@ -88,7 +88,7 @@ def main() -> None:
         gates = check_gates(eval_res, guard.metrics, baseline_a_ref=base_a_512)
         rec = append_experiment_record(
             30,
-            f"Verify_Shared4Null_ResSkip_Seed{seed}",
+            f"Verify_Shared4Null_Stable_Seed{seed}",
             eval_res,
             guard.metrics,
             status="pass" if gates["ALL_GATES_PASS"] else "verify_partial",
@@ -134,7 +134,7 @@ def main() -> None:
             )
             rec_s2 = append_experiment_record(
                 30,
-                "Verify_Stage2_2048Doc_Shared4Null_ResSkip",
+                "Verify_Stage2_2048Doc_Shared4Null_Stable",
                 eval_s2,
                 guard_s2.metrics,
                 status="pass" if (gates_s2["ALL_GATES_PASS"] and ratio_512 <= 0.25) else "verify_partial",

@@ -1,0 +1,257 @@
+{
+  "small": {
+    "scale": "small",
+    "static_vram_mb": 690.13,
+    "runs": {
+      "Base_Unedited": {
+        "shared_retention": {
+          "real_anchors_acc": 0.6,
+          "real_fact_acc": 0.6,
+          "real_code_acc": 0.6,
+          "general_qa_raw_acc": 0.9333,
+          "retention_acc": 1.0,
+          "kl_div": 0.0
+        },
+        "domains": {
+          "42": {
+            "code_api": {
+              "domain": "code_api",
+              "seed": 42,
+              "api_qa_acc": 0.0,
+              "code_pass1": 0.0,
+              "neg_ctrl_pass1": 0.5,
+              "refusal_rate": 0.0,
+              "code_errors": [
+                "runtime",
+                "runtime",
+                "runtime",
+                "runtime",
+                "assertion",
+                "syntax"
+              ]
+            },
+            "pop_culture": {
+              "domain": "pop_culture",
+              "seed": 42,
+              "para_acc": 0.0,
+              "multihop_acc": 0.0,
+              "refusal_rate": 0.0,
+              "real_pop_acc": 0.4,
+              "sibling_bleed": 0.0
+            },
+            "bio_logic": {
+              "domain": "bio_logic",
+              "seed": 42,
+              "direct_acc": 0.0,
+              "para_acc": 0.0,
+              "logic_1turn_acc": 0.0,
+              "refusal_rate": 0.0,
+              "sibling_bleed": 0.0
+            }
+          },
+          "1337": {
+            "code_api": {
+              "domain": "code_api",
+              "seed": 1337,
+              "api_qa_acc": 0.0,
+              "code_pass1": 0.0,
+              "neg_ctrl_pass1": 0.5,
+              "refusal_rate": 0.0,
+              "code_errors": [
+                "runtime",
+                "runtime",
+                "runtime",
+                "runtime",
+                "runtime",
+                "runtime"
+              ]
+            },
+            "pop_culture": {
+              "domain": "pop_culture",
+              "seed": 1337,
+              "para_acc": 0.0,
+              "multihop_acc": 0.0,
+              "refusal_rate": 0.0,
+              "real_pop_acc": 0.4,
+              "sibling_bleed": 0.0
+            },
+            "bio_logic": {
+              "domain": "bio_logic",
+              "seed": 1337,
+              "direct_acc": 0.0,
+              "para_acc": 0.0,
+              "logic_1turn_acc": 0.0,
+              "refusal_rate": 0.0,
+              "sibling_bleed": 0.0
+            }
+          }
+        }
+      },
+      "InContext_Oracle": {
+        "shared_retention": {
+          "real_anchors_acc": 0.72,
+          "real_fact_acc": 0.7333,
+          "real_code_acc": 0.7,
+          "general_qa_raw_acc": 0.5333,
+          "retention_acc": 0.5714,
+          "kl_div": 0.0
+        },
+        "domains": {
+          "42": {
+            "code_api": {
+              "domain": "code_api",
+              "seed": 42,
+              "api_qa_acc": 0.625,
+              "code_pass1": 0.0,
+              "neg_ctrl_pass1": 0.3333,
+              "refusal_rate": 0.0,
+              "code_errors": [
+                "runtime",
+                "runtime",
+                "runtime",
+                "assertion",
+                "runtime",
+                "runtime"
+              ]
+            },
+            "pop_culture": {
+              "domain": "pop_culture",
+              "seed": 42,
+              "para_acc": 0.9,
+              "multihop_acc": 0.5,
+              "refusal_rate": 0.0,
+              "real_pop_acc": 0.3,
+              "sibling_bleed": 0.0
+            },
+            "bio_logic": {
+              "domain": "bio_logic",
+              "seed": 42,
+              "direct_acc": 1.0,
+              "para_acc": 0.9583,
+              "logic_1turn_acc": 0.2222,
+              "refusal_rate": 0.0,
+              "sibling_bleed": 0.0
+            }
+          },
+          "1337": {
+            "code_api": {
+              "domain": "code_api",
+              "seed": 1337,
+              "api_qa_acc": 0.625,
+              "code_pass1": 0.0,
+              "neg_ctrl_pass1": 0.3333,
+              "refusal_rate": 0.0,
+              "code_errors": [
+                "assertion",
+                "runtime",
+                "runtime",
+                "runtime",
+                "runtime",
+                "assertion"
+              ]
+            },
+            "pop_culture": {
+              "domain": "pop_culture",
+              "seed": 1337,
+              "para_acc": 1.0,
+              "multihop_acc": 0.5,
+              "refusal_rate": 0.0,
+              "real_pop_acc": 0.4,
+              "sibling_bleed": 0.0
+            },
+            "bio_logic": {
+              "domain": "bio_logic",
+              "seed": 1337,
+              "direct_acc": 0.9167,
+              "para_acc": 0.8333,
+              "logic_1turn_acc": 0.0,
+              "refusal_rate": 0.0,
+              "sibling_bleed": 0.0
+            }
+          }
+        }
+      },
+      "FullBackprop_seq2048_probe": {
+        "oom_no_ckpt": false,
+        "oom_with_ckpt": false,
+        "peak_vram_mb": 0.0,
+        "overhead_mb": 0.0
+      },
+      "FullBackprop_Baseline_s42": {
+        "code_api": {
+          "domain_eval": {
+            "domain": "code_api",
+            "seed": 42,
+            "api_qa_acc": 0.0,
+            "code_pass1": 0.0,
+            "neg_ctrl_pass1": 0.3333,
+            "refusal_rate": 0.0,
+            "code_errors": [
+              "runtime",
+              "runtime",
+              "runtime",
+              "runtime",
+              "runtime",
+              "syntax"
+            ]
+          },
+          "shared_retention": {
+            "real_anchors_acc": 0.52,
+            "real_fact_acc": 0.5333,
+            "real_code_acc": 0.5,
+            "general_qa_raw_acc": 0.8833,
+            "retention_acc": 0.9465,
+            "kl_div": 0.058059
+          },
+          "peak_vram_mb": 5446.7,
+          "overhead_mb": 4756.57,
+          "wall_time_sec": 7.15
+        },
+        "pop_culture": {
+          "domain_eval": {
+            "domain": "pop_culture",
+            "seed": 42,
+            "para_acc": 0.0,
+            "multihop_acc": 0.0,
+            "refusal_rate": 0.0,
+            "real_pop_acc": 0.5,
+            "sibling_bleed": 0.0
+          },
+          "shared_retention": {
+            "real_anchors_acc": 0.6,
+            "real_fact_acc": 0.6,
+            "real_code_acc": 0.6,
+            "general_qa_raw_acc": 0.9,
+            "retention_acc": 0.9643,
+            "kl_div": 0.072141
+          },
+          "peak_vram_mb": 4952.71,
+          "overhead_mb": 4262.58,
+          "wall_time_sec": 6.12
+        },
+        "bio_logic": {
+          "domain_eval": {
+            "domain": "bio_logic",
+            "seed": 42,
+            "direct_acc": 0.0,
+            "para_acc": 0.0,
+            "logic_1turn_acc": 0.0,
+            "refusal_rate": 0.0,
+            "sibling_bleed": 0.0
+          },
+          "shared_retention": {
+            "real_anchors_acc": 0.6,
+            "real_fact_acc": 0.6,
+            "real_code_acc": 0.6,
+            "general_qa_raw_acc": 0.8833,
+            "retention_acc": 0.9465,
+            "kl_div": 0.07217
+          },
+          "peak_vram_mb": 4776.6,
+          "overhead_mb": 4086.47,
+          "wall_time_sec": 5.71
+        }
+      }
+    }
+  }
+}

@@ -23,5 +23,6 @@ c0_cache_*/
 # Quantized model snapshot & temporary caches (regenerate automatically)
 ornith_nobackprop_lab/ornith_8bit_bnb/
 ornith_nobackprop_lab/bio_base_ref_*.json
+ornith_nobackprop_lab/universal_base_ref_*.json
 ornith_nobackprop_lab/smoltalk_cache_small.json
 ornith_nobackprop_lab/iter_*_details_*.json

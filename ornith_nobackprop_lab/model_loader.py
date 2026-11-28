@@ -13,7 +13,13 @@ from transformers.masking_utils import create_causal_mask, create_recurrent_atte
 
 MODEL_ID = "ornith-ai/Ornith-1.0-9B"
 COMPUTE_DTYPE = torch.float16
-QUANTIZED_DIR = Path("/content/ornith_nobackprop_lab/ornith_8bit_bnb")
+_LOCAL_QUANTIZED_DIR = Path(__file__).resolve().parent / "ornith_8bit_bnb"
+_LEGACY_QUANTIZED_DIR = Path("/content/ornith_nobackprop_lab/ornith_8bit_bnb")
+QUANTIZED_DIR = (
+    _LEGACY_QUANTIZED_DIR
+    if (_LEGACY_QUANTIZED_DIR / "config.json").exists() and not (_LOCAL_QUANTIZED_DIR / "config.json").exists()
+    else _LOCAL_QUANTIZED_DIR
+)
 
 
 def get_text_model(model: nn.Module) -> nn.Module:

@@ -390,7 +390,9 @@ def load_smoltalk_splits(
     from pathlib import Path
 
     assert n_cal <= 200, "Calibration dataset budget must be <= 200 examples!"
-    cache_file = Path("/content/ornith_nobackprop_lab/smoltalk_cache.json")
+    _local_cache = Path(__file__).resolve().parent / "smoltalk_cache.json"
+    _legacy_cache = Path("/content/ornith_nobackprop_lab/smoltalk_cache.json")
+    cache_file = _local_cache if _local_cache.exists() or not _legacy_cache.exists() else _legacy_cache
     if cache_file.exists():
         payload = json.loads(cache_file.read_text())
         if len(payload.get("cal_texts", [])) >= n_cal and len(payload.get("kl_texts", [])) >= n_kl_eval:

@@ -27,7 +27,21 @@
 
 *Key `360M` Iter 0 takeaways*: Unedited `Base` has `0.0` prior across every synthetic domain; `InContext_Oracle` destroys general QA retention (`0.571`) and hurts standard Python negative controls (`0.50 -> 0.333`); `FullBackprop` directly on raw 2048-token documents spikes activation VRAM to `+4.09–4.76 GB` even on a 360M model, fails `KL <= 0.05` (`0.058–0.072`), degrades retention (`0.9465`), and yields `0.0` downstream QA/Code recall.
 
-*(8-bit `Ornith-1.0-9B` Iteration 0 baselines running next...)*
+#### `ornith-ai/Ornith-1.0-9B` (`LLM.int8()` + `fp16` compute, `llm_int8_skip_modules=["lm_head"]`, Static VRAM = `10,485.51 MB`)
+
+| Method | Seed | Code API (QA / Pass@1 / NegCtrl) | Pop Culture (Para / MH / RealPop / Bleed / Refusal) | Bio Logic (Direct / Para / 1-Turn / Bleed / Refusal) | Real Anchors (25) | Gen QA Ret | KL Div | Peak Ovh / Time |
+|---|---:|---|---|---|---|---:|---:|---:|
+| `Base_Unedited` | 42 | `0.000` / `0.000` / `0.833` | `0.000` / `0.167` / `1.000` / `0.000` / `0.063` | `0.000` / `0.000` / `0.222` / `0.000` / `0.333` | `0.960` (`1.00/0.90`) | `1.000` | `0.000000` | `0 MB` / `0.0s` |
+| `Base_Unedited` | 1337 | `0.000` / `0.000` / `0.833` | `0.000` / `0.167` / `1.000` / `0.000` / `0.000` | `0.000` / `0.000` / `0.000` / `0.000` / `0.028` | `0.960` | `1.000` | `0.000000` | `0 MB` / `0.0s` |
+| `InContext_Oracle` | 42 | `0.875` / `0.833` / `0.667` | `1.000` / `1.000` / `1.000` / `0.500` / `0.000` | `1.000` / `1.000` / `0.778` / `0.200` / `0.000` | `1.000` (`1.00/1.00`) | `1.000` | `0.000000` | `0 MB` / `0.0s` |
+| `InContext_Oracle` | 1337 | `0.875` / `0.833` / `0.667` | `1.000` / `1.000` / `0.800` / `0.750` / `0.000` | `1.000` / `1.000` / `1.000` / `0.400` / `0.000` | — | — | `0.000000` | `0 MB` / `0.0s` |
+| `FullBackprop` (`seq=2048`) | 42 | **OOM** (no-ckpt: `14,693.99 MB`, `+4,208.48 MB`; with grad-ckpt: **OOM** at `14,447.01 MB`) | — | — | — | — | — | **OOM** |
+| `FullBackprop` (`seq=512, ckpt=True`) | 42 | `0.750` / `0.000` / `0.667` | `0.300` / `0.000` / `1.000` / `0.250` / `0.188` | `0.250` / `0.167` / `0.222` / `0.000` / `0.417` | `0.960` | `0.983–1.000` | **`0.1519–0.1747`** | **`+3,262.9–3,267.8 MB`** / `96.9–97.4s` |
+
+*Key `9B` Iter 0 takeaways*:
+1. **Standard Full-Backprop Failure at `seq=2048`**: End-to-end backprop through 8-bit `Ornith-1.0-9B` OOMs on a 15 GiB T4 both without gradient checkpointing (`14,693.99 MB`) and **even with** gradient checkpointing (`14,447.01 MB`).
+2. **Truncated `FullBackprop` (`seq=512, ckpt=True`) Still Violates Constraints**: Spikes activation VRAM by **`+3,263–3,268 MB`** (`13.75 GB` total), blows the `KL <= 0.05` retention budget by **>3x** (`0.1519–0.1747`), yields `0.000` `Code Pass@1` and `0.000` `Pop MultiHop`, and triggers severe false refusal (`0.188` pop_culture, `0.417` bio_logic).
+3. **Strong In-Context Oracle Upper Bound (with Bleed & Context Cost)**: With the full doc in context, `9B` hits `Code Pass@1 = 0.833` (5/6 unit tests), `Pop MH = 1.000`, `Bio Logic = 0.778–1.000`, and `Real Anchors = 1.000`, though context interference raises `sibling_bleed` (`0.50–0.75` pop, `0.20–0.40` bio) and reduces `neg_ctrl` (`0.833 -> 0.667`).
 
 ---
 
